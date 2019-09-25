@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdlib.h>
 #include <sstream>
+#include <string.h>
 using namespace std;
 
 Exercici::Exercici(const Exercici &e) {
@@ -10,6 +11,8 @@ Exercici::Exercici(const Exercici &e) {
 	m_lliuraments = e.m_lliuraments;
 	m_nEstudiants = e.m_nEstudiants;
 }
+
+Exercici::~Exercici() {}
 
 void Exercici::inicialitzaEstudiants(const string &fitxerEstudiants){
 	ifstream infile(fitxerEstudiants);
@@ -37,11 +40,46 @@ void Exercici::inicialitzaEstudiants(const string &fitxerEstudiants){
 }
 
 bool Exercici::afegeixTramesa(const string& niu,const string& fitxer, const string& data){
+	int parsedNiu = stoi(niu);
+
 	for (int i = 0; i < m_nEstudiants;i++) {
-		if (m_lliuraments[i].m_niu == niu){
+		int parsedLliuramentNiu = stoi(m_lliuraments[i].getNiu());
+		if (parsedLliuramentNiu == parsedNiu){
 			m_lliuraments[i].afegeixTramesa(fitxer,data);
 			return true;
 		}
 	}
 	return false;
+}
+
+bool Exercici::consultaTramesa(const string& niu, const string& data, string& fitxer){
+	int parsedNiu = stoi(niu);
+
+	for (int i = 0;i < m_nEstudiants;i++) {
+		int parsedLliuramentNiu = stoi(m_lliuraments[i].getNiu());
+		if (parsedLliuramentNiu == parsedNiu)
+			return m_lliuraments[i].consultaTramesa(data, fitxer);
+	}
+	return false;
+}
+
+bool Exercici::eliminaTramesa(const string& niu, const string& data){
+	try {
+		int parsedNiu = stoi(niu);
+
+	} catch (const std::invalid_argument& e){
+		return false;
+	}
+
+	int parsedNiu = stoi(niu);
+	for (int i = 0 ; i < m_nEstudiants; i++){
+		int parsedLliuramentNiu = stoi(m_lliuraments[i].getNiu());
+		if (parsedLliuramentNiu == parsedNiu)
+			return m_lliuraments[i].eliminaTramesa(data);
+	}
+	return false;
+}
+Exercici& Exercici::operator =(const Exercici&e){
+	Exercici *exercici = new Exercici(e);
+	return *exercici;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <forward_list>
+#include <list>
 #include "Tramesa.h"
 using namespace std;
 
@@ -17,6 +18,7 @@ public:
 private:
 	string m_niu;
 	float m_nota;
-	forward_list<Tramesa> m_trameses;
+	list<Tramesa> m_trameses;
+	char* stringToChar(string stringToParse);
 };
 
