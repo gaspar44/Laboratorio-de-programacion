@@ -64,14 +64,14 @@ bool Exercici::consultaTramesa(const string& niu, const string& data, string& fi
 }
 
 bool Exercici::eliminaTramesa(const string& niu, const string& data){
+	int parsedNiu;
 	try {
-		int parsedNiu = stoi(niu);
+		parsedNiu = stoi(niu);
 
 	} catch (const std::invalid_argument& e){
 		return false;
 	}
 
-	int parsedNiu = stoi(niu);
 	for (int i = 0 ; i < m_nEstudiants; i++){
 		int parsedLliuramentNiu = stoi(m_lliuraments[i].getNiu());
 		if (parsedLliuramentNiu == parsedNiu)
