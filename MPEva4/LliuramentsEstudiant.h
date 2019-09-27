@@ -20,6 +20,5 @@ private:
 	float m_nota;
 	list<Tramesa> m_trameses;
 	char* stringToChar(string stringToParse);
-	void realDelete(list<Tramesa>::iterator iterator,const char *parsedData);
 };
 
