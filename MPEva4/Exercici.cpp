@@ -8,8 +8,13 @@ using namespace std;
 Exercici::Exercici(const Exercici &e) {
 	m_descripcio = e.m_descripcio;
 	m_dataLimit = e.m_dataLimit;
-	m_lliuraments = e.m_lliuraments;
 	m_nEstudiants = e.m_nEstudiants;
+	m_lliuraments = new LliuramentsEstudiant[m_nEstudiants];
+
+	for (int i = 0; i < m_nEstudiants;i++) {
+		m_lliuraments[i] = e.m_lliuraments[i];
+	}
+
 }
 
 Exercici::~Exercici() {}
@@ -52,6 +57,7 @@ bool Exercici::afegeixTramesa(const string& niu,const string& fitxer, const stri
 	return false;
 }
 
+
 bool Exercici::consultaTramesa(const string& niu, const string& data, string& fitxer){
 	int parsedNiu = stoi(niu);
 
@@ -79,7 +85,9 @@ bool Exercici::eliminaTramesa(const string& niu, const string& data){
 	}
 	return false;
 }
-Exercici& Exercici::operator =(const Exercici&e){
-	Exercici *exercici = new Exercici(e);
+Exercici& Exercici::operator =(const Exercici &e){
+	Exercici *exercici = new Exercici(e.m_descripcio,e.m_dataLimit);
+	exercici->m_nEstudiants = e.m_nEstudiants;
+	exercici->m_lliuraments = e.m_lliuraments;
 	return *exercici;
 }

@@ -38,25 +38,3 @@ char* LliuramentsEstudiant::stringToChar(string stringToParse){
 	strcpy(array, stringToParse.c_str());
 	return array;
 }
-
-//void LliuramentsEstudiant::realDelete(list<Tramesa>::iterator iterator,const char *parsedData){
-//	list<Tramesa> copyList;
-//	list<Tramesa>::iterator it;
-//
-//
-//	for (it = m_trameses.begin(); it != m_trameses.end();++it) {
-//		if ((strcmp(stringToChar(iterator->getData()), parsedData) != 0 )){
-//			Tramesa tramesaToCopy = m_trameses.front();
-//			copyList.push_front(tramesaToCopy);
-//			if (!m_trameses.empty()){
-//				m_trameses.pop_front();
-//			}
-//
-//		}
-//		else
-//			it = m_trameses.erase(iterator);
-//	}
-//
-//	m_trameses = copyList;
-
-// }
