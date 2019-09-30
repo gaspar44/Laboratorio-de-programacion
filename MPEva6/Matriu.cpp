@@ -4,6 +4,8 @@
 #include <cmath>
 
 Matriu::~Matriu(){
+	if (!haveReleasedBefore)
+		releaseMatrixMemory();
 }
 
 void Matriu::resize(int nFiles,int nColumnes){
@@ -166,6 +168,7 @@ bool Matriu::operator ==(const Matriu& m){
 }
 
 void Matriu::releaseMatrixMemory() {
+	haveReleasedBefore = !haveReleasedBefore;
 	for (int i = 0; i < m_nFiles; i++) {
 		if (m_matriu[i] != 0)
 			delete [] m_matriu[i];

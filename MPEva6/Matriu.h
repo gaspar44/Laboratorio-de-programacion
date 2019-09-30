@@ -27,4 +27,5 @@ private:
 	int m_nColumnes;
 	void initializeEmptyMatrix(float** matrix,int nFiles,int nColumnes);
 	void releaseMatrixMemory();
+	bool haveReleasedBefore = false;
 };
