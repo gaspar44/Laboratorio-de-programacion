@@ -13,6 +13,7 @@ public:
 	void transpose();
 	Matriu& operator=(const Matriu& m);
 	void setValor(int fila, int columna, float valor);
+	float getValor(int fila,int columna) const ;
 	Matriu operator+(const Matriu& m);
 	Matriu operator+(float s);
 	bool operator==(const Matriu& m);
@@ -20,10 +21,10 @@ public:
 	bool esBuida() const { return (m_matriu == nullptr); }
 	int getNFiles() const { return m_nFiles; }
 	int getNColumnes() const { return m_nColumnes; }
-	float getValor(int fila, int columna) const;
 private:
-	int **m_matriu;
+	float **m_matriu;
 	int m_nFiles;
 	int m_nColumnes;
-	void initializeEmptyMatrix(int** matrix,int nFiles,int nColumnes);
+	void initializeEmptyMatrix(float** matrix,int nFiles,int nColumnes);
+	void releaseMatrixMemory();
 };
