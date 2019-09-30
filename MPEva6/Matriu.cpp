@@ -4,7 +4,7 @@
 #include <cmath>
 
 Matriu::~Matriu(){
-	releaseMatrixMemory();
+//	releaseMatrixMemory();
 }
 
 void Matriu::resize(int nFiles,int nColumnes){
@@ -22,20 +22,20 @@ void Matriu::resize(int nFiles,int nColumnes){
 
 	if (esBuida()) {
 		initializeEmptyMatrix(newMatrix,nFiles, nColumnes);
+
 	}
+	else {
+		for(int i = 0; i < nFiles; i++) {
+			float *temp = newMatrix[i];
+			int rowSizeLimiter = i >= m_nFiles ? m_nFiles : i;
 
-	for(int i = 0; i < nFiles; i++) {
-		float *temp = newMatrix[i];
+			for (int j = 0; j < nColumnes; j++) {
+				temp[j] = j >=  m_nColumnes ? m_matriu[rowSizeLimiter][m_nColumnes] : m_matriu[rowSizeLimiter][j];
+			}
 
-		for (int j = 0; j < nColumnes; j++){
-			if (j >= nColumnes){
-				temp[j] = m_matriu[i][j];
-			}
-			else {
-				temp[j] = 0;
-			}
 		}
 	}
+
 
 	releaseMatrixMemory();
 
