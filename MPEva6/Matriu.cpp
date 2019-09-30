@@ -4,8 +4,7 @@
 #include <cmath>
 
 Matriu::~Matriu(){
-	if (!haveReleasedBefore)
-		releaseMatrixMemory();
+	releaseMatrixMemory();
 }
 
 void Matriu::resize(int nFiles,int nColumnes){
@@ -14,7 +13,6 @@ void Matriu::resize(int nFiles,int nColumnes){
 	 * y que los apuntadores tienen otro arreglo, se procede a iniciar
 	 * el primer arreglo
 	 */
-
 	float **newMatrix = new float*[nFiles];
 
 	for (int i = 0; i < nColumnes; i++){
@@ -26,14 +24,13 @@ void Matriu::resize(int nFiles,int nColumnes){
 		initializeEmptyMatrix(newMatrix,nFiles, nColumnes);
 	}
 
-
 	for(int i = 0; i < nFiles; i++) {
 		float *temp = newMatrix[i];
+
 		for (int j = 0; j < nColumnes; j++){
-			if (m_nColumnes >= nColumnes){
+			if (j >= nColumnes){
 				temp[j] = m_matriu[i][j];
 			}
-
 			else {
 				temp[j] = 0;
 			}
@@ -68,24 +65,6 @@ void Matriu::transpose() {
 	m_matriu = transposeMatrix;
 	m_nColumnes = newColumnes;
 	m_nFiles = newFiles;
-}
-
-Matriu::Matriu(const Matriu& m) {
-	m_nColumnes = m.m_nColumnes;
-	m_nFiles = m.m_nFiles;
-	m_matriu = new float* [m_nFiles];
-
-	for (int i = 0; i < m_nColumnes; i++){
-		float *newColumn = new float[m_nColumnes];
-		m_matriu[i] = newColumn;
-	}
-
-	for(int i = 0; i < m_nFiles; i++){
-		for (int j = 0; j < m_nColumnes; j++) {
-			m_matriu[i][j] = m.m_matriu[i][j];
-		}
-	}
-
 }
 
 Matriu& Matriu::operator =(const Matriu& m) {
@@ -184,7 +163,6 @@ void Matriu::initializeEmptyMatrix(float** matrix,int nFiles, int nColumnes){
 		if (matrix[i] != nullptr) {
 			temp = matrix[i];
 		}
-
 		else {
 			temp = new float[m_nFiles];
 		}
