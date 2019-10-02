@@ -22,7 +22,6 @@ void Matriu::resize(int nFiles,int nColumnes){
 
 	if (esBuida()) {
 		initializeEmptyMatrix(newMatrix,nFiles, nColumnes);
-
 	}
 
 	else {
@@ -88,8 +87,6 @@ Matriu& Matriu::operator =(const Matriu& m) {
 			copyMatrix[i][j] = m.m_matriu[i][j];
 		}
 	}
-
-	m.~Matriu();
 
 	m_matriu = copyMatrix;
 	return *this;
