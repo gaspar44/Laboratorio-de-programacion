@@ -27,19 +27,19 @@ void Matriu::resize(int nFiles,int nColumnes){
 	else {
 
 		if (m_nFiles <= nFiles && m_nColumnes <= nColumnes){
-			fillNewMatrixWithOld(newMatrix, m_nFiles, m_nColumnes);
+			fillNewMatrixWithOld(m_matriu,newMatrix, m_nFiles, m_nColumnes);
 		}
 
 		else if (m_nFiles <= nFiles && m_nColumnes > nColumnes){
-			fillNewMatrixWithOld(newMatrix, m_nFiles, nColumnes);
+			fillNewMatrixWithOld(m_matriu,newMatrix, m_nFiles, nColumnes);
 		}
 
 		else if (m_nFiles > nFiles && m_nColumnes <= nColumnes){
-			fillNewMatrixWithOld(newMatrix, nFiles, m_nColumnes);
+			fillNewMatrixWithOld(m_matriu,newMatrix, nFiles, m_nColumnes);
 		}
 
 		else if (m_nFiles > nFiles && m_nColumnes > nColumnes){
-			fillNewMatrixWithOld(newMatrix, nFiles, nColumnes);
+			fillNewMatrixWithOld(m_matriu,newMatrix, nFiles, nColumnes);
 		}
 	}
 
@@ -77,16 +77,12 @@ Matriu& Matriu::operator =(const Matriu& m) {
 	m_nFiles = m.m_nFiles;
 	float **copyMatrix = new float* [m_nFiles];
 
-	for (int i = 0; i < m_nColumnes; i++){
+	for (int i = 0; i < m_nFiles; i++){
 		float *newColumn = new float[m_nColumnes];
 		copyMatrix[i] = newColumn;
 	}
 
-	for(int i = 0; i < m_nFiles; i++){
-		for (int j = 0; j < m_nColumnes; j++) {
-			copyMatrix[i][j] = m.m_matriu[i][j];
-		}
-	}
+	fillNewMatrixWithOld(m.m_matriu,copyMatrix, m.m_nFiles, m.m_nColumnes);
 
 	m_matriu = copyMatrix;
 	return *this;
@@ -108,14 +104,14 @@ float Matriu::getValor(int fila,int columna) const{
 
 Matriu Matriu::operator+(const Matriu& m){
 	if (m_nColumnes != m.getNColumnes() || m_nFiles != m.getNFiles()){
-		return Matriu(0,0);
+		return Matriu();
 	}
 
 	Matriu sumMatrix = Matriu(m_nFiles,m_nColumnes);
 
 	for (int i = 0; i < m_nFiles ; i ++){
 		for(int j = 0 ; j < m_nColumnes;j++){
-			sumMatrix.m_matriu[i][j] = m_matriu[i][j] +m.m_matriu[i][j];
+			sumMatrix.m_matriu[i][j] = m_matriu[i][j] + m.m_matriu[i][j];
 		}
 	}
 	return sumMatrix;
@@ -175,11 +171,12 @@ void Matriu::initializeEmptyMatrix(float** matrix,int nFiles, int nColumnes){
 	}
 }
 
-void Matriu::fillNewMatrixWithOld(float **newMatrix, int rowLimiter,int columnLimiter){
+void Matriu::fillNewMatrixWithOld(float **sourceMatrix,float **destinyMatrix, int rowLimiter,int columnLimiter){
 	for (int i = 0; i < rowLimiter;i++){
-		float *temp = newMatrix[i];
+		float *temp = destinyMatrix[i];
 		for (int j = 0; j < columnLimiter; j++){
-			temp[j] = m_matriu[i][j];
+			temp[j] = sourceMatrix[i][j];
+
 		}
 	}
 }

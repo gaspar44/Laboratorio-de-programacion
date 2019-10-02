@@ -27,5 +27,5 @@ private:
 	int m_nColumnes;
 	void initializeEmptyMatrix(float** matrix,int nFiles,int nColumnes);
 	void releaseMatrixMemory();
-	void fillNewMatrixWithOld(float **newMatrix, int rowLimiter,int columnLimiter);
+	void fillNewMatrixWithOld(float **sourceMatrix,float **destinyMatrix, int rowLimiter,int columnLimiter);
 };
