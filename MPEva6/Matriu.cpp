@@ -15,7 +15,7 @@ void Matriu::resize(int nFiles,int nColumnes){
 	 */
 	float **newMatrix = new float*[nFiles];
 
-	for (int i = 0; i < nColumnes; i++){
+	for (int i = 0; i < nFiles; i++){
 		float *newColumn = new float[nColumnes];
 		newMatrix[i] = newColumn;
 	}
@@ -24,25 +24,31 @@ void Matriu::resize(int nFiles,int nColumnes){
 		initializeEmptyMatrix(newMatrix,nFiles, nColumnes);
 
 	}
+
 	else {
-		for(int i = 0; i < nFiles; i++) {
-			float *temp = newMatrix[i];
-			int rowSizeLimiter = i >= m_nFiles ? m_nFiles : i;
 
-			for (int j = 0; j < nColumnes; j++) {
-				temp[j] = j >=  m_nColumnes ? m_matriu[rowSizeLimiter][m_nColumnes] : m_matriu[rowSizeLimiter][j];
-			}
+		if (m_nFiles <= nFiles && m_nColumnes <= nColumnes){
+			fillNewMatrixWithOld(newMatrix, m_nFiles, m_nColumnes);
+		}
 
+		else if (m_nFiles <= nFiles && m_nColumnes > nColumnes){
+			fillNewMatrixWithOld(newMatrix, m_nFiles, nColumnes);
+		}
+
+		else if (m_nFiles > nFiles && m_nColumnes <= nColumnes){
+			fillNewMatrixWithOld(newMatrix, nFiles, m_nColumnes);
+		}
+
+		else if (m_nFiles > nFiles && m_nColumnes > nColumnes){
+			fillNewMatrixWithOld(newMatrix, nFiles, nColumnes);
 		}
 	}
-
 
 	releaseMatrixMemory();
 
 	m_nColumnes = nColumnes;
 	m_nFiles = nFiles;
 	m_matriu = newMatrix;
-
 }
 
 void Matriu::transpose() {
@@ -147,7 +153,6 @@ bool Matriu::operator ==(const Matriu& m){
 }
 
 void Matriu::releaseMatrixMemory() {
-	haveReleasedBefore = !haveReleasedBefore;
 	for (int i = 0; i < m_nFiles; i++) {
 		if (m_matriu[i] != 0)
 			delete [] m_matriu[i];
@@ -171,5 +176,13 @@ void Matriu::initializeEmptyMatrix(float** matrix,int nFiles, int nColumnes){
 			temp[j] = 0;
 		}
 	}
+}
 
+void Matriu::fillNewMatrixWithOld(float **newMatrix, int rowLimiter,int columnLimiter){
+	for (int i = 0; i < rowLimiter;i++){
+		float *temp = newMatrix[i];
+		for (int j = 0; j < columnLimiter; j++){
+			temp[j] = m_matriu[i][j];
+		}
+	}
 }
