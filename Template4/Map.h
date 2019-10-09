@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <utility>
+#include <algorithm>
 using namespace std;
 
 template<class TClau, class TValor>
@@ -41,10 +42,27 @@ public:
 			it++;
 		}
 
+
 		m_keys.push_back(key);
 		m_values.push_back(value);
 		m_longitud++;
-	}
+
+		vector<TClau> tempKeys = m_keys;
+		vector<TValor> tempValues;
+
+		sort(m_keys.begin(),m_keys.end());
+
+		for (int i = 0; i < m_longitud;i++){
+			for (int j = 0; j < m_longitud; j++){
+				if (m_keys.at(i) == tempKeys.at(j)){
+					tempValues.push_back(m_values.at(j));
+					break;
+				}
+			}
+		}
+
+		m_values = tempValues;
+}
 
 	TValor operator[](const TClau& key) const {
 		typename vector<TClau>::const_iterator it = m_keys.begin();
