@@ -21,8 +21,13 @@ public:
 		}
 
 	}
-	int longitud() const { return m_longitud; }
+
+	const int longitud() const {
+		 return  m_longitud;
+	}
+
 	bool esBuit() const { return m_longitud == 0; }
+
 	void afegeix(TClau key,TValor value){
 		typename vector<TClau>::iterator it = m_keys.begin();
 		int positionIndex = 0;
@@ -41,8 +46,8 @@ public:
 		m_longitud++;
 	}
 
-	const TValor& operator[](const TClau& key){
-		typename vector<TClau>::iterator it = m_keys.begin();
+	TValor operator[](const TClau& key) const {
+		typename vector<TClau>::const_iterator it = m_keys.begin();
 		int positionIndex = 0;
 		bool foundElement = false;
 
@@ -62,7 +67,7 @@ public:
 		return m_values.at(positionIndex);
 	}
 
-	const TClau& operator[]( const TValor& value ){
+	const TClau& operator[]( const TValor& value ) const {
 		typename vector<TValor>::iterator it = m_values.begin();
 		int positionIndex = 0;
 		bool foundElement = false;
@@ -89,17 +94,6 @@ public:
 		return m_keys.at(indexToGet);
 	}
 
-	TClau& operator[] ( const int indexToGet){
-		return (const_cast<const Map&>(*this))[indexToGet];
-	}
-
-	TClau& operator[]( const TValor& value ){
-		return (const_cast<const Map&>(*this))[value];
-	}
-
-	TValor& operator[] ( const TClau& key ){
-		return (const_cast<const Map&>(*this))[key];
-	}
 
 	Map<TClau,TValor>& operator=(const Map<TClau,TValor>& m){
 		m_longitud = m.m_longitud;
