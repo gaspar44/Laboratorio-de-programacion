@@ -13,7 +13,6 @@ public:
 	}
 
 	SmartPointer<T>(T* pointerToCast) {
-		cout<<"SmartPointer<T>(T* pointerToCast)"<<endl;
 		bool isDeleteNeeded = false;
 		if (m_originalPointer != nullptr){
 			isDeleteNeeded = true;
@@ -29,19 +28,13 @@ public:
 	}
 
 	SmartPointer<T>(const SmartPointer<T> &spToAsign){
-		cout<<"SmartPointer<T>(SmartPointer<T> spToAsign)"<<endl;
-
 		m_originalPointer = new T;
 		*m_originalPointer = *spToAsign.m_originalPointer;
-//		delete spToAsign.m_originalPointer;
-//		spToAsign.m_originalPointer = nullptr;
 
 	}
 
 
 	SmartPointer<T> operator=(T* &pointerToCast){
-		cout<<"operador=(T* &pointerToCast"<<endl;
-
 		bool isDeleteNeeded = false;
 		if (m_originalPointer != nullptr){
 			isDeleteNeeded = true;
@@ -58,8 +51,6 @@ public:
 	}
 
 	SmartPointer<T> operator =(SmartPointer<T> spToAsign){
-		cout<<"operator =(SmartPointer<T> spToAsign)"<<endl;
-
 		m_originalPointer = new T;
 		T *temp = spToAsign.m_originalPointer;
 
@@ -81,7 +72,7 @@ public:
 	}
 
 
-	bool isNull() { return m_originalPointer == nullptr ;}
+	bool isNull() { return  m_originalPointer != nullptr ;}
 private:
 	T* m_originalPointer;
 
