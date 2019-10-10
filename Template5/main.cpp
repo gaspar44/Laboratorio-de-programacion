@@ -67,6 +67,7 @@ int main()
 
 	cout << "Comment :=>> Comprovant operador d'assignacio entre objectes de tipus Smart Pointer ....................... " << endl;
 	sp1 = sp2;
+	cout<<"ERHUEVOOOOOOOOOOOOOOOOO   "<<(*sp2).getNom()<<endl;
 	if (((*sp1).getNom() != "B") || (!sp2.isNull()))
 	{
 		valid = false;
