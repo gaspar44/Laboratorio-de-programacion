@@ -13,10 +13,10 @@ void Matriu::resize(int nFiles,int nColumnes){
 	 * y que los apuntadores tienen otro arreglo, se procede a iniciar
 	 * el primer arreglo
 	 */
-	float **newMatrix = new float*[nFiles];
+	float **newMatrix = new float* [nFiles];
 
 	for (int i = 0; i < nFiles; i++){
-		float *newColumn = new float[nColumnes];
+		float *newColumn = new float[nColumnes-i];
 		newMatrix[i] = newColumn;
 	}
 
@@ -78,7 +78,7 @@ Matriu& Matriu::operator =(const Matriu& m) {
 	float **copyMatrix = new float* [m_nFiles];
 
 	for (int i = 0; i < m_nFiles; i++){
-		float *newColumn = new float[m_nColumnes];
+		float *newColumn = new float[m_nColumnes-1];
 		copyMatrix[i] = newColumn;
 	}
 

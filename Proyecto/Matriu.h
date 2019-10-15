@@ -21,7 +21,8 @@ public:
 	bool esBuida() const { return (m_matriu == nullptr); }
 	int getNFiles() const { return m_nFiles; }
 	int getNColumnes() const { return m_nColumnes; }
-private:
+
+protected:
 	float **m_matriu;
 	int m_nFiles;
 	int m_nColumnes;
