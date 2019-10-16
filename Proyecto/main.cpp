@@ -19,15 +19,21 @@ void showMatrix(SimmetricMatrix m, int memory){
 
 int main ()
 {
-	int valueToReserve = 5;
-	int valueToeduce = 12;
+	int valueToReserve = 20;
+	int valueToeduce = 25;
 
 	//MatriuDispersa m = MatriuDispersa();
 	//m.resize(7, 7);
-	SimmetricMatrix m2 = SimmetricMatrix(valueToReserve,valueToReserve);
-	m2.setValor(1, 2, 5);
+	MatriuDispersa m2 = MatriuDispersa(valueToReserve,valueToReserve);
+	//m2.init(valueToReserve,valueToReserve);
+	m2.setValor(4, 5, 5);
+	float temp;
+	m2.getValor(4, 5, temp);
+	cout<<temp<<endl;
+	//MatriuDispersa m = MatriuDispersa(m2);
 	m2.resize(valueToeduce, valueToeduce);
-	showMatrix(m2, valueToeduce);
+	showMatrix(m2, valueToReserve);
+	cout<<temp<<endl;
 
 	//m2.setValor(10, 2, 1);
 

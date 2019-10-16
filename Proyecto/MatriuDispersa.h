@@ -19,8 +19,8 @@ public:
 	MatriuDispersa(int rows, int columns) : SimmetricMatrix(rows,columns) {};
 	//MatriuDispersa(const MatriuDispersa& m) { Matriu()
 	void init(int rows,int columns)  { SimmetricMatrix::initializeEmptyMatrix(m_matriu,rows,columns); };
-	bool getValor(int row,int column,float &value) ;
-	void setValor(int row,int column,float value);
+	bool getValor(int row,int column,float &value) { return SimmetricMatrix::getValor(row, column, value); };
+	void setValor(int row,int column,float value) { SimmetricMatrix::setValor(m_matriu, row, column, value); } ;
 
 
 
