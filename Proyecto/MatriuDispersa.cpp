@@ -9,12 +9,37 @@
 #include <iostream>
 #include <fstream>
 
-MatriuDispersa::MatriuDispersa(string fileName,int rows,int columns) : SimmetricMatrix(rows, columns){
+MatriuDispersa::MatriuDispersa(string fileName) {
+	m_matriu = nullptr;
+	int rowToWrite;
+	int columnToWrite;
+	int rowsAndColumnsToReserve = getMaxNumberOfNodes(fileName) + 1;
+
+	resize(rowsAndColumnsToReserve, rowsAndColumnsToReserve);
+
+
 	ifstream fileToCreateMatrix(fileName);
 	string readedLine;
 
-	while(getline(fileToCreateMatrix,readedLine)){
 
+	while(!fileToCreateMatrix.eof()){
+		fileToCreateMatrix>>rowToWrite>>columnToWrite;
+		setValor(rowToWrite, columnToWrite, 1);
 	}
+
+}
+
+MatriuDispersa::MatriuDispersa(const MatriuDispersa &m) : SimmetricMatrix(m){}
+
+
+int MatriuDispersa::getMaxNumberOfNodes(string fileName){
+	ifstream fileToCheckNodes(fileName);
+	int maxValue;
+	int other;
+
+	while ( !fileToCheckNodes.eof() ){
+		fileToCheckNodes >> maxValue>>other;
+	}
+	return maxValue;
 
 }

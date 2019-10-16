@@ -1,8 +1,11 @@
 // comparing apples with apples
 #include <iostream>
 #include <string>
+#include <fstream>
 #include <stdio.h>
 #include "MatriuDispersa.h"
+#include <cstdio>
+#include <ctime>
 using namespace std;
 
 void showMatrix(SimmetricMatrix m, int memory){
@@ -19,25 +22,16 @@ void showMatrix(SimmetricMatrix m, int memory){
 
 int main ()
 {
-	int valueToReserve = 20;
-	int valueToeduce = 25;
+//	int valueToReserve = 75887;
+//	double duration;
+//	std::clock_t start = std::clock();
+//	MatriuDispersa m2 = MatriuDispersa(valueToReserve,valueToReserve);
+//	duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
 
-	//MatriuDispersa m = MatriuDispersa();
-	//m.resize(7, 7);
-	MatriuDispersa m2 = MatriuDispersa(valueToReserve,valueToReserve);
-	//m2.init(valueToReserve,valueToReserve);
-	m2.setValor(4, 5, 5);
-	float temp;
-	m2.getValor(4, 5, temp);
-	cout<<temp<<endl;
-	//MatriuDispersa m = MatriuDispersa(m2);
-	m2.resize(valueToeduce, valueToeduce);
-	showMatrix(m2, valueToReserve);
-	cout<<temp<<endl;
+//	cout<<"printf: "<< duration <<'\n';
+	MatriuDispersa m = MatriuDispersa("Xarxa1.txt");
 
-	//m2.setValor(10, 2, 1);
-
-
+	showMatrix(m, 8);
 
 
   return 0;
