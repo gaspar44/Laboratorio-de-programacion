@@ -7,17 +7,18 @@
 
 #ifndef MATRIUDISPERSA_H_
 #define MATRIUDISPERSA_H_
-#include "Matriu.h"
 #include <string>
+
+#include "SimmetricMatrix.h"
 using namespace std;
 
-class MatriuDispersa : public Matriu {
+class MatriuDispersa : public SimmetricMatrix {
 public:
-	MatriuDispersa() : Matriu() {};
+	MatriuDispersa() : SimmetricMatrix() {};
 	MatriuDispersa(string fileName, int rows, int columns);
-	MatriuDispersa(int rows, int columns) : Matriu(rows,columns) {};
+	MatriuDispersa(int rows, int columns) : SimmetricMatrix(rows,columns) {};
 	//MatriuDispersa(const MatriuDispersa& m) { Matriu()
-	void init(int rows,int columns)  { Matriu::initializeEmptyMatrix(m_matriu,rows,columns); };
+	void init(int rows,int columns)  { SimmetricMatrix::initializeEmptyMatrix(m_matriu,rows,columns); };
 	bool getValor(int row,int column,float &value) ;
 	void setValor(int row,int column,float value);
 

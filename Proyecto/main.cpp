@@ -5,29 +5,34 @@
 #include "MatriuDispersa.h"
 using namespace std;
 
-int main ()
-{
-	//MatriuDispersa m = MatriuDispersa();
-	//m.resize(7, 7);
-	Matriu m2 = Matriu(7,7);
-	//m2.resize(3, 3);
-
-	//int * p = new int[1];
-//	p[43] = 0;
-//	cout<<p[43]<<endl;
-//	delete p;
-//	cout<<p[43]<<endl;
-//
-
-	//m.setValor(1, 2, 1);
-
-	for (int i = 0; i < 7 ;i++){
-		for (int j = 0; j < 7 ; j++){
-			float value = m2.getValor(i, j);
+void showMatrix(SimmetricMatrix m, int memory){
+	float value;
+	for (int i = 0; i < memory ;i++){
+		for (int j = 0; j < memory ; j++){
+			 m.getValor(i, j,value);
 			cout<<value<<" , ";
 		}
 
 		cout<<endl;
 	}
+}
+
+int main ()
+{
+	int valueToReserve = 5;
+	int valueToeduce = 12;
+
+	//MatriuDispersa m = MatriuDispersa();
+	//m.resize(7, 7);
+	SimmetricMatrix m2 = SimmetricMatrix(valueToReserve,valueToReserve);
+	m2.setValor(1, 2, 5);
+	m2.resize(valueToeduce, valueToeduce);
+	showMatrix(m2, valueToeduce);
+
+	//m2.setValor(10, 2, 1);
+
+
+
+
   return 0;
 }
