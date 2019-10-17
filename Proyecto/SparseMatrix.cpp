@@ -73,10 +73,33 @@ SparseMatrix SparseMatrix::operator *(const double n){
 	map<pair<int,int>,double>::iterator it;
 
 	for (it = sp.m_dictionary.begin(); it != sp.m_dictionary.end();++it){
-		(sp.m_dictionary)[it->first] = (sp.m_dictionary)[it->first] * n;
+		sp.m_dictionary[it->first] = sp.m_dictionary[it->first] * n;
 	}
 
 	return sp;
+
+}
+
+vector<float> SparseMatrix::operator *(const vector<float> &vec){
+	if (vec.size() != m_columns)
+		throw "Error of vec for *";
+
+	vector<float> resultVector;
+	pair<int,int> keyToSearchForNumber;
+
+	for (int i = 0 ; i < m_rows ; i++){
+		float temp = 0;
+
+		for (int j = 0; j < m_columns;j++){
+			keyToSearchForNumber = make_pair(i, j);
+			temp = temp + m_dictionary[keyToSearchForNumber] * vec.at(j);
+		}
+
+		resultVector.push_back(temp);
+	}
+
+	return resultVector;
+
 
 }
 
