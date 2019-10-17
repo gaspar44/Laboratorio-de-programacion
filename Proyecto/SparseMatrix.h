@@ -20,18 +20,19 @@ public:
 	SparseMatrix(string fileName);
 	SparseMatrix(int rows, int columns) : m_rows(rows), m_columns(columns), m_noZeroElements(0) {};
 	SparseMatrix(const SparseMatrix& m);
-	void init(int rows,int columns);
+	//void init(int rows,int columns) : m_rows(rows), m_columns(columns), m_noZeroElements(0) {};
 	int getNFiles() { return m_rows; };
 	int getNColumnes() { return m_columns; } ;
-	bool getValor(int row,int column,double &value);
 	void setValor(int row,int column,double value);
+	bool getValor(int row,int column,double &value);
 	SparseMatrix operator *(const double n);
 	vector<float> operator *(const vector<float> &vec);
 	SparseMatrix operator/(const double n);
+	SparseMatrix& operator= (const SparseMatrix &m);
 	friend ostream& operator<<(ostream &out, SparseMatrix& sp);
 
 private:
-	map<pair<int,int>,double> m_values;
+	map<pair<int,int>,double> m_dictionary;
 	int m_rows;
 	int m_columns;
 	int m_noZeroElements;

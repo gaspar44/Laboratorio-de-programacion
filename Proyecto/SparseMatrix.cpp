@@ -22,7 +22,6 @@ SparseMatrix::SparseMatrix(string fileName) {
 	ifstream fileToCreateMatrix(fileName);
 	string readedLine;
 
-
 	while(!fileToCreateMatrix.eof()){
 		fileToCreateMatrix>>rowToWrite>>columnToWrite;
 		setValor(rowToWrite, columnToWrite, 1);
@@ -31,8 +30,12 @@ SparseMatrix::SparseMatrix(string fileName) {
 	fileToCreateMatrix.close();
 }
 
-
-
+SparseMatrix::SparseMatrix(const SparseMatrix &m){
+	m_noZeroElements = m.m_noZeroElements;
+	m_rows = m.m_rows;
+	m_columns = m.m_columns;
+	m_dictionary = m.m_dictionary;
+}
 
 void SparseMatrix::setValor(int row,int column,double value){
 	if (value == 0)
@@ -40,7 +43,7 @@ void SparseMatrix::setValor(int row,int column,double value){
 
 	pair<int,int> key = make_pair(row, column);
 
-	if (m_values[key] == 0) {
+	if (m_dictionary[key] == 0) {
 		if (row > m_rows){
 			m_rows = row + 1;
 		}
@@ -49,7 +52,7 @@ void SparseMatrix::setValor(int row,int column,double value){
 			m_columns = column + 1 ;
 		}
 
-		m_values[key] = value;
+		m_dictionary[key] = value;
 		m_noZeroElements = m_noZeroElements + 1;
 	}
 }
@@ -59,11 +62,23 @@ bool SparseMatrix::getValor(int row,int column,double &value){
 		value = 0;
 		return false;
 	}
+
 	pair<int,int> key = make_pair(row,column);
-	value = m_values[key];
+	value = m_dictionary[key];
 	return true;
 }
 
+SparseMatrix SparseMatrix::operator *(const double n){
+	SparseMatrix sp = *this;
+	map<pair<int,int>,double>::iterator it;
+
+	for (it = sp.m_dictionary.begin(); it != sp.m_dictionary.end();++it){
+		(sp.m_dictionary)[it->first] = (sp.m_dictionary)[it->first] * n;
+	}
+
+	return sp;
+
+}
 
 
 ostream& operator<<(ostream &out, SparseMatrix& sp){
@@ -71,12 +86,20 @@ ostream& operator<<(ostream &out, SparseMatrix& sp){
 	out <<"MATRIU DE (FILES: "<<sp.m_rows<<" COLUMNES: "<<sp.m_columns<<" )"<<endl;
 	out <<"VALORS (FILA::COL::VALOR)"<<endl;
 
-	for (it = sp.m_values.begin(); it != sp.m_values.end();++it){
+	for (it = sp.m_dictionary.begin(); it != sp.m_dictionary.end();++it){
 		out << "( " <<(it->first).first<<" :: "<<(it->first).second<<" :: "<<it->second<< " )"<<endl;
 	}
+
 	return out;
 
+}
 
+SparseMatrix& SparseMatrix::operator =(const SparseMatrix &m){
+	m_noZeroElements = m.m_noZeroElements;
+	m_rows = m.m_rows;
+	m_columns = m.m_columns;
+	m_dictionary = m.m_dictionary;
+	return *this;
 }
 
 
@@ -88,6 +111,6 @@ int SparseMatrix::getMaxNumberOfNodes(string fileName){
 	while ( !fileToCheckNodes.eof() ){
 		fileToCheckNodes >> maxValue>>other;
 	}
-	return maxValue;
 
+	return maxValue;
 }
