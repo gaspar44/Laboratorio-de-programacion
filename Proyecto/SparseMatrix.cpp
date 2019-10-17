@@ -65,20 +65,10 @@ bool SparseMatrix::getValor(int row,int column,double &value){
 
 	pair<int,int> key = make_pair(row,column);
 	value = m_dictionary[key];
+
 	return true;
 }
 
-SparseMatrix SparseMatrix::operator *(const double n){
-	SparseMatrix sp = *this;
-	map<pair<int,int>,double>::iterator it;
-
-	for (it = sp.m_dictionary.begin(); it != sp.m_dictionary.end();++it){
-		sp.m_dictionary[it->first] = sp.m_dictionary[it->first] * n;
-	}
-
-	return sp;
-
-}
 
 vector<float> SparseMatrix::operator *(const vector<float> &vec){
 	if (vec.size() != m_columns)
@@ -99,10 +89,33 @@ vector<float> SparseMatrix::operator *(const vector<float> &vec){
 	}
 
 	return resultVector;
+}
 
+SparseMatrix SparseMatrix::operator *(const double n){
+	SparseMatrix sp = *this;
+	map<pair<int,int>,double>::iterator it;
+
+	for (it = sp.m_dictionary.begin(); it != sp.m_dictionary.end();++it){
+		sp.m_dictionary[it->first] = sp.m_dictionary[it->first] * n;
+	}
+
+	return sp;
 
 }
 
+SparseMatrix SparseMatrix::operator /(const double n){
+	if (n == 0);
+		throw "Error of vec for *";
+
+	SparseMatrix sp = *this;
+	map<pair<int,int>,double>::iterator it;
+
+	for (it = sp.m_dictionary.begin(); it != sp.m_dictionary.end();++it){
+		sp.m_dictionary[it->first] = sp.m_dictionary[it->first] / n;
+	}
+
+	return sp;
+}
 
 ostream& operator<<(ostream &out, SparseMatrix& sp){
 	map<pair<int,int>,double>::iterator it;

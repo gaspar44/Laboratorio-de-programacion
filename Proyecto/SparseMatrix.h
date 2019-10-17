@@ -25,8 +25,8 @@ public:
 	int getNColumnes() { return m_columns; } ;
 	void setValor(int row,int column,double value);
 	bool getValor(int row,int column,double &value);
-	SparseMatrix operator *(const double n);
 	vector<float> operator *(const vector<float> &vec);
+	SparseMatrix operator *(const double n);
 	SparseMatrix operator/(const double n);
 	SparseMatrix& operator= (const SparseMatrix &m);
 	friend ostream& operator<<(ostream &out, SparseMatrix& sp);
