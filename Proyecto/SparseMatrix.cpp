@@ -104,7 +104,7 @@ SparseMatrix SparseMatrix::operator *(const double n){
 }
 
 SparseMatrix SparseMatrix::operator /(const double n){
-	if (n == 0);
+	if (n == 0)
 		throw "Error of vec for *";
 
 	SparseMatrix sp = *this;
@@ -123,7 +123,7 @@ ostream& operator<<(ostream &out, SparseMatrix& sp){
 	out <<"VALORS (FILA::COL::VALOR)"<<endl;
 
 	for (it = sp.m_dictionary.begin(); it != sp.m_dictionary.end();++it){
-		out << "( " <<(it->first).first<<" :: "<<(it->first).second<<" :: "<<it->second<< " )"<<endl;
+		out << "( " <<(it->first).first<<" :: "<<(it->first).second<<" :: "<<it->second<< " ) "<<endl;
 	}
 
 	return out;

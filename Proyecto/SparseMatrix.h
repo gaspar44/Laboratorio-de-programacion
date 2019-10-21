@@ -8,6 +8,7 @@
 #ifndef SPARSEMATRIX_H_
 #define SPARSEMATRIX_H_
 #include <string>
+#include <iostream>
 #include <vector>
 #include <map>
 
@@ -20,7 +21,7 @@ public:
 	SparseMatrix(string fileName);
 	SparseMatrix(int rows, int columns) : m_rows(rows), m_columns(columns), m_noZeroElements(0) {};
 	SparseMatrix(const SparseMatrix& m);
-	//void init(int rows,int columns) : m_rows(rows), m_columns(columns), m_noZeroElements(0) {};
+	void init(int rows,int columns) : m_rows(rows), m_columns(columns), m_noZeroElements(0) {};
 	int getNFiles() { return m_rows; };
 	int getNColumnes() { return m_columns; } ;
 	void setValor(int row,int column,double value);
@@ -40,6 +41,14 @@ private:
 	int getMaxNumberOfNodes(string fileName);
 
 };
+
+template<typename T>
+ostream& operator <<(ostream & os, vector<T> vec){
+	for (int i = 0; i <vec.size();i++){
+		os << "[POS: "<<i<<" ;"<<" VAL: "<<vec.at(i)<<" ]"<<endl;
+	}
+	return os;
+}
 
 
 #endif /* SPARSEMATRIX_H_ */
