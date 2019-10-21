@@ -41,21 +41,18 @@ void Biblioteca::llegirPublicacions(const string & nomFitxer){
 
 		else if (typeOfPublication.compare("R") == 0){
 			string periocidad;
-			string erHuevo;
-			char numberOfExamples[2];
+			string numberOfExamples;
 
 			getline(libraryToCreate,publicationID);
 			getline(libraryToCreate,title);
 			getline(libraryToCreate,periocidad);
 			getline(libraryToCreate,numberOfCopies);
-			getline(libraryToCreate,erHuevo);
-			strcpy(numberOfExamples,erHuevo.c_str());
+			getline(libraryToCreate,numberOfExamples);
 
 			int numberOfcopies = stoi(numberOfCopies.c_str());
 
-			libraryToCreate>>numberOfExamples;
-			string stringedNumberOfExamples(numberOfExamples);
-			int intergerNumberOfExamples = stoi(stringedNumberOfExamples.c_str());
+			char cp = numberOfExamples[0];
+			int intergerNumberOfExamples = atoi(&cp);
 
 			Magazine *magazineToCreate = new Magazine(publicationID,title,periocidad,numberOfcopies,intergerNumberOfExamples);
 			m_publications.push_back(*magazineToCreate);
