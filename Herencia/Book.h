@@ -9,12 +9,15 @@
 #define BOOK_H_
 #include "Publicacio.h"
 #include <string>
+using namespace std;
 
 class Book : public Publicacio {
 public:
+	Book() : Publicacio() ,m_author("") {};
+	Book(string codeID,string title,string author,int numberOfCopies,int daysToBorow);
 
 private:
-
+	string m_author;
 
 };
 
