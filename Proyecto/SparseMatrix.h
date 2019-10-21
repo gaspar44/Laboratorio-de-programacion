@@ -21,7 +21,7 @@ public:
 	SparseMatrix(string fileName);
 	SparseMatrix(int rows, int columns) : m_rows(rows), m_columns(columns), m_noZeroElements(0) {};
 	SparseMatrix(const SparseMatrix& m);
-	void init(int rows,int columns) : m_rows(rows), m_columns(columns), m_noZeroElements(0) {};
+	void init(int rows,int columns) { m_rows = rows; m_columns = columns; m_noZeroElements= 0 ;};
 	int getNFiles() { return m_rows; };
 	int getNColumnes() { return m_columns; } ;
 	void setValor(int row,int column,double value);

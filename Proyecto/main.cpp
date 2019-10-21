@@ -13,7 +13,7 @@ int main () {
 	vector<float> v = {1,2,3,4,5,6,7,8};
 	vector<float> prueba = m * v;
 
-	cout<<prueba<<endl;
+	cout<<m2<<endl;
 	cout<<m.getNFiles()<<endl;
 
 
