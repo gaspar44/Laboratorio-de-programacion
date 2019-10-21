@@ -80,6 +80,7 @@ bool Biblioteca::prestar(const string& idUsuari, const string& codi, const Data&
 
 bool Biblioteca::retornar(const string& idUsuari, const string& codi, const Data& data, bool &dataCorrecta, int nExmplar){
 	vector<Borrow>::iterator it;
+	vector<Publicacio>::iterator it2;
 
 
 	for (it = m_borrows.begin();it != m_borrows.end();++it){
@@ -87,6 +88,14 @@ bool Biblioteca::retornar(const string& idUsuari, const string& codi, const Data
 
 		if (idUsuari.compare(it->getUserID()) == 0 && codi.compare(it->getPublicationID()) == 0) {
 			m_borrows.erase(it);
+
+			for (it2 = m_publications.begin(); it2 != m_publications.end();++it2){
+				if (codi.compare( it2->getPublicationID() ) == 0){
+					it2->increaseCopy();
+					break;
+				}
+			}
+
 			return true;
 		}
 	}
