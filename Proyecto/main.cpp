@@ -475,211 +475,211 @@ int main()
 			if (grade < 0)
 				grade = 0;
 			cout << endl << "Comment :=>> Grade : " << grade << endl;
-//
-//	AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
-//			cout << "Comment :=>> ==========================================" << endl;
-//			cout << "Comment :=>> TEST SOBRE EPINIONS ORDENAT.............. " << endl;
-//
-//			string nomFitxerRels = "EpinionsOrdenat.txt";
-//
-//			cout << "Comment :=>> LLEGINT I CREANT Epinions Ordenat........ " << endl;
-//			MatriuSparse m3(nomFitxerRels);
-//
-//			cout << "Comment :=>> AFEGINT 7 a posicio (0,2) ............... " << endl;
-//			m3.setVal(0, 2, 7);
-//			cout << "Comment :=>> AFEGINT 8 a posicio (8,1) ............... " << endl;
-//			m3.setVal(8, 1, 8);
-//			cout << "Comment :=>> AFEGINT 9 a posicio (5,9) ............... " << endl;
-//			m3.setVal(5, 9, 9);
-//			cout << "Comment :=>> AFEGINT 11 a posicio (8677, 1768) ............... " << endl;
-//			m3.setVal(8677, 1768, 11);
-//			cout << "Comment :=>> ESCRIVINT Epinions Ordenat............... " << endl;
-//
-//			ofstream fResEpiOrdenat;
-//			fResEpiOrdenat.open("ResEpiOrdenatCOORD.txt");
-//			if (fResEpiOrdenat.is_open())
-//			{
-//				fResEpiOrdenat << m3;
-//				fResEpiOrdenat.close();
-//			}
-//
-//			if (IgualFitxers("ResEpiOrdenatCOORD.txt", "ResEpiOrdenatCOORDEsperat.txt", "ResCompEpiOrdenat.txt"))
-//			{
-//				cout << "Comment :=>> Epinions Ordenat BEN CONSTRUIT OK ....................... " << endl;
-//				grade++;
-//			}
-//			else
-//			{
-//				cout << "Comment :=>> ERROR CONSTRUCCIO Epinions Ordenat....................... " << endl;
-//				valid = false;
-//			}
-//
-//			trobat = m3.getVal(75888, 0, valor);
-//			if (trobat)
-//			{
-//				cout << "Comment :=>>VAL(75888,0): " << valor << " . ERROR NO HAURIA D'EXISTIR" << endl;
-//				valid = false;
-//			}
-//			else
-//			{
-//				cout << "Comment :=>>VAL(75888,0): OK NO EXISTEIX" << endl;
-//				grade++;
-//			}
-//
-//			trobat = m3.getVal(0, 2, valor);
-//			if (trobat)
-//				if (valor == 7)
-//				{
-//					cout << "Comment :=>> OK VAL(0,2): " << valor << endl;
-//					grade++;
-//				}
-//				else
-//				{
-//					cout << "Comment :=>> OK EXISTEIX VAL(0,2): Pero ERROR val " << valor << " Valor correcte 7" << endl;
-//					valid = false;
-//				}
-//			else
-//			{
-//				cout << "Comment :=>> ERROR VAL(0,2): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=7" << endl;
-//				valid = false;
-//			}
-//
-//			trobat = m3.getVal(8, 1, valor);
-//			if (trobat)
-//				if (valor == 8)
-//				{
-//					cout << "Comment :=>> OK VAL(8,1): " << valor << endl;
-//					grade++;
-//				}
-//				else
-//				{
-//					cout << "Comment :=>> OK EXISTEIX VAL(8,1): Pero ERROR val " << valor << " Valor correcte 8" << endl;
-//					valid = false;
-//				}
-//			else
-//			{
-//				cout << "Comment :=>> ERROR VAL(8,1): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=8" << endl;
-//				valid = false;
-//			}
-//			trobat = m3.getVal(75877, 75876, valor);
-//			if (trobat)
-//				if (valor == 1)
-//				{
-//					cout << "Comment :=>> OK VAL(75877,75876): " << valor << endl;
-//					grade++;
-//				}
-//				else
-//				{
-//					cout << "Comment :=>> OK EXISTEIX VAL(75877,75876): Pero ERROR val " << valor << " Valor correcte 1" << endl;
-//					valid = false;
-//				}
-//			else
-//			{
-//				cout << "Comment :=>> ERROR VAL(75877,75876): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=1" << endl;
-//				valid = false;
-//			}
-//
-//			trobat = m3.getVal(75885, 16086, valor);
-//			if (trobat)
-//				if (valor == 1)
-//				{
-//					cout << "Comment :=>> OK VAL(75885,16086): " << valor << endl;
-//					grade++;
-//				}
-//				else
-//				{
-//					cout << "Comment :=>> OK EXISTEIX VAL(75885,16086): Pero ERROR val " << valor << " Valor correcte 1" << endl;
-//					valid = false;
-//				}
-//			else
-//			{
-//				cout << "Comment :=>> ERROR VAL(75885,16086): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=1" << endl;
-//				valid = false;
-//			}
-//
-//			trobat = m3.getVal(8677, 1768, valor);
-//			if (trobat)
-//				if (valor == 11)
-//				{
-//					cout << "Comment :=>> OK VAL(8677, 1768): " << valor << endl;
-//					grade++;
-//				}
-//				else
-//				{
-//					cout << "Comment :=>> OK EXISTEIX VAL(8677, 1768): Pero ERROR val " << valor << " Valor correcte 11" << endl;
-//					valid = false;
-//				}
-//			else
-//			{
-//				cout << "Comment :=>> ERROR VAL(8677, 1768): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=11" << endl;
-//				valid = false;
-//			}
-//
-//			cout << "Comment :=>> ==========================================" << endl;
-//			cout << "Comment :=>> VALIDANT * per float......................" << endl;
-//			MatriuSparse mProdEpiOrdenat = m3 * 6;
-//
-//			ofstream fProdEpiOrdenat("MatProdEpiOrdenatCOORD.txt", ios::out);
-//			fProdEpiOrdenat << mProdEpiOrdenat;
-//			fProdEpiOrdenat.close();
-//			if (IgualFitxers("MatProdEpiOrdenatCOORD.txt", "MatProdEpiOrdenatCOORDEsperat.txt", "ResCompMatProdEpiOrdenat.txt"))
-//			{
-//				cout << "Comment :=>> Prod per 6 Epi Ordenat OK ....................... " << endl;
-//				grade++;
-//			}
-//			else
-//			{
-//				cout << "Comment :=>> ERROR Prod per 6 Epi Ordenat ....................... " << endl;
-//				valid = false;
-//			}
-//
-//			cout << "Comment :=>> ==========================================" << endl;
-//			cout << "Comment :=>> VALIDANT / per float......................" << endl;
-//			MatriuSparse mDivEpiOrdenatProd = mProdEpiOrdenat / 3;
-//			ofstream fDivEpiOrdenat("MatDivEpiOrdenatCOORD.txt", ios::out);
-//			fDivEpiOrdenat << mDivEpiOrdenatProd;
-//			fDivEpiOrdenat.close();
-//			if (IgualFitxers("MatDivEpiOrdenatCOORD.txt", "MatDivEpiOrdenatCOORDEsperat.txt", "ResCompMatDivEpiOrdenat.txt"))
-//			{
-//				cout << "Comment :=>> (EpiOrdenat*6)/3 OK ....................... " << endl;
-//				grade++;
-//			}
-//			else
-//			{
-//				cout << "Comment :=>> ERROR (EpiOrdenat*6)/3 ....................... " << endl;
-//				valid = false;
-//			}
-//			cout << "Comment :=>> ==========================================" << endl;
-//			cout << "Comment :=>> VALIDANT * per vector....................." << endl;
-//			vector<float> vEpiOrdenat;
-//			vEpiOrdenat.resize(m3.getNFiles(), 1);
-//
-//			vector<float> v2EpiOrdenat = m3*vEpiOrdenat;
-//			ofstream fProdVEpiOrdenat("VectProdEpiOrdenatCOORD.txt", ios::out);
-//			for (int i = 0; i < v2EpiOrdenat.size(); i++)
-//			{
-//				if (v2EpiOrdenat[i] != 0)
-//				{
-//					fProdVEpiOrdenat << "[POS: " << i << " ; VAL: " << v2EpiOrdenat[i] << " ] " << endl;
-//				}
-//			}
-//			fProdVEpiOrdenat.close();
-//			if (IgualFitxers("VectProdEpiOrdenatCOORD.txt", "VectProdEpiOrdenatCOORDEsperat.txt", "ResCompVectProdEpiOrdenat.txt"))
-//			{
-//				cout << "Comment :=>> (EpiOrdenat*vector) OK ....................... " << endl;
-//				grade++;
-//			}
-//			else
-//			{
-//				cout << "Comment :=>> ERROR (EpiOrdenat*vector) ....................... " << endl;
-//				valid = false;
-//			}
-//
-//		if (valid)
-//			cout << "Comment :=>> Final del test sense errors" << endl;
-//		if (grade < 0)
-//			grade = 0;
-//		cout << endl << "Grade :=>> " << grade << endl;
+
+
+			cout << "Comment :=>> ==========================================" << endl;
+			cout << "Comment :=>> TEST SOBRE EPINIONS ORDENAT.............. " << endl;
+
+			string nomFitxerRels = "EpinionsOrdenat.txt";
+
+			cout << "Comment :=>> LLEGINT I CREANT Epinions Ordenat........ " << endl;
+			MatriuSparse m3(nomFitxerRels);
+
+			cout << "Comment :=>> AFEGINT 7 a posicio (0,2) ............... " << endl;
+			m3.setVal(0, 2, 7);
+			cout << "Comment :=>> AFEGINT 8 a posicio (8,1) ............... " << endl;
+			m3.setVal(8, 1, 8);
+			cout << "Comment :=>> AFEGINT 9 a posicio (5,9) ............... " << endl;
+			m3.setVal(5, 9, 9);
+			cout << "Comment :=>> AFEGINT 11 a posicio (8677, 1768) ............... " << endl;
+			m3.setVal(8677, 1768, 11);
+			cout << "Comment :=>> ESCRIVINT Epinions Ordenat............... " << endl;
+
+			ofstream fResEpiOrdenat;
+			fResEpiOrdenat.open("ResEpiOrdenatCOORD.txt");
+			if (fResEpiOrdenat.is_open())
+			{
+				fResEpiOrdenat << m3;
+				fResEpiOrdenat.close();
+			}
+
+			if (IgualFitxers("ResEpiOrdenatCOORD.txt", "ResEpiOrdenatCOORDEsperat.txt", "ResCompEpiOrdenat.txt"))
+			{
+				cout << "Comment :=>> Epinions Ordenat BEN CONSTRUIT OK ....................... " << endl;
+				grade++;
+			}
+			else
+			{
+				cout << "Comment :=>> ERROR CONSTRUCCIO Epinions Ordenat....................... " << endl;
+				valid = false;
+			}
+
+			trobat = m3.getVal(75888, 0, valor);
+			if (trobat)
+			{
+				cout << "Comment :=>>VAL(75888,0): " << valor << " . ERROR NO HAURIA D'EXISTIR" << endl;
+				valid = false;
+			}
+			else
+			{
+				cout << "Comment :=>>VAL(75888,0): OK NO EXISTEIX" << endl;
+				grade++;
+			}
+
+			trobat = m3.getVal(0, 2, valor);
+			if (trobat)
+				if (valor == 7)
+				{
+					cout << "Comment :=>> OK VAL(0,2): " << valor << endl;
+					grade++;
+				}
+				else
+				{
+					cout << "Comment :=>> OK EXISTEIX VAL(0,2): Pero ERROR val " << valor << " Valor correcte 7" << endl;
+					valid = false;
+				}
+			else
+			{
+				cout << "Comment :=>> ERROR VAL(0,2): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=7" << endl;
+				valid = false;
+			}
+
+			trobat = m3.getVal(8, 1, valor);
+			if (trobat)
+				if (valor == 8)
+				{
+					cout << "Comment :=>> OK VAL(8,1): " << valor << endl;
+					grade++;
+				}
+				else
+				{
+					cout << "Comment :=>> OK EXISTEIX VAL(8,1): Pero ERROR val " << valor << " Valor correcte 8" << endl;
+					valid = false;
+				}
+			else
+			{
+				cout << "Comment :=>> ERROR VAL(8,1): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=8" << endl;
+				valid = false;
+			}
+			trobat = m3.getVal(75877, 75876, valor);
+			if (trobat)
+				if (valor == 1)
+				{
+					cout << "Comment :=>> OK VAL(75877,75876): " << valor << endl;
+					grade++;
+				}
+				else
+				{
+					cout << "Comment :=>> OK EXISTEIX VAL(75877,75876): Pero ERROR val " << valor << " Valor correcte 1" << endl;
+					valid = false;
+				}
+			else
+			{
+				cout << "Comment :=>> ERROR VAL(75877,75876): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=1" << endl;
+				valid = false;
+			}
+
+			trobat = m3.getVal(75885, 16086, valor);
+			if (trobat)
+				if (valor == 1)
+				{
+					cout << "Comment :=>> OK VAL(75885,16086): " << valor << endl;
+					grade++;
+				}
+				else
+				{
+					cout << "Comment :=>> OK EXISTEIX VAL(75885,16086): Pero ERROR val " << valor << " Valor correcte 1" << endl;
+					valid = false;
+				}
+			else
+			{
+				cout << "Comment :=>> ERROR VAL(75885,16086): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=1" << endl;
+				valid = false;
+			}
+
+			trobat = m3.getVal(8677, 1768, valor);
+			if (trobat)
+				if (valor == 11)
+				{
+					cout << "Comment :=>> OK VAL(8677, 1768): " << valor << endl;
+					grade++;
+				}
+				else
+				{
+					cout << "Comment :=>> OK EXISTEIX VAL(8677, 1768): Pero ERROR val " << valor << " Valor correcte 11" << endl;
+					valid = false;
+				}
+			else
+			{
+				cout << "Comment :=>> ERROR VAL(8677, 1768): NO EXISTEIX. HAURIA D'EXISTIR i VALOR=11" << endl;
+				valid = false;
+			}
+
+			cout << "Comment :=>> ==========================================" << endl;
+			cout << "Comment :=>> VALIDANT * per float......................" << endl;
+			MatriuSparse mProdEpiOrdenat = m3 * 6;
+
+			ofstream fProdEpiOrdenat("MatProdEpiOrdenatCOORD.txt", ios::out);
+			fProdEpiOrdenat << mProdEpiOrdenat;
+			fProdEpiOrdenat.close();
+			if (IgualFitxers("MatProdEpiOrdenatCOORD.txt", "MatProdEpiOrdenatCOORDEsperat.txt", "ResCompMatProdEpiOrdenat.txt"))
+			{
+				cout << "Comment :=>> Prod per 6 Epi Ordenat OK ....................... " << endl;
+				grade++;
+			}
+			else
+			{
+				cout << "Comment :=>> ERROR Prod per 6 Epi Ordenat ....................... " << endl;
+				valid = false;
+			}
+
+			cout << "Comment :=>> ==========================================" << endl;
+			cout << "Comment :=>> VALIDANT / per float......................" << endl;
+			MatriuSparse mDivEpiOrdenatProd = mProdEpiOrdenat / 3;
+			ofstream fDivEpiOrdenat("MatDivEpiOrdenatCOORD.txt", ios::out);
+			fDivEpiOrdenat << mDivEpiOrdenatProd;
+			fDivEpiOrdenat.close();
+			if (IgualFitxers("MatDivEpiOrdenatCOORD.txt", "MatDivEpiOrdenatCOORDEsperat.txt", "ResCompMatDivEpiOrdenat.txt"))
+			{
+				cout << "Comment :=>> (EpiOrdenat*6)/3 OK ....................... " << endl;
+				grade++;
+			}
+			else
+			{
+				cout << "Comment :=>> ERROR (EpiOrdenat*6)/3 ....................... " << endl;
+				valid = false;
+			}
+			cout << "Comment :=>> ==========================================" << endl;
+			cout << "Comment :=>> VALIDANT * per vector....................." << endl;
+			vector<float> vEpiOrdenat;
+			vEpiOrdenat.resize(m3.getNFiles(), 1);
+
+			vector<float> v2EpiOrdenat = m3*vEpiOrdenat;
+			ofstream fProdVEpiOrdenat("VectProdEpiOrdenatCOORD.txt", ios::out);
+			for (int i = 0; i < v2EpiOrdenat.size(); i++)
+			{
+				if (v2EpiOrdenat[i] != 0)
+				{
+					fProdVEpiOrdenat << "[POS: " << i << " ; VAL: " << v2EpiOrdenat[i] << " ] " << endl;
+				}
+			}
+			fProdVEpiOrdenat.close();
+			if (IgualFitxers("VectProdEpiOrdenatCOORD.txt", "VectProdEpiOrdenatCOORDEsperat.txt", "ResCompVectProdEpiOrdenat.txt"))
+			{
+				cout << "Comment :=>> (EpiOrdenat*vector) OK ....................... " << endl;
+				grade++;
+			}
+			else
+			{
+				cout << "Comment :=>> ERROR (EpiOrdenat*vector) ....................... " << endl;
+				valid = false;
+			}
+
+		if (valid)
+			cout << "Comment :=>> Final del test sense errors" << endl;
+		if (grade < 0)
+			grade = 0;
+		cout << endl << "Grade :=>> " << grade << endl;
 		return 0;
 	}
 	catch (std::bad_alloc)
