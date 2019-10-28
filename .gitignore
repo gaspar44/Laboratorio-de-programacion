@@ -5,3 +5,17 @@
 **/.vscode/*
 *.o
 main
+MatDivSubEpi2OrdenatCOORD.txt
+MatDivX1COORD.txt
+MatProdSubEpi2OrdenatCOORD.txt
+MatProdX1COORD.txt
+ResCompMatDivSubEpi2Ordenat.txt
+ResCompMatDivX1.txt
+ResCompMatProdSubEpi2Ordenat.txt
+ResCompMatProdX1.txt
+ResCompVectProdX1.txt
+ResComparaSubEpi2Ordenat.txt
+ResComparaX1.txt
+ResSubEpi2OrdenatCOORD.txt
+ResX1COORD.txt
+VectProdX1COORD.txt
