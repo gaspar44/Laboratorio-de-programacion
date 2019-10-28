@@ -1,5 +1,5 @@
 #include "MatriuSparse.h"
-#include <fstream>
+
 
 bool IgualFitxers(string nomF1, string nomF2, string nomFRes)
 {

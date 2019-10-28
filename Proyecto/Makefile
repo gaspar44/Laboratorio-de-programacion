@@ -1,5 +1,5 @@
 GPP=g++
-GCCFLAGS=-g -std=c++11
+GCCFLAGS=-g #-std=c++11
 
 %.o: %.cpp
 	$(GPP) -c  $(GCCFLAGS) $<
