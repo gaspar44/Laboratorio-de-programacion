@@ -65,23 +65,26 @@ vector<float> MatriuSparse::operator *(const vector<float> &vec){
 		throw "Error of vec for *";
 
 	vector<float> resultVector;
-	pair<int,int> keyToSearchForNumber;
+	resultVector.resize(m_dimension);
 
 	map<pair<int,int>,float>::iterator it;
 	int actualRow = 0;
 	float temp = 0;
 
 	for (it = m_dictionary.begin(); it != m_dictionary.end(); ++it){
+
 		if (actualRow != it->first.first) {
+			resultVector.insert(resultVector.begin() + actualRow,temp);
 			actualRow = it->first.first;
-			resultVector.push_back(temp);
 			temp = 0;
 		}
 
-		if (it->second != 0)
-			temp = temp + it->second * vec.at((it->first).second);
+		temp = temp + it->second * vec.at((it->first).second);
 	}
 
+	if (temp != 0){ // Necesario porque no le da a veces para insertar en la última iteración
+		resultVector.insert(resultVector.begin() + actualRow,temp);
+	}
 
 	return resultVector;
 }
