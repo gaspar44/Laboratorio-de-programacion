@@ -38,4 +38,7 @@ private:
 	int m_numArestes;
 	bool m_dirigit;
 	void cicleCalculator(vector<int> &traveledPath,int maxNumberCicle);
+	bool subConjunt(vector<int> &traveledPath,list<pair<int,int>> aristas);
+	int taskToNode(string nodeToParse);
+	void insertToRet(vector<int> elementsToInsert,vector<vector<string>> &ret);
 };

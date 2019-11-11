@@ -159,54 +159,83 @@ void Graf::eliminarNode(string node)
 
 vector<vector<string>> Graf::cicles(){
 	vector<vector<string>> ret;
-	list<pair<int,int>>::iterator it;
+	vector<string>::iterator it;
 
-
-	for (it = m_veins.begin(); it != m_veins.end(); ++it) {
+	for (it = m_nodes.begin(); it != m_nodes.end(); ++it) {
 		vector<int> elementsToInsert;
-		elementsToInsert.push_back((it->first));
+		int integerNode = taskToNode(*it);
+		elementsToInsert.push_back(integerNode);
 		cicleCalculator(elementsToInsert,0);
+		sort(elementsToInsert.begin(), elementsToInsert.end());
+		insertToRet(elementsToInsert, ret);
+
+		for (int j = 0; j < 3; j++){
+			cout<<elementsToInsert[j]<<endl;
+		}
+		cout<<endl;
+	}
+	return ret;
+}
+
+void Graf::insertToRet(vector<int> elementsToInsert,vector<vector<string>> &ret){
+	vector<string> cicle;
+	vector<int>::iterator it;
+
+	for(it = elementsToInsert.begin();it != elementsToInsert.end();++it){
+		string name = to_string(*it + 1);
+		string nodeName = "Tasca " + name;
+		cicle.push_back(nodeName);
 	}
 
+	if (find(ret.begin(),ret.end(),cicle) == ret.end() ){
+		ret.push_back(cicle);
+	}
+}
 
+int Graf::taskToNode(string nodeToParse){
+	string subString = nodeToParse.substr(nodeToParse.size() - 2, nodeToParse.size() -1);
+	int node = stoi(subString);
+	return node - 1;
 }
 
 void Graf::cicleCalculator(vector<int> &traveledPath,int maxNumberCicle){
-	if (maxNumberCicle == 3){
-		if (traveledPath.size() == 3)
-			return;
-
-		traveledPath.clear();
-		return;
-	}
-
-	list<pair<int,int>> aristas = m_veins[traveledPath.end()];
-	list<pair<int,int>>::iterator it;
-
-	for (it = aristas.begin(); it != aristas.end();++it){
-
-		if(find(traveledPath.begin(), traveledPath.end(),it->first) != traveledPath.end()) { // it's inside
-			cicleCalculator(traveledPath,maxNumberCicle  + 1);
-			// HAY QUE HACER EL UN FIND PROPIO PARA VER SI TODOS LOS ELEMENTOS ESTÁN Y NO SÓLO EL PRIMERO
+	int iteratorLimit = 0;
+	while (traveledPath.size() != 3 && maxNumberCicle != 2){
+		list<pair<int,int>> visibleNodes = m_veins[traveledPath[traveledPath.size() - 1]];
+		list<pair<int,int>>::iterator it;
+		for (it = visibleNodes.begin(); it != visibleNodes.end();++it){
+			list<pair<int,int>> visitedNode = m_veins[it->first];
+			if(subConjunt(traveledPath,visitedNode)) { // it's inside
+				traveledPath.push_back(it->first);
+			}
 		}
+		maxNumberCicle++;
+	}
+}
 
-		else {
-			traveledPath.push_back(it->first);
-			cicleCalculator(traveledPath,maxNumberCicle);
+bool Graf::subConjunt(vector<int> &traveledPath,list<pair<int,int>> aristas){
+	vector<int>::iterator travelerIterator;
+	list<pair<int,int>>::iterator aristasIterator;
+	int foundElements = 0;
+
+	for(travelerIterator = traveledPath.begin(); travelerIterator != traveledPath.end();++travelerIterator){
+		for(aristasIterator = aristas.begin(); aristasIterator != aristas.end();++aristasIterator){
+			if(*travelerIterator == aristasIterator->first){
+				foundElements = foundElements + 1;
+			}
 		}
 	}
-
-
-
-
+	return foundElements == traveledPath.size();
 }
 
 int Graf::grauOutNode(string node)
 {
+	return 5;
 }
 
 int Graf::grauInNode(string node)
 {
+	return 5;
 }
 
 
