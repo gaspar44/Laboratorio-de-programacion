@@ -165,14 +165,17 @@ vector<vector<string>> Graf::cicles(){
 		vector<int> elementsToInsert;
 		int integerNode = taskToNode(*it);
 		elementsToInsert.push_back(integerNode);
-		cicleCalculator(elementsToInsert,0);
+
+		if (!m_dirigit){
+			dirigitCicleCalculator(elementsToInsert,0);
+		}
+		
+		else {
+			noDirigitCicleCalculator(elementsToInsert,0);
+		}
+
 		sort(elementsToInsert.begin(), elementsToInsert.end());
 		insertToRet(elementsToInsert, ret);
-
-		for (int j = 0; j < 3; j++){
-			cout<<elementsToInsert[j]<<endl;
-		}
-		cout<<endl;
 	}
 	return ret;
 }
@@ -181,9 +184,13 @@ void Graf::insertToRet(vector<int> elementsToInsert,vector<vector<string>> &ret)
 	vector<string> cicle;
 	vector<int>::iterator it;
 
+	if (elementsToInsert.size() == 0)
+		return;
+
 	for(it = elementsToInsert.begin();it != elementsToInsert.end();++it){
 		string name = to_string(*it + 1);
 		string nodeName = "Tasca " + name;
+
 		cicle.push_back(nodeName);
 	}
 
@@ -198,25 +205,56 @@ int Graf::taskToNode(string nodeToParse){
 	return node - 1;
 }
 
-void Graf::cicleCalculator(vector<int> &traveledPath,int maxNumberCicle){
-	int iteratorLimit = 0;
-	while (traveledPath.size() != 3 && maxNumberCicle != 2){
+void Graf::dirigitCicleCalculator(vector<int> &traveledPath,int maxNumberCicle){
+	int foundElements;
+	while (maxNumberCicle != m_maxCicleCalculator){
 		list<pair<int,int>> visibleNodes = m_veins[traveledPath[traveledPath.size() - 1]];
 		list<pair<int,int>>::iterator it;
 		for (it = visibleNodes.begin(); it != visibleNodes.end();++it){
-			list<pair<int,int>> visitedNode = m_veins[it->first];
-			if(subConjunt(traveledPath,visitedNode)) { // it's inside
+			list<pair<int,int>> visibleNodesFromVisitedNode = m_veins[it->first];
+			if(subConjunt(traveledPath,visibleNodesFromVisitedNode,foundElements)) { // it's inside
 				traveledPath.push_back(it->first);
 			}
 		}
 		maxNumberCicle++;
 	}
+
+	if (traveledPath.size() != m_maxCicleCalculator){
+		traveledPath.clear();
+	}
 }
 
-bool Graf::subConjunt(vector<int> &traveledPath,list<pair<int,int>> aristas){
+void Graf::noDirigitCicleCalculator(vector<int> &traveledPath,int numberOfNodesToVisit){
+		int foundElements;
+		while (numberOfNodesToVisit != m_maxCicleCalculator){
+		list<pair<int,int>> visibleNodes = m_veins[traveledPath[traveledPath.size() - 1]];
+		list<pair<int,int>>::iterator firstLevelIterator;
+		list<pair<int,int>>::iterator secondLevelIterator;
+		for (firstLevelIterator = visibleNodes.begin(); firstLevelIterator != visibleNodes.end();++firstLevelIterator){
+			list<pair<int,int>> visibleNodesFromVisitedNode = m_veins[firstLevelIterator->first];
+
+			for (secondLevelIterator = visibleNodesFromVisitedNode.begin(); secondLevelIterator != visibleNodesFromVisitedNode.end(); ++secondLevelIterator){
+				list<pair<int,int>> visibleNodesFromNode = m_veins[secondLevelIterator->first];
+				
+				if(subConjunt(traveledPath,visibleNodesFromNode,foundElements)) { // it's inside
+					traveledPath.push_back(firstLevelIterator->first);
+					traveledPath.push_back(secondLevelIterator->first);
+					return;
+				}
+			}
+		}
+		numberOfNodesToVisit++;
+	}
+
+	if (traveledPath.size() != m_maxCicleCalculator){
+		traveledPath.clear();
+	}
+}
+
+bool Graf::subConjunt(vector<int> &traveledPath,list<pair<int,int>> aristas,int &foundElements){
 	vector<int>::iterator travelerIterator;
 	list<pair<int,int>>::iterator aristasIterator;
-	int foundElements = 0;
+	foundElements = 0;
 
 	for(travelerIterator = traveledPath.begin(); travelerIterator != traveledPath.end();++travelerIterator){
 		for(aristasIterator = aristas.begin(); aristasIterator != aristas.end();++aristasIterator){
@@ -230,12 +268,17 @@ bool Graf::subConjunt(vector<int> &traveledPath,list<pair<int,int>> aristas){
 
 int Graf::grauOutNode(string node)
 {
-	return 5;
+	int nodeToSearch = taskToNode(node);
+	return m_veins[nodeToSearch].size();
 }
 
 int Graf::grauInNode(string node)
 {
+	int nodeToSearch = taskToNode(node);
+	if (!m_dirigit)
+		return m_veins[nodeToSearch].size();
 	return 5;
+	
 }
 
 
