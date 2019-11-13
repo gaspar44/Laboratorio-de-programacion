@@ -40,7 +40,7 @@ private:
 	int m_maxCicleCalculator = 3;
 	void dirigitCicleCalculator(vector<int> &traveledPath,int maxNumberCicle);
 	void noDirigitCicleCalculator(vector<int> &traveledPath,int numberOfNodesToVisit);
-	bool subConjunt(vector<int> &traveledPath,list<pair<int,int>> aristas,int &foundElements);
+	bool subConjunt(vector<int> &traveledPath,list<pair<int,int>> aristas);
 	int taskToNode(string nodeToParse);
 	void insertToRet(vector<int> elementsToInsert,vector<vector<string>> &ret);
 };

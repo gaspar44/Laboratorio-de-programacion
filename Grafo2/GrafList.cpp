@@ -206,13 +206,12 @@ int Graf::taskToNode(string nodeToParse){
 }
 
 void Graf::dirigitCicleCalculator(vector<int> &traveledPath,int maxNumberCicle){
-	int foundElements;
 	while (maxNumberCicle != m_maxCicleCalculator){
 		list<pair<int,int>> visibleNodes = m_veins[traveledPath[traveledPath.size() - 1]];
 		list<pair<int,int>>::iterator it;
 		for (it = visibleNodes.begin(); it != visibleNodes.end();++it){
 			list<pair<int,int>> visibleNodesFromVisitedNode = m_veins[it->first];
-			if(subConjunt(traveledPath,visibleNodesFromVisitedNode,foundElements)) { // it's inside
+			if(subConjunt(traveledPath,visibleNodesFromVisitedNode)) { // it's inside
 				traveledPath.push_back(it->first);
 			}
 		}
@@ -225,7 +224,6 @@ void Graf::dirigitCicleCalculator(vector<int> &traveledPath,int maxNumberCicle){
 }
 
 void Graf::noDirigitCicleCalculator(vector<int> &traveledPath,int numberOfNodesToVisit){
-		int foundElements;
 		while (numberOfNodesToVisit != m_maxCicleCalculator){
 		list<pair<int,int>> visibleNodes = m_veins[traveledPath[traveledPath.size() - 1]];
 		list<pair<int,int>>::iterator firstLevelIterator;
@@ -236,7 +234,7 @@ void Graf::noDirigitCicleCalculator(vector<int> &traveledPath,int numberOfNodesT
 			for (secondLevelIterator = visibleNodesFromVisitedNode.begin(); secondLevelIterator != visibleNodesFromVisitedNode.end(); ++secondLevelIterator){
 				list<pair<int,int>> visibleNodesFromNode = m_veins[secondLevelIterator->first];
 				
-				if(subConjunt(traveledPath,visibleNodesFromNode,foundElements)) { // it's inside
+				if(subConjunt(traveledPath,visibleNodesFromNode)) { // it's inside
 					traveledPath.push_back(firstLevelIterator->first);
 					traveledPath.push_back(secondLevelIterator->first);
 					return;
@@ -251,10 +249,10 @@ void Graf::noDirigitCicleCalculator(vector<int> &traveledPath,int numberOfNodesT
 	}
 }
 
-bool Graf::subConjunt(vector<int> &traveledPath,list<pair<int,int>> aristas,int &foundElements){
+bool Graf::subConjunt(vector<int> &traveledPath,list<pair<int,int>> aristas){
 	vector<int>::iterator travelerIterator;
 	list<pair<int,int>>::iterator aristasIterator;
-	foundElements = 0;
+	int foundElements = 0;
 
 	for(travelerIterator = traveledPath.begin(); travelerIterator != traveledPath.end();++travelerIterator){
 		for(aristasIterator = aristas.begin(); aristasIterator != aristas.end();++aristasIterator){
@@ -277,8 +275,21 @@ int Graf::grauInNode(string node)
 	int nodeToSearch = taskToNode(node);
 	if (!m_dirigit)
 		return m_veins[nodeToSearch].size();
-	return 5;
-	
+
+	vector<int> nodeToSearchElements = {nodeToSearch};
+
+	vector<list<pair<int,int>>>::iterator travelerIterator;
+	list<pair<int,int>>::iterator aristasIterator;
+	int foundElements = 0;
+
+	for(travelerIterator = m_veins.begin(); travelerIterator != m_veins.end();++travelerIterator){
+		for(aristasIterator = travelerIterator->begin(); aristasIterator != travelerIterator->end();++aristasIterator){
+			if(nodeToSearch == aristasIterator->first){
+				foundElements = foundElements + 1;
+			}
+		}
+	}
+	return foundElements;
 }
 
 
