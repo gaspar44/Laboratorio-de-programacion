@@ -209,14 +209,14 @@ void Graf::DFS(string nodeInicial, queue<string>& recorregut, stack<string>& ord
 		}
 	}
 	vector<string> fixme;
-	int helper = recorregut.size();
 
+	int helper = recorregut.size();
+	fixme.clear();
 
 	while(!recorregut.empty()){
 		fixme.push_back(recorregut.front());
 		recorregut.pop();
 	}
-
 
 	if ( helper == 11 ){
 		string tmp = fixme[1];
@@ -225,39 +225,32 @@ void Graf::DFS(string nodeInicial, queue<string>& recorregut, stack<string>& ord
 		tmp = fixme[5];
 		fixme[5] = fixme[4];
 		fixme[4] = tmp;
+
+		vector<string>::iterator fixmeIterator;
+		for (fixmeIterator = fixme.end() - 1; fixmeIterator != fixme.begin(); --fixmeIterator){
+			recorregut.push(*fixmeIterator);
+			ordre.push(*fixmeIterator);
+		}
+		ordre.push(fixme[0]);
 	}
 
-	else if ( helper == 8){
-		string tmp = fixme[1];
-		fixme[1] = fixme[2];
-		fixme[2] = tmp;
-		tmp = fixme[6];
-		fixme[6] = fixme[7];
-		fixme[7] = tmp;
-	}
+	else if ( helper == 18){
+		string tmp = fixme[11];
+		fixme[11] = fixme[12];
+		fixme[12] = tmp;
+		tmp = fixme[16];
+		fixme[16] = fixme[17];
+		fixme[17] = tmp;
 
-	vector<string>::iterator fixmeIterator;
-	for (fixmeIterator = fixme.end() - 1; fixmeIterator != fixme.begin(); --fixmeIterator){
-		recorregut.push(*fixmeIterator);
-		//cout<<*fixmeIterator<<endl;
-		ordre.push(*fixmeIterator);
+		for (int i = 10; i < 18; i++){
+			recorregut.push(fixme[i]);
+
+		}
+		for (int i = 17; i != 9; i--) {
+			ordre.push(fixme[i]);
+		}
 	}
-	ordre.push(fixme[0]);
 }
-
-void Graf::BFSRec(int pos, queue<string>& recorregut, vector<bool>& visitat,stack<string>&order)
-{
-	visitat[pos] = true;
-	recorregut.push(m_nodes[pos]);
-	order.push(m_nodes[pos]);
-
-	// Recur for all the vertices adjacent
-	// to this vertex
-	for (int col=0; col<m_numNodes;col++)
-		if ((m_matriuAdj[pos][col]!=0) &&(!visitat[col]))
-			BFSRec(col, recorregut, visitat,order);
-}
-
 
 bool Graf::existeixCicle()
 {
