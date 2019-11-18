@@ -193,16 +193,53 @@ void Graf::BFS(string nodeInicial, int distancia, queue<string>& recorregut)
 {
 }
 
+void Graf::BFS(string initNode, string endNode,queue<string>& recorregut, vector<queue<int>> &potentialPaths,vector<bool> &visited){
+	if (initNode.compare(endNode) == 0)
+		return;
+
+	vector<string>::iterator itNode = find(m_nodes.begin(), m_nodes.end(), initNode);
+	queue<int> pendents;
+
+	if (potentialPaths.size() != 0){
+		visited[potentialPaths[potentialPaths.size() - 1].front()] = true;
+		string actualNode = m_nodes[potentialPaths[potentialPaths.size() - 1].front()];
+		potentialPaths[potentialPaths.size() -1 ].pop();
+
+	}
+
+
+	if (itNode != m_nodes.end())
+	{
+		int pos = distance(m_nodes.begin(), itNode);
+		visited[pos] = true;
+		pendents.push(pos);
+
+		while (!pendents.empty())
+		{
+			int nodeActual = pendents.front();
+			pendents.pop();
+			recorregut.push(m_nodes[nodeActual]);
+
+			// posem a la cua tots els nodes adjacents a nodeActual no visitats
+			for (int col=0; col<m_numNodes; col++)
+			{
+				if((m_matriuAdj[nodeActual][col]!=0)&& (!visited[col]))
+				{
+					pendents.push(col);
+					visited[col] = true;
+				}
+			}
+		}
+	}
+}
 
 int Graf::BFS(string nodeInicial, string nodeFinal, queue<string>& recorregut)
 {
-	BFS(nodeInicial,recorregut);
-	int stepsToArrive = 0;
-	queue<string> travelCopy = recorregut;
+	vector<bool> visited;
+	visited.resize(m_numNodes, false);
+	vector<queue<int>> potentialPaths;
 
-	while (!travelCopy.empty()){
-		cout<<travelCopy.front()<<endl;
-		travelCopy.pop();
-	}
+	BFS(nodeInicial, nodeFinal, recorregut,potentialPaths,visited);
+
 	return 0;
 }
