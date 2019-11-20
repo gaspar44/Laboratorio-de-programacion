@@ -194,30 +194,9 @@ void Graf::BFS(string nodeInicial, int distancia, queue<string>& recorregut)
 }
 
 int Graf::BFS(string nodeInicial, string nodeFinal, queue<string>& recorregut){
-	vector<int> candidatesToMin;
-	vector<queue<string>> candidatesToTravel;
-	BFS(nodeInicial,nodeFinal,candidatesToTravel,candidatesToMin);
-
-	int min = 9999;
-	for(int i = 0; i < candidatesToMin.size();i++){
-		if (candidatesToMin[i] < min){
-			min = candidatesToMin[i];
-		}
-	}
-
-	return min == 9999 ? -1 : min;
-}
-
-
-void Graf::BFS(string nodeInicial, string nodeFinal, vector<queue<string>>& traveles,vector<int> candidatesToMin)
-{
-	if (nodeInicial.compare(nodeFinal) == 0)
-		return;
-
 	vector<string>::iterator itNode = find(m_nodes.begin(), m_nodes.end(), nodeInicial);
 	vector<string>::iterator itNode2 = find(m_nodes.begin(), m_nodes.end(), nodeFinal);
 	vector<bool> visitat;
-	queue<string> recorregut;
 	visitat.resize(m_numNodes, false);
 	queue<int> pendents;
 
@@ -245,14 +224,12 @@ void Graf::BFS(string nodeInicial, string nodeFinal, vector<queue<string>>& trav
 						visitat[col] = true;
 					}
 					else {
-						candidatesToMin.push_back(counter);
-						traveles.push_back(recorregut);
-						BFS(recorregut.front(),nodeFinal,traveles,candidatesToMin);
-						return;
+						return counter;
 					}
 				}
 			}
 			counter++;
 		}
 	}
+	return -1;
 }

@@ -40,7 +40,7 @@ private:
 
 	void crearMatriu(vector<vector<int>> parelles);
 	void crearMatriu(vector<vector<int>> parelles, vector<int> pesos);
-	void BFS(string nodeInicial, string nodeFinal, vector<queue<string>>& traveles,vector<int> candidatesToMin);
+
 
 };
 
