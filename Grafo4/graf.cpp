@@ -193,26 +193,41 @@ void Graf::BFS(string nodeInicial, int distancia, queue<string>& recorregut)
 {
 }
 
-void Graf::BFS(string initNode, string endNode,queue<string>& recorregut, vector<queue<int>> &potentialPaths,vector<bool> &visited){
-	if (initNode.compare(endNode) == 0)
-		return;
+int Graf::BFS(string nodeInicial, string nodeFinal, queue<string>& recorregut){
+	vector<int> candidatesToMin;
+	vector<queue<string>> candidatesToTravel;
+	BFS(nodeInicial,nodeFinal,candidatesToTravel,candidatesToMin);
 
-	vector<string>::iterator itNode = find(m_nodes.begin(), m_nodes.end(), initNode);
-	queue<int> pendents;
-
-	if (potentialPaths.size() != 0){
-		visited[potentialPaths[potentialPaths.size() - 1].front()] = true;
-		string actualNode = m_nodes[potentialPaths[potentialPaths.size() - 1].front()];
-		potentialPaths[potentialPaths.size() -1 ].pop();
-
+	int min = 9999;
+	for(int i = 0; i < candidatesToMin.size();i++){
+		if (candidatesToMin[i] < min){
+			min = candidatesToMin[i];
+		}
 	}
 
+	return min == 9999 ? -1 : min;
+}
+
+
+void Graf::BFS(string nodeInicial, string nodeFinal, vector<queue<string>>& traveles,vector<int> candidatesToMin)
+{
+	if (nodeInicial.compare(nodeFinal) == 0)
+		return;
+
+	vector<string>::iterator itNode = find(m_nodes.begin(), m_nodes.end(), nodeInicial);
+	vector<string>::iterator itNode2 = find(m_nodes.begin(), m_nodes.end(), nodeFinal);
+	vector<bool> visitat;
+	queue<string> recorregut;
+	visitat.resize(m_numNodes, false);
+	queue<int> pendents;
 
 	if (itNode != m_nodes.end())
 	{
 		int pos = distance(m_nodes.begin(), itNode);
-		visited[pos] = true;
+		int finalPosition = distance(m_nodes.begin(),itNode2);
+		visitat[pos] = true;
 		pendents.push(pos);
+		int counter = 1;
 
 		while (!pendents.empty())
 		{
@@ -223,23 +238,21 @@ void Graf::BFS(string initNode, string endNode,queue<string>& recorregut, vector
 			// posem a la cua tots els nodes adjacents a nodeActual no visitats
 			for (int col=0; col<m_numNodes; col++)
 			{
-				if((m_matriuAdj[nodeActual][col]!=0)&& (!visited[col]))
+				if((m_matriuAdj[nodeActual][col]!=0)&& (!visitat[col]))
 				{
-					pendents.push(col);
-					visited[col] = true;
+					if (col != finalPosition){
+						pendents.push(col);
+						visitat[col] = true;
+					}
+					else {
+						candidatesToMin.push_back(counter);
+						traveles.push_back(recorregut);
+						BFS(recorregut.front(),nodeFinal,traveles,candidatesToMin);
+						return;
+					}
 				}
 			}
+			counter++;
 		}
 	}
-}
-
-int Graf::BFS(string nodeInicial, string nodeFinal, queue<string>& recorregut)
-{
-	vector<bool> visited;
-	visited.resize(m_numNodes, false);
-	vector<queue<int>> potentialPaths;
-
-	BFS(nodeInicial, nodeFinal, recorregut,potentialPaths,visited);
-
-	return 0;
 }
