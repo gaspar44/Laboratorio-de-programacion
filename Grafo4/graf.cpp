@@ -3,6 +3,9 @@
 #include <iomanip>
 #include <vector>
 #include <algorithm>
+#include <queue>
+
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -199,6 +202,9 @@ int Graf::BFS(string nodeInicial, string nodeFinal, queue<string>& recorregut){
 	vector<bool> visitat;
 	visitat.resize(m_numNodes, false);
 	queue<int> pendents;
+	queue<int> firstTimeQueue;
+	vector<int> steps;
+	bool firstTime = true;
 
 	if (itNode != m_nodes.end())
 	{
@@ -213,23 +219,58 @@ int Graf::BFS(string nodeInicial, string nodeFinal, queue<string>& recorregut){
 			int nodeActual = pendents.front();
 			pendents.pop();
 			recorregut.push(m_nodes[nodeActual]);
+			firstTime = nodeActual == pos;
 
 			// posem a la cua tots els nodes adjacents a nodeActual no visitats
 			for (int col=0; col<m_numNodes; col++)
 			{
+
 				if((m_matriuAdj[nodeActual][col]!=0)&& (!visitat[col]))
 				{
+
 					if (col != finalPosition){
 						pendents.push(col);
 						visitat[col] = true;
+
+						if (firstTime) {
+							firstTimeQueue.push(col);
+						}
 					}
+
 					else {
-						return counter;
+						steps.push_back(counter);
+						vector<bool>::iterator iter;
+
+						for(iter = visitat.begin();iter != visitat.end();++iter){
+							*iter = false;
+						}
+
+						int pos2 = distance(m_nodes.begin(), itNode);
+						visitat[pos2] = true;
+
+						while (!pendents.empty()) {
+							pendents.pop();
+						}
+
+						while (!recorregut.empty()){
+							recorregut.pop();
+						}
+
+						if (!firstTimeQueue.empty()){
+							visitat[firstTimeQueue.front()];
+							pendents.push(firstTimeQueue.front());
+							firstTimeQueue.pop();
+						}
+						counter = 0;
 					}
 				}
 			}
 			counter++;
 		}
 	}
+
+	if (steps.size() != 0)
+		return *min_element(steps.begin(), steps.end());
+
 	return -1;
 }
