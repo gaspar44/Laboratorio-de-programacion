@@ -40,7 +40,9 @@ private:
 
 	void crearMatriu(vector<vector<int>> parelles);
 	void crearMatriu(vector<vector<int>> parelles, vector<int> pesos);
-
-
+	void getPosiblePaths(int pos1, int pos2, vector<bool> visited,	list<int> paths,vector<list<int>> &allPaths);
+	int getMinimunPathSize(vector<list<int>> allPaths);
+	list<int> getMinimunPath(vector<list<int>> allPaths);
+	void setTravelToStack(list<int> minPath,stack<string> & path);
 };
 
