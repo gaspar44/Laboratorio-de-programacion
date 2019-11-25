@@ -12,21 +12,27 @@
 #include <vector>
 #include <map>
 #include <fstream>
+#include "Tree.h"
 
 using namespace std;
 
 class MatriuSparse {
 public:
-	MatriuSparse() : m_dimension(0), m_noZeroElements(0) {};
+	MatriuSparse() : m_dimension(0), m_noZeroElements(0), m_aristas(0) {};
 	~MatriuSparse() {};
 	MatriuSparse(string fileName);
-	MatriuSparse(int rows, int columns) : m_dimension(rows), m_noZeroElements(0) {};
+	MatriuSparse(int rows, int columns) : m_dimension(rows), m_noZeroElements(0), m_aristas(0) {};
 	MatriuSparse(const MatriuSparse& m);
 	void init(int rows,int columns) { m_dimension = rows; m_noZeroElements= 0 ;};
 	int getNFiles() { return m_dimension; };
 	int getNColumnes() { return m_dimension; } ;
 	void setVal(int row,int column,float value);
 	bool getVal(int row,int column,float &value);
+	int getNValues() const { return m_gradesIn.size() ; };
+	void calculaGrau(vector<int> &graus);
+	void creapMaps(vector<map<pair<int,int>,float>> &vMaps);
+	void calculaDendograms(vector<Tree<double>*> &vDendogramns) const;
+
 	vector<float> operator *(const vector<float> &vec);
 	MatriuSparse operator *(const float n);
 	MatriuSparse operator/(const float n);
@@ -35,8 +41,10 @@ public:
 
 private:
 	map<pair<int,int>,float> m_dictionary;
+	map<int,int> m_gradesIn;
 	int m_dimension;
 	int m_noZeroElements;
+	int m_aristas;
 
 	int getMaxNumberOfNodes(string fileName);
 
@@ -49,6 +57,5 @@ ostream& operator <<(ostream & os, vector<T> vec){
 	}
 	return os;
 }
-
 
 #endif /* MATRIUSPARSE_H_ */

@@ -30,18 +30,39 @@ MatriuSparse::MatriuSparse(const MatriuSparse &m){
 	m_noZeroElements = m.m_noZeroElements;
 	m_dimension = m.m_dimension;
 	m_dictionary = m.m_dictionary;
+	m_aristas = m.m_aristas;
+	m_gradesIn = m.m_gradesIn;
+}
+
+void MatriuSparse::creapMaps(vector<map<pair<int,int>,float>> &vMaps){
+	map<pair<int,int>,float> aux;
+	aux.clear();
+	vMaps.resize(m_dimension,aux);
+	map<pair<int,int>,float>::iterator mapIterator;
+
+	for (mapIterator = m_dictionary.begin(); mapIterator != m_dictionary.end(); ++mapIterator){
+		cout<< "Creando clave "<<mapIterator->first.first<<" "<< mapIterator->first.second<<endl;
+		pair <int,int> key = make_pair(mapIterator->first.first, mapIterator->first.second);
+		map<pair<int,int>,float> mapOfVector = vMaps[mapIterator->first.first];
+		mapOfVector[key] = 0;
+		vMaps[mapIterator->first.first] = mapOfVector;
+	}
 }
 
 void MatriuSparse::setVal(int row,int column,float value){
 	if (value == 0)
 		return;
 
-	pair<int,int> key = make_pair(row, column);
+	pair<int,int> key1 = make_pair(row, column);
+	pair<int,int> key2 = make_pair(column, row);
 
 	if (row > m_dimension - 1 || column > m_dimension - 1){
 		m_dimension = row > column ? row + 1 : column + 1;
 	}
-		m_dictionary[key] = value;
+		m_dictionary[key1] = value;
+		m_dictionary[key2] = value;
+		m_gradesIn[row]+=1;
+		m_aristas = m_aristas + 1;
 		m_noZeroElements = m_noZeroElements + 1;
 }
 
@@ -135,7 +156,18 @@ MatriuSparse& MatriuSparse::operator =(const MatriuSparse &m){
 	m_noZeroElements = m.m_noZeroElements;
 	m_dimension = m.m_dimension;
 	m_dictionary = m.m_dictionary;
+	m_gradesIn = m.m_gradesIn;
+	m_aristas = m.m_aristas;
 	return *this;
+}
+
+void MatriuSparse::calculaGrau(vector<int> &graus){
+	map<int,int>::iterator mapIterator;
+	graus.resize(m_gradesIn.size(),0);
+
+	for (mapIterator = m_gradesIn.begin(); mapIterator != m_gradesIn.end(); ++mapIterator){
+		graus[mapIterator->first] = mapIterator->second;
+	}
 }
 
 
