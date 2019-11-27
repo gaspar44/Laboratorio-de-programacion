@@ -41,7 +41,6 @@ void MatriuSparse::creapMaps(vector<map<pair<int,int>,float>> &vMaps){
 	map<pair<int,int>,float>::iterator mapIterator;
 
 	for (mapIterator = m_dictionary.begin(); mapIterator != m_dictionary.end(); ++mapIterator){
-		cout<< "Creando clave "<<mapIterator->first.first<<" "<< mapIterator->first.second<<endl;
 		pair <int,int> key = make_pair(mapIterator->first.first, mapIterator->first.second);
 		map<pair<int,int>,float> mapOfVector = vMaps[mapIterator->first.first];
 		mapOfVector[key] = 0;
@@ -149,7 +148,6 @@ ostream& operator<<(ostream &out, MatriuSparse& sp){
 	}
 
 	return out;
-
 }
 
 MatriuSparse& MatriuSparse::operator =(const MatriuSparse &m){
@@ -170,6 +168,20 @@ void MatriuSparse::calculaGrau(vector<int> &graus){
 	}
 }
 
+void MatriuSparse::calculaDendograms(vector<Tree<double>*> &vDendogramns){
+	vDendogramns.resize(m_dimension);
+	vector<Tree<double>*>::iterator dendogramIterator;
+
+	for (int i = 0; i < m_dimension; i++){
+		Tree<double>* newTree = new Tree<double>(i);
+		vDendogramns[i] = newTree;
+	}
+}
+
+void MatriuSparse::clear(){
+	m_dictionary.clear();
+	m_gradesIn.clear();
+}
 
 int MatriuSparse::getMaxNumberOfNodes(string fileName){
 	ifstream fileToCheckNodes(fileName);

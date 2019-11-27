@@ -13,9 +13,22 @@ using namespace std;
 template <class T>
 class Tree {
 public:
-	Tree();
-	Tree(const T& data);
-	Tree(const Tree<T>& t);
+	Tree() : m_data(nullptr), m_father(nullptr), m_left(nullptr), m_right(nullptr) {}
+	Tree(const T& data) {
+		m_left = nullptr;
+		m_right = nullptr;
+		m_father = nullptr;
+		m_data = new T;
+		*m_data = data;
+	};
+
+	Tree(const Tree<T>& t) {
+		m_left = t.m_left;
+		m_right = t.m_right;
+		m_father = t.m_father;
+		m_data = t.m_data;
+	}
+
 	Tree(string nomFitxer);
 	~Tree();
 
@@ -26,7 +39,7 @@ public:
 	void setRight(Tree<T>* tR);
 	void setLeft(Tree<T>* tL);
 	T& getData() { return (*m_data); }
-	template<T> friend std::ostream& operator<<(std::ostream& out, const Tree<T>& t);
+	//template<T> friend std::ostream& operator<<(std::ostream& out, const Tree<T>& t);
 
 private:
 	Tree<T>* m_left;
