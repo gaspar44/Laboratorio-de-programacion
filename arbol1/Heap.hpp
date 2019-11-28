@@ -80,11 +80,11 @@ void Heap<T>::insereix(const T& el)
 	}
 	int posAct = m_actual;
 	// Si no es compleix la propietat del heap, intercanviem amb el pare per solucionar-ho
-	while ((posAct != 0) && (m_data[posAct] < m_data[getPare(posAct)]))
+	while ((m_data[posAct] > m_data[getPare(posAct)]))
 	{
 		intercanvia(m_data[posAct], m_data[getPare(posAct)]);
 		posAct = getPare(posAct);
-	}		
+	}
 }
 
 
@@ -94,6 +94,7 @@ void Heap<T>::esborraMinim()
 	if (m_actual >= 0)
 	{
 		// Posar element ultim a l'arrel, decrementar nombre elements i descendir l'arrel per mantenir propietat de heap
+
 		intercanvia(m_data[0], m_data[m_actual]);
 		m_actual--;
 		descendeix(0);
@@ -103,13 +104,9 @@ void Heap<T>::esborraMinim()
 template<class T>
 int Heap<T>::findIndexOfElement(T element){
 	for(int i = 0;i < m_max;i++){
-		if (m_data[i] == element){
-			T *helper = new T;
-			m_data[i] == *helper;
+		if (m_data[i] == element)
 			return i;
-		}
 	}
-
 	return -1;
 }
 
@@ -121,8 +118,11 @@ void Heap<T>::esborra(const T& el)
 	if (index == -1)
 		return;
 
+	T helper = T();
+	m_data[index] = helper;
 	ascend(index);
 	esborraMinim();
+	//m_data.resize(m_actual - 1);
 }
 
 template<class T>
@@ -145,18 +145,26 @@ void Heap<T>::descendeix(int posAct)
 template<class T>
 void Heap<T>::ascend(int posAct)
 {
-	int fEsq = getFillEsq(posAct);
-	int fDret = getFillDret(posAct);
+	//cout<<"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"<<endl;
+	int father = getPare(posAct);
 	int mesPetit = posAct;
-	if ((fEsq <= m_actual) && (m_data[fEsq] > m_data[posAct]))
-		mesPetit = fEsq;
-	if ((fDret <= m_actual) && (m_data[fDret] > m_data[mesPetit]))
-		mesPetit = fDret;
-	if (mesPetit != posAct)
-	{
-		intercanvia(m_data[posAct], m_data[mesPetit]);
-		ascend(mesPetit);
+
+	if (father == 0)
+		return;
+
+	for(int i = 0; i < m_data.size();i++){
+		cout<<m_data[i].getCodi()<<" : "<<m_data[i].getPrioritat()<<endl;
 	}
+
+	cout<<"ER HUEVO"<<endl;
+
+	intercanvia(m_data[posAct], m_data[father]);
+
+	for(int i = 0; i < m_data.size();i++){
+		cout<<m_data[i].getCodi()<<" : "<<m_data[i].getPrioritat()<<endl;
+	}
+
+	ascend(father);
 }
 
 /////////////////////////////////////////////////////////////////////////////
