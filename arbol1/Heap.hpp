@@ -28,6 +28,7 @@ public:
 	void insereix(const T& el);
 	void esborra(const T& el);
 	void esborraMinim();
+	void print();
 
 private:
 	vector<T> m_data;
@@ -113,16 +114,18 @@ int Heap<T>::findIndexOfElement(T element){
 template<class T>
 void Heap<T>::esborra(const T& el)
 {
+
 	int index = findIndexOfElement(el);
 
 	if (index == -1)
 		return;
-
+	print();
+	cout<<"ER HUEVO"<<endl;
 	T helper = T();
 	m_data[index] = helper;
 	ascend(index);
 	esborraMinim();
-	//m_data.resize(m_actual - 1);
+	//m_data.resize(m_actual);
 }
 
 template<class T>
@@ -145,26 +148,22 @@ void Heap<T>::descendeix(int posAct)
 template<class T>
 void Heap<T>::ascend(int posAct)
 {
-	//cout<<"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"<<endl;
 	int father = getPare(posAct);
 	int mesPetit = posAct;
 
 	if (father == 0)
 		return;
 
-	for(int i = 0; i < m_data.size();i++){
-		cout<<m_data[i].getCodi()<<" : "<<m_data[i].getPrioritat()<<endl;
-	}
-
-	cout<<"ER HUEVO"<<endl;
-
 	intercanvia(m_data[posAct], m_data[father]);
+	ascend(father);
+	print();
+}
 
+template<class T>
+void Heap<T>::print() {
 	for(int i = 0; i < m_data.size();i++){
 		cout<<m_data[i].getCodi()<<" : "<<m_data[i].getPrioritat()<<endl;
 	}
-
-	ascend(father);
 }
 
 /////////////////////////////////////////////////////////////////////////////

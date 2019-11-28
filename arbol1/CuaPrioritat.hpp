@@ -40,6 +40,10 @@ public:
 		m_heap.esborra(element);
 	}
 
+	void print() {
+		m_heap.print();
+	}
+
 private:
 	Heap<T> m_heap;
 };
