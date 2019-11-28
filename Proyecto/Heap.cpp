@@ -53,13 +53,13 @@ void Heap::resize(int newMaxValue){
 }
 
 void Heap::delMax(){
-	m_data[0] = m_data[m_actualPosition -1];
-	pair<int,int> pairHelper = make_pair(-1, -1);
-	ElemHeap helper = ElemHeap(-1,pairHelper);
-	m_data[m_actualPosition -1] = helper;
-	delElem(0);
+	if (m_actualPosition == -1)
+		return;
+
+	swapElementHeap(0, m_actualPosition);
 	m_actualPosition--;
-	m_data.resize(m_actualPosition);
+	delElem(0);
+	m_data.resize(m_actualPosition);  // Tal vez haya que eliminarlo
 }
 
 void Heap::delElem(int pos){
