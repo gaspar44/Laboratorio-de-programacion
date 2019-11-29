@@ -81,7 +81,7 @@ void Heap<T>::insereix(const T& el)
 	}
 	int posAct = m_actual;
 	// Si no es compleix la propietat del heap, intercanviem amb el pare per solucionar-ho
-	while ((m_data[posAct] > m_data[getPare(posAct)]))
+	while ((posAct != 0) && (m_data[posAct] > m_data[getPare(posAct)]))
 	{
 		intercanvia(m_data[posAct], m_data[getPare(posAct)]);
 		posAct = getPare(posAct);
@@ -148,15 +148,11 @@ void Heap<T>::descendeix(int posAct)
 template<class T>
 void Heap<T>::ascend(int posAct)
 {
-	int father = getPare(posAct);
-	int mesPetit = posAct;
-
-	if (father == 0)
-		return;
-
-	intercanvia(m_data[posAct], m_data[father]);
-	ascend(father);
-	print();
+	while ((posAct != 0) && (m_data[posAct] < m_data[getPare(posAct)]))
+	{
+		intercanvia(m_data[posAct], m_data[getPare(posAct)]);
+		posAct = getPare(posAct);
+	}
 }
 
 template<class T>
