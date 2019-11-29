@@ -53,7 +53,6 @@ Map<TClau,TValor>::Map(){
 
 template<class TClau, class TValor>
 Map<TClau,TValor>::Map(const Map<TClau,TValor>& m){
-
 	m_keyMap = m.m_keyMap;
 }
 
@@ -63,16 +62,30 @@ bool Map<TClau,TValor>::esBuit() const{
 }
 
 template<class TClau, class TValor>
-TValor& Map<TClau,TValor>::operator[](const TClau& key){
+TValor& Map<TClau,TValor>::operator[](const TClau& key) {
 	TValor emptyValor = TValor();
 	PairMap<TClau,TValor> pairToSearch = PairMap<TClau,TValor>(key,emptyValor);
 	TreeRB<PairMap<TClau,TValor>> *ret = new TreeRB<PairMap<TClau,TValor>>();
-	m_keyMap.cerca(pairToSearch, ret);
+
+	if (!m_keyMap.cerca(pairToSearch, ret)){
+		TValor emptyValue = TValor();
+		PairMap<TClau,TValor> *prueba = new PairMap<TClau,TValor>("",emptyValue);
+		return prueba->second;
+	}
+
 	return ret->getData().second;
 }
 
 template<class TClau, class TValor>
 void Map<TClau,TValor>::afegeix(const TClau& key,const TValor & value){
 	PairMap<TClau,TValor> pairToInsert = PairMap<TClau,TValor>(key,value);
-	m_keyMap.insert(pairToInsert);
+	TreeRB<PairMap<TClau,TValor>> * tree = new TreeRB<PairMap<TClau,TValor>>();
+
+	if (!m_keyMap.cerca(pairToInsert, tree) ){
+		m_keyMap.insert(pairToInsert);
+	}
+
+	else {
+		tree->getData().second = value;
+	}
 }

@@ -44,8 +44,11 @@ bool igualFitxers(string nomF1, string nomF2)
 			getline(f2, b);
 			if ((pos = b.find_first_of(char(13))) < string::npos)
 				b = b.substr(0, pos);
-			if (a != b)
+			if (a != b){
 				iguals = false;
+				cout<<a<<" ER HUEVOOOOOOOOO "<<b<<endl;
+			}
+
 		}
 		if (!f1.eof() && f2.eof())
 			iguals = false;

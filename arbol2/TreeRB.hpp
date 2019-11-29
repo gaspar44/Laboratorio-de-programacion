@@ -441,22 +441,25 @@ void TreeRB<T>::TreeRBRec(ifstream& fitxerNodes, int h, TreeRB<T>* father)
 template<class T>
 TreeRB<T>::~TreeRB()
 {
-	if (m_right != NULL)
-	{
-		delete m_right;
-	}
+//	if (m_right != NULL)
+//	{
+//		delete m_right;
+//	}
+//
+//	if (m_left != NULL)
+//	{
+//		delete m_left;
+//	}
+//
+//	if (m_data != NULL)
+//	{
+//		delete m_data;
+//	}
+//
+//	if (m_father != NULL) {
+//		m_father = NULL;
+//	}
 
-	if (m_left != NULL)
-	{
-		delete m_left;
-	}
-
-	if (m_data != NULL)
-	{
-		delete m_data;
-	}
-
-	m_father = NULL;
 }
 
 //Suposem l'arbre ordenat amb valors menors a arrel a esquerra i valors majors a dreta
