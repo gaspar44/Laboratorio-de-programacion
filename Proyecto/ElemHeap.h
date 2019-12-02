@@ -12,27 +12,31 @@
 class ElemHeap {
 public:
 
-	ElemHeap() { m_Val = 0; m_Pos = { 0, 0 }; }
-	ElemHeap(double val, std::pair<int, int> pos) { m_Val = val; m_Pos = pos; };
-	double getVal() const { return m_Val; }
-	std::pair<int,int> getPos() const { return m_Pos; }
-	bool operator<(const ElemHeap& e) { return (m_Val < e.m_Val); }
-	bool operator<=(const ElemHeap& e) { return (m_Val <= e.m_Val); }
-	bool operator>(const ElemHeap& e) { return (m_Val > e.m_Val);}
-	bool operator>=(const ElemHeap& e) { return (m_Val >= e.m_Val); }
-	bool operator==(const ElemHeap& e) { return ( m_Val == e.m_Val); }
-	void setValor(double value) { m_Val = value; } ;
+	ElemHeap() { m_value = 0; m_position = { 0, 0 }; }
+	ElemHeap(double val, std::pair<int, int> pos) { m_value = val; m_position = pos; };
+	ElemHeap(double value) { m_value = value ; m_position = {0 ,0}; };
+	double getVal() const { return m_value; }
+	std::pair<int,int> getPos() const { return m_position; }
+	bool operator<(const ElemHeap& e) { return (m_value < e.m_value); }
+	bool operator<=(const ElemHeap& e) { return (m_value <= e.m_value); }
+	bool operator>(const ElemHeap& e) { return (m_value > e.m_value);}
+	bool operator>=(const ElemHeap& e) { return (m_value >= e.m_value); }
+	bool operator==(const ElemHeap& e) { return ( m_value == e.m_value); }
+	void setValor(double value) { m_value = value; } ;
 	~ElemHeap() {};
 	ElemHeap& operator=(const ElemHeap& e){
-		m_Val = e.m_Val;
-		m_Pos = e.m_Pos;
+		m_value = e.m_value;
+		m_position = e.m_position;
 		return *this;
 	};
-	friend std::ostream& operator<<(std::ostream& out, const ElemHeap& elHeap);
+	friend std::ostream& operator<<(std::ostream& out, const ElemHeap& elHeap) {
+		out<< elHeap.m_value<< ": "<<elHeap.m_position.first<<","<<elHeap.m_position.second;
+		return out;
+	}
 
 private:
-	double m_Val;
-	std::pair<int, int> m_Pos;
+	double m_value;
+	std::pair<int, int> m_position;
 };
 
 

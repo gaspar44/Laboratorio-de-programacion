@@ -36,10 +36,25 @@ public:
 	bool isEmpty() const { return (m_data == NULL);}
 	Tree<T>* getRight(){ return m_right;}
 	Tree<T>* getLeft() { return m_left; }
-	void setRight(Tree<T>* tR);
-	void setLeft(Tree<T>* tL);
+	void setRight(Tree<T>* tR) {
+		m_right = tR;
+
+		if (m_right != NULL){
+			m_right->m_father = this;
+		}
+	}
+	void setLeft(Tree<T>* tL) {
+		m_left = tL;
+
+		if (m_left != NULL){
+			m_left->m_father = this;
+		}
+	};
 	T& getData() { return (*m_data); }
-	//template<T> friend std::ostream& operator<<(std::ostream& out, const Tree<T>& t);
+	friend std::ostream& operator<<(std::ostream& out, const Tree<T>& t) {
+		t.coutArbreRec(0, out);
+		return out;
+	}
 
 private:
 	Tree<T>* m_left;
@@ -50,5 +65,58 @@ private:
 	std::ostream& coutArbreRec(int n, std::ostream& out) const;
 };
 
+template<class T>
+std::ostream& Tree<T>::coutArbreRec(int n, std::ostream& out) const
+{
+	if (isEmpty())
+	{//Pintem arbre buit
+		out << "Comment :=>> ";
+		for (int i = 0; i < n; i++)
+		{
+			out << "|--";
+		}
+		out << "-->BUIT" << endl;
+	}
+	else
+	{
+		out << "Comment :=>> ";
+		for (int i = 0; i < n; i++)
+		{
+			out << "|--";
+		}
+		out << "|-->";
+		out << (*m_data) << endl;
+		if (!isLeave())
+		{
+			if (m_left != NULL)
+			{
+				m_left->coutArbreRec(n + 1,out);
+			}
+			else
+			{
+				out << "Comment :=>> ";
+				for (int i = 0; i < n + 1; i++)
+				{
+					out << "|--";
+				}
+				out << "|-->BUIT" << endl;
+			}
+			if (m_right != NULL)
+			{
+				m_right->coutArbreRec(n + 1,out);
+			}
+			else
+			{
+				out << "Comment :=>> ";
+				for (int i = 0; i < n + 1; i++)
+				{
+					out << "|--";
+				}
+				out << "|-->BUIT" << endl;
+			}
+		}
+	}
+	return out;
+}
 
 #endif /* TREE_H_ */

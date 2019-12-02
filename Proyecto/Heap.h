@@ -9,6 +9,7 @@
 #define HEAP_H_
 #include <ostream>
 #include <vector>
+#include <iostream>
 #include "ElemHeap.h"
 
 class Heap {
@@ -19,8 +20,14 @@ class Heap {
 	~Heap() {};
 	Heap& operator=(const Heap& h);
 	ElemHeap& max() { return m_data[0]; }
-	int size() { return m_actualPosition+1; }
-	friend std::ostream& operator<<(std::ostream& out, const Heap& h);
+	int size() { return m_actualPosition; }
+	friend std::ostream& operator<<(std::ostream& out, const Heap& h){
+		for(int i = 0; i < h.m_actualPosition;i++){
+			out<<h.m_data[i]<<std::endl;
+		}
+
+		return out;
+	}
 	void insert(const ElemHeap& el);
 	void resize(int mida);
 	void delMax();
@@ -32,6 +39,7 @@ class Heap {
 private:
 
 	std::vector<ElemHeap> m_data;
+	int m_maxPosibleValue = 9999;
 	//Guardem indexs del vei inicial per cada un dels valors que tenim guardats
 	std::vector<int> m_index;
 	int m_maxNumberOfElementsInHeap; //indica nombre total de nodes: array va de 0 a m_maxEls‐1

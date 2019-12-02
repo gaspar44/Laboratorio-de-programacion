@@ -30,13 +30,6 @@ Heap& Heap::operator =(const Heap &h){
 	return *this;
 }
 
-ostream& operator<<(ostream &out, const Heap &h){
-	for (int i = 0; i > h.m_data.size();i++){
-		out<<h.m_data[i].getVal()<<endl;
-	}
-	return out;
-}
-
 void Heap::insert(const ElemHeap &elementHeap){
 	m_actualPosition++;
 	if (m_actualPosition < m_maxNumberOfElementsInHeap){
@@ -48,12 +41,15 @@ void Heap::insert(const ElemHeap &elementHeap){
 		m_maxNumberOfElementsInHeap++;
 	}
 
-
 	int positionHelper = m_actualPosition;
 	heapSort(positionHelper);
 }
 
 void Heap::resize(int newMaxValue){
+	if (newMaxValue < m_actualPosition){
+		m_actualPosition = newMaxValue;
+	}
+
 	m_maxNumberOfElementsInHeap = newMaxValue;
 	m_data.resize(m_maxNumberOfElementsInHeap);
 }
@@ -68,26 +64,35 @@ void Heap::delMax(){
 }
 
 void Heap::descend(int pos){
-	int min = pos;
+	int max = pos;
 	int leftChild = getLefChild(pos);
 	int rightChild = getRightChild(pos);
 
-	if (leftChild <= m_maxNumberOfElementsInHeap && m_data[min] < m_data[leftChild]){
-		min = leftChild;
+	if (leftChild <= m_actualPosition && m_data[max] < m_data[leftChild]){
+		max = leftChild;
 	}
 
-	if (rightChild <= m_maxNumberOfElementsInHeap && m_data[min] < m_data[rightChild]){
-		min = rightChild;
+	if (rightChild <= m_actualPosition && m_data[max] < m_data[rightChild]){
+		max = rightChild;
 	}
 
-	if (min != pos){
-		swapElementHeap(pos, min);
-		descend(min);
+	if (max != pos){
+		swapElementHeap(pos, max);
+		descend(max);
 	}
 }
 
 void Heap::modifElem(const ElemHeap& newValue){
 
+}
+void Heap::delElem(int pos){
+	if (pos <= -1 || pos > m_actualPosition)
+		return;
+
+	ElemHeap maxElementHeap = ElemHeap(m_maxPosibleValue);
+	m_data[pos] = maxElementHeap;
+	ascend(pos);
+	delMax();
 }
 
 void Heap::clear(){
@@ -96,10 +101,10 @@ void Heap::clear(){
 }
 
 bool Heap::operator ==(const Heap& h){
-	if (m_maxNumberOfElementsInHeap != h.m_maxNumberOfElementsInHeap)
+	if (m_maxNumberOfElementsInHeap != h.m_maxNumberOfElementsInHeap || m_actualPosition != h.m_actualPosition)
 		return false;
 
-	for (int i = 0; i < m_data.size();i++){
+	for (int i = 0; i < m_actualPosition;i++){
 		if (!(m_data[i] == h.m_data[i]))
 			return false;
 	}
