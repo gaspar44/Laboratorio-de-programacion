@@ -21,6 +21,7 @@ public:
 	bool operator>(const ElemHeap& e) { return (m_Val > e.m_Val);}
 	bool operator>=(const ElemHeap& e) { return (m_Val >= e.m_Val); }
 	bool operator==(const ElemHeap& e) { return ( m_Val == e.m_Val); }
+	void setValor(double value) { m_Val = value; } ;
 	~ElemHeap() {};
 	ElemHeap& operator=(const ElemHeap& e){
 		m_Val = e.m_Val;

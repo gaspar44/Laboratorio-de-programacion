@@ -6,6 +6,7 @@
  */
 #include "Heap.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
 
 Heap::Heap(int maxElements){
@@ -37,13 +38,18 @@ ostream& operator<<(ostream &out, const Heap &h){
 }
 
 void Heap::insert(const ElemHeap &elementHeap){
-	if (m_actualPosition == m_maxNumberOfElementsInHeap)
-		return;
-
 	m_actualPosition++;
-	int positionHelper = m_actualPosition;
-	m_data[positionHelper] = elementHeap;
+	if (m_actualPosition < m_maxNumberOfElementsInHeap){
+		m_data[m_actualPosition] = elementHeap;
+	}
 
+	else {
+		m_data.push_back(elementHeap);
+		m_maxNumberOfElementsInHeap++;
+	}
+
+
+	int positionHelper = m_actualPosition;
 	heapSort(positionHelper);
 }
 
@@ -53,31 +59,30 @@ void Heap::resize(int newMaxValue){
 }
 
 void Heap::delMax(){
-	if (m_actualPosition == -1)
+	if (m_actualPosition < 0)
 		return;
 
 	swapElementHeap(0, m_actualPosition);
 	m_actualPosition--;
-	delElem(0);
-	m_data.resize(m_actualPosition);  // Tal vez haya que eliminarlo
+	descend(0);
 }
 
-void Heap::delElem(int pos){
+void Heap::descend(int pos){
 	int min = pos;
 	int leftChild = getLefChild(pos);
 	int rightChild = getRightChild(pos);
 
-	if (leftChild < m_maxNumberOfElementsInHeap && m_data[min] < m_data[leftChild]){
+	if (leftChild <= m_maxNumberOfElementsInHeap && m_data[min] < m_data[leftChild]){
 		min = leftChild;
 	}
 
-	if (rightChild < m_maxNumberOfElementsInHeap && m_data[min] < m_data[rightChild]){
+	if (rightChild <= m_maxNumberOfElementsInHeap && m_data[min] < m_data[rightChild]){
 		min = rightChild;
 	}
 
 	if (min != pos){
 		swapElementHeap(pos, min);
-		delElem(min);
+		descend(min);
 	}
 }
 
@@ -106,7 +111,7 @@ void Heap::heapSort(int positionToStartSort){
 	int father = getFather(positionToStartSort);
 	int actual = positionToStartSort;
 
-	while (actual > 0 && m_data[father] < m_data[actual]){
+	while (actual != 0 && m_data[actual] > m_data[father]){
 		swapElementHeap(actual, father);
 		actual = father;
 		father = getFather(father);
@@ -117,4 +122,13 @@ void Heap::swapElementHeap(int actualNode,int fatherToSwitch) {
 	ElemHeap helper = m_data[actualNode];
 	m_data[actualNode] = m_data[fatherToSwitch];
 	m_data[fatherToSwitch] = helper;
+}
+
+void Heap::ascend(int pos){
+	int father = getFather(pos);
+	while (pos != 0 && m_data[pos] > m_data[father]) {
+		swapElementHeap(pos, father);
+		pos = getFather(pos);
+		father = getFather(pos);
+	}
 }

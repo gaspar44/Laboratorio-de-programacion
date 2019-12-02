@@ -42,8 +42,8 @@ private:
 	int getRightChild(int pos) const { return ((2 * pos) + 2); }
 	void swapElementHeap(int pos1, int pos2);
 	std::ostream& printRec(std::ostream& out,int pos,int n) const;
-	void ascendir(int pos);
-	void descendir(int pos);
+	void ascend(int pos);
+	void descend(int pos);
 	void heapSort(int positionToStartSort);
 
 };
