@@ -28,9 +28,9 @@ public:
 	int getNColumnes() { return m_dimension; } ;
 	void setVal(int row,int column,float value);
 	bool getVal(int row,int column,float &value);
-	int getNValues() const { return m_gradesIn.size() ; };
+	int getNValues() const { return m_gradesIn.size() * 2; };
 	void calculaGrau(vector<int> &graus);
-	void creapMaps(vector<map<pair<int,int>,float>> &vMaps);
+	void creapMaps(vector<map<pair<int,int>,double>> &vMaps);
 	void calculaDendograms(vector<Tree<double>*> &vDendogramns);
 	void clear();
 

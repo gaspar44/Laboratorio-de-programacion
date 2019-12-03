@@ -34,15 +34,15 @@ MatriuSparse::MatriuSparse(const MatriuSparse &m){
 	m_gradesIn = m.m_gradesIn;
 }
 
-void MatriuSparse::creapMaps(vector<map<pair<int,int>,float>> &vMaps){
-	map<pair<int,int>,float> aux;
+void MatriuSparse::creapMaps(vector<map<pair<int,int>,double>> &vMaps){
+	map<pair<int,int>,double> aux;
 	aux.clear();
 	vMaps.resize(m_dimension,aux);
-	map<pair<int,int>,float>::iterator mapIterator;
+	map<pair<int,int>,double>::iterator mapIterator;
 
 	for (mapIterator = m_dictionary.begin(); mapIterator != m_dictionary.end(); ++mapIterator){
 		pair <int,int> key = make_pair(mapIterator->first.first, mapIterator->first.second);
-		map<pair<int,int>,float> mapOfVector = vMaps[mapIterator->first.first];
+		map<pair<int,int>,double> mapOfVector = vMaps[mapIterator->first.first];
 		mapOfVector[key] = 0;
 		vMaps[mapIterator->first.first] = mapOfVector;
 	}
