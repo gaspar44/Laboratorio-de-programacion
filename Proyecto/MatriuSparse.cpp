@@ -60,11 +60,10 @@ void MatriuSparse::setVal(int row,int column,float value){
 	}
 		m_dictionary[key1] = value;
 		m_dictionary[key2] = value;
-		m_gradesIn[row]+=1;
-		m_aristas = m_aristas + 1;
-		m_noZeroElements = m_noZeroElements + 1;
+		m_gradesIn[row]++;
+		m_aristas++;
+		m_noZeroElements++;
 }
-
 
 bool MatriuSparse::getVal(int row,int column,float &value){
 	if (row >= m_dimension || column >= m_dimension){
@@ -79,7 +78,6 @@ bool MatriuSparse::getVal(int row,int column,float &value){
 	return true;
 }
 
-
 vector<float> MatriuSparse::operator *(const vector<float> &vec){
 	if (vec.size() != m_dimension)
 		throw "Error of vec for *";
@@ -87,9 +85,9 @@ vector<float> MatriuSparse::operator *(const vector<float> &vec){
 	vector<float> resultVector;
 	resultVector.resize(m_dimension);
 
-	map<pair<int,int>,float>::iterator it;
+	map<pair<int,int>,double>::iterator it;
 	int actualRow = 0;
-	float temp = 0;
+	double temp = 0;
 
 	for (it = m_dictionary.begin(); it != m_dictionary.end(); ++it){
 
@@ -111,7 +109,7 @@ vector<float> MatriuSparse::operator *(const vector<float> &vec){
 
 MatriuSparse MatriuSparse::operator *(const float n){
 	MatriuSparse sp = *this;
-	map<pair<int,int>,float>::iterator it;
+	map<pair<int,int>,double>::iterator it;
 
 	for (it = sp.m_dictionary.begin(); it != sp.m_dictionary.end();it++){
 		sp.m_dictionary[it->first] = sp.m_dictionary[it->first] * n;
@@ -126,7 +124,7 @@ MatriuSparse MatriuSparse::operator /(const float n){
 		throw "Error of vec for /";
 
 	MatriuSparse sp = *this;
-	map<pair<int,int>,float>::iterator it;
+	map<pair<int,int>,double>::iterator it;
 
 	for (it = sp.m_dictionary.begin(); it != sp.m_dictionary.end();++it){
 		sp.m_dictionary[it->first] = sp.m_dictionary[it->first] / n;
@@ -136,7 +134,7 @@ MatriuSparse MatriuSparse::operator /(const float n){
 }
 
 ostream& operator<<(ostream &out, MatriuSparse& sp){
-	map<pair<int,int>,float>::iterator it;
+	map<pair<int,int>,double>::iterator it;
 	out <<"MATRIU DE (FILES: "<<sp.m_dimension <<"  COLUMNES: "<<sp.m_dimension<<" )"<<endl;
 	out <<"VALORS (FILA::COL::VALOR)"<<endl;
 	pair<int,int> key;
@@ -191,6 +189,6 @@ int MatriuSparse::getMaxNumberOfNodes(string fileName){
 	while ( !fileToCheckNodes.eof() ){
 		fileToCheckNodes >> maxValue>>other;
 	}
-
+	fileToCheckNodes.close();
 	return maxValue;
 }

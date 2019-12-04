@@ -28,11 +28,12 @@ public:
 	int getNColumnes() { return m_dimension; } ;
 	void setVal(int row,int column,float value);
 	bool getVal(int row,int column,float &value);
-	int getNValues() const { return m_gradesIn.size() * 2; };
+	int getNValues() const { return m_aristas - 1;};
 	void calculaGrau(vector<int> &graus);
 	void creapMaps(vector<map<pair<int,int>,double>> &vMaps);
 	void calculaDendograms(vector<Tree<double>*> &vDendogramns);
 	void clear();
+
 
 	vector<float> operator *(const vector<float> &vec);
 	MatriuSparse operator *(const float n);
@@ -41,14 +42,13 @@ public:
 	friend ostream& operator<<(ostream &out, MatriuSparse& sp);
 
 private:
-	map<pair<int,int>,float> m_dictionary;
+	map<pair<int,int>,double> m_dictionary;
 	map<int,int> m_gradesIn;
 	int m_dimension;
 	int m_noZeroElements;
 	int m_aristas;
 
 	int getMaxNumberOfNodes(string fileName);
-
 };
 
 template<typename T>

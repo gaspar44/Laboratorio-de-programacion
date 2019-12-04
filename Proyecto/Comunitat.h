@@ -16,7 +16,7 @@
 class Comunitat {
 public:
 	Comunitat(MatriuSparse* pMAdj);
-	~Comunitat();
+	~Comunitat() {};
 
 	void calculaM2() { m_M2 = m_sparseMatrix->getNValues(); };
 	void calculaK() { m_sparseMatrix->calculaGrau(m_k); };
@@ -31,9 +31,9 @@ public:
 
 	vector<int> getK() { return m_k; }
 	vector<double> getA() { return m_A; }
-	vector<map<pair<int, int>, double>> getdeltaQ() {return m_deltaQ;}
+	vector<map<pair<int, int>, double>> getdeltaQ() { return m_deltaQ;}
 	Heap gethTotal() { return m_hTotal;}
-	vector<pair<int, int>> getIndexComs() { return m_indexComs; }
+	vector<pair<int, int>> getIndexComs() { return m_indexOfActivaComunity; }
 	void clear();
 
 private:
@@ -41,11 +41,11 @@ private:
 	Heap m_hTotal;
 	double m_Q;
 	int m_M2;
-	int m_primComdeltaQ;
+	int m_firstActiveComunity;
 
 	vector<map<pair<int, int>, double>> m_deltaQ;
-	vector<pair<int, int>> m_indexComs;
-	vector<pair<int, double>> m_maxDeltaQFil;
+	vector<pair<int, int>> m_indexOfActivaComunity;
+	vector<pair<int, double>> m_maxDeltaQOfRows;
 	vector<int> m_k;
 	vector<double> m_A;
 	vector<Tree<double>*> m_vDendrograms;
