@@ -5,6 +5,7 @@
  *      Author: gaspar
  */
 #include "Comunitat.h"
+#include <math.h>
 
 Comunitat::Comunitat(MatriuSparse* pMAdj) {
 	m_sparseMatrix = pMAdj;
@@ -41,19 +42,22 @@ void Comunitat::creaDeltaQHeap(){
 	m_sparseMatrix->creapMaps(m_deltaQ);
 
 	double deltaQLeftSideOfMinusOperation = double(1) / m_M2;
+	cout<<"lado izquierdo: "<<deltaQLeftSideOfMinusOperation<<endl;
 
 	for (int i = 0; i < m_deltaQ.size();i++){
 		map<pair<int,int>,double> aux = m_deltaQ[i];
 		map<pair<int,int>,double>::iterator mapIterator;
 		double maxDeltaQInRow = 0;
-		cout<<"fila: "<<i<<endl;
+//		cout<<"fila: "<<i<<endl;
 		pair<int,int> keyofMaxDeltaQ;
 
 		for (mapIterator = aux.begin();mapIterator != aux.end();++mapIterator){
-//			cout<< "Creando clave "<<mapIterator->first.first<<" "<< mapIterator->first.second<<endl;
 
 			pair<int,int> key = make_pair(mapIterator->first.first, mapIterator->first.second);
-			double newDeltaQ = deltaQLeftSideOfMinusOperation - double((( mapIterator->first.first * mapIterator->first.second)/(m_M2 * m_M2)));
+			double deltaQRightSideOfMinusOperation = mapIterator->first.first * mapIterator->first.second;
+			deltaQRightSideOfMinusOperation = deltaQRightSideOfMinusOperation / pow(m_M2,2);
+			//cout<<"lado derecho: "<<deltaQRightSideOfMinusOperation<<endl;
+			double newDeltaQ = deltaQLeftSideOfMinusOperation - deltaQRightSideOfMinusOperation;
 			mapIterator->second = newDeltaQ;
 
 			if (newDeltaQ > maxDeltaQInRow){
@@ -62,7 +66,9 @@ void Comunitat::creaDeltaQHeap(){
 				keyofMaxDeltaQ = key;
 			}
 		}
-		cout<<"MAX: "<<maxDeltaQInRow<<endl;
+
+		m_deltaQ[i] = aux;
+		//cout<<"MAX: "<<maxDeltaQInRow<<endl;
 		ElemHeap elementHeap = ElemHeap(maxDeltaQInRow,keyofMaxDeltaQ);
 		m_hTotal.insert(elementHeap);
 		pair<int,double> rowOfMaxDeltaQAndValue = make_pair(keyofMaxDeltaQ.first, maxDeltaQInRow);
