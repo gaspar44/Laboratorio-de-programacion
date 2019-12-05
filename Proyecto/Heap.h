@@ -22,7 +22,12 @@ class Heap {
 	ElemHeap& max() { return m_data[0]; }
 	int size() { return m_actualPosition; }
 	friend std::ostream& operator<<(std::ostream& out, const Heap& h){
-		for(int i = 0; i < h.m_actualPosition;i++){
+		if (h.m_actualPosition == -1){
+			out<<"empty Tree"<<std::endl;
+			return out;
+		}
+
+		for(int i = 0; i <= h.m_actualPosition;i++){
 			out<<h.m_data[i]<<std::endl;
 		}
 

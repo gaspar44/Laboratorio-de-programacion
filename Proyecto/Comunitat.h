@@ -28,6 +28,7 @@ public:
 	void fusiona(int com1, int com2);
 	void modificaVei(int com1, int com2, int vei, int cas);
 	int getM2() { return m_M2; }
+	void printTree() { cout<<m_hTotal<<endl; };
 
 	vector<int> getK() { return m_k; }
 	vector<double> getA() { return m_A; }

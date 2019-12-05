@@ -52,7 +52,8 @@ public:
 	};
 	T& getData() { return (*m_data); }
 	friend std::ostream& operator<<(std::ostream& out, const Tree<T>& t) {
-		t.coutArbreRec(0, out);
+
+		t.coutArbreRec(out,t);
 		return out;
 	}
 
@@ -62,59 +63,20 @@ private:
 	Tree<T>* m_father;
 	T* m_data;
 	void TreeRec(ifstream& fitxerNodes, int h, Tree<T>* father);
-	std::ostream& coutArbreRec(int n, std::ostream& out) const;
+	std::ostream& coutArbreRec(std::ostream& out,const Tree<T>& t) const;
 };
 
 template<class T>
-std::ostream& Tree<T>::coutArbreRec(int n, std::ostream& out) const
+std::ostream& Tree<T>::coutArbreRec(std::ostream& out,const Tree<T>& t) const
 {
-	if (isEmpty())
-	{//Pintem arbre buit
-		out << "Comment :=>> ";
-		for (int i = 0; i < n; i++)
-		{
-			out << "|--";
-		}
-		out << "-->BUIT" << endl;
+	if (t.m_left != NULL) {
+		t.m_left->coutArbreRec(out,t.m_left);
 	}
-	else
-	{
-		out << "Comment :=>> ";
-		for (int i = 0; i < n; i++)
-		{
-			out << "|--";
-		}
-		out << "|-->";
-		out << (*m_data) << endl;
-		if (!isLeave())
-		{
-			if (m_left != NULL)
-			{
-				m_left->coutArbreRec(n + 1,out);
-			}
-			else
-			{
-				out << "Comment :=>> ";
-				for (int i = 0; i < n + 1; i++)
-				{
-					out << "|--";
-				}
-				out << "|-->BUIT" << endl;
-			}
-			if (m_right != NULL)
-			{
-				m_right->coutArbreRec(n + 1,out);
-			}
-			else
-			{
-				out << "Comment :=>> ";
-				for (int i = 0; i < n + 1; i++)
-				{
-					out << "|--";
-				}
-				out << "|-->BUIT" << endl;
-			}
-		}
+
+	out<<*m_data<<endl;
+
+	if (t.m_right != NULL){
+		t.m_right->coutArbreRec(out,t.m_right);
 	}
 	return out;
 }
