@@ -174,6 +174,7 @@ void MatriuSparse::calculaDendograms(vector<Tree<double>*> &vDendogramns){
 		Tree<double>* newTree = new Tree<double>(i);
 		vDendogramns[i] = newTree;
 	}
+
 }
 
 void MatriuSparse::clear(){

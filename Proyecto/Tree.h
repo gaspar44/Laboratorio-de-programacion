@@ -78,6 +78,7 @@ std::ostream& Tree<T>::coutArbreRec(std::ostream& out,const Tree<T>& t) const
 	if (t.m_right != NULL){
 		t.m_right->coutArbreRec(out,t.m_right);
 	}
+
 	return out;
 }
 

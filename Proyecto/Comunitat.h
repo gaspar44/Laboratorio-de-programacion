@@ -25,7 +25,7 @@ public:
 	void creaIndexComs();
 	void InicialitzaDendrograms() { m_sparseMatrix->calculaDendograms(m_vDendrograms); };
 	void calculaComunitats(list<Tree<double>*>& listDendrogram);
-	void fusiona(int com1, int com2);
+	void fusiona(int comunityToBeAbsorbed, int comunityToKeepAsFusionOfBoth);
 	void modificaVei(int com1, int com2, int vei, int cas);
 	int getM2() { return m_M2; }
 	void printTree() { cout<<m_hTotal<<endl; };
@@ -34,7 +34,7 @@ public:
 	vector<double> getA() { return m_A; }
 	vector<map<pair<int, int>, double>> getdeltaQ() { return m_deltaQ;}
 	Heap gethTotal() { return m_hTotal;}
-	vector<pair<int, int>> getIndexComs() { return m_indexOfActivaComunity; }
+	vector<pair<int, int>> getIndexComs() { return m_indexOfActiveComunity; }
 	void clear();
 
 private:
@@ -45,11 +45,14 @@ private:
 	int m_firstActiveComunity;
 
 	vector<map<pair<int, int>, double>> m_deltaQ;
-	vector<pair<int, int>> m_indexOfActivaComunity;
+	vector<pair<int, int>> m_indexOfActiveComunity;
 	vector<pair<int, double>> m_maxDeltaQOfRows;
 	vector<int> m_k;
 	vector<double> m_A;
 	vector<Tree<double>*> m_vDendrograms;
+
+	void commonNeighbourdsOfFusion(int comunityToBeAbsorbed, int comunityToKeepAsFusionOfBoth,vector<int> &neighboursOfTheComunityToBeAbsorbed,vector<int> &neighboursOfTheComunityWhoAbsorbs);
+
 };
 
 #endif /* COMUNITATS_H_ */
