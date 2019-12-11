@@ -68,11 +68,11 @@ void Heap::descend(int pos){
 	int leftChild = getLefChild(pos);
 	int rightChild = getRightChild(pos);
 
-	if (leftChild <= m_actualPosition && m_data[max] < m_data[leftChild]){
+	if (leftChild <= m_actualPosition && m_data[max] <= m_data[leftChild]){
 		max = leftChild;
 	}
 
-	if (rightChild <= m_actualPosition && m_data[max] < m_data[rightChild]){
+	if (rightChild <= m_actualPosition && m_data[max] <= m_data[rightChild]){
 		max = rightChild;
 	}
 
@@ -85,6 +85,7 @@ void Heap::descend(int pos){
 void Heap::modifElem(const ElemHeap& newValue){
 
 }
+
 void Heap::delElem(int pos){
 	if (pos <= -1 || pos > m_actualPosition)
 		return;
@@ -116,7 +117,7 @@ void Heap::heapSort(int positionToStartSort){
 	int father = getFather(positionToStartSort);
 	int actual = positionToStartSort;
 
-	while (actual != 0 && m_data[actual] > m_data[father]){
+	while (actual != 0 && m_data[actual] >= m_data[father]){
 		swapElementHeap(actual, father);
 		actual = father;
 		father = getFather(father);
@@ -131,7 +132,7 @@ void Heap::swapElementHeap(int actualNode,int fatherToSwitch) {
 
 void Heap::ascend(int pos){
 	int father = getFather(pos);
-	while (pos != 0 && m_data[pos] > m_data[father]) {
+	while (pos != 0 && m_data[pos] >= m_data[father]) {
 		swapElementHeap(pos, father);
 		pos = getFather(pos);
 		father = getFather(pos);
