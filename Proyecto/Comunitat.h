@@ -51,8 +51,10 @@ private:
 	vector<double> m_A;
 	vector<Tree<double>*> m_vDendrograms;
 
+	vector<int> getNeighbourds(int comuintyToGetNeighbourd);
 	void commonNeighbourdsOfFusion(int comunityToBeAbsorbed, int comunityToKeepAsFusionOfBoth,vector<int> &neighboursOfTheComunityToBeAbsorbed,vector<int> &neighboursOfTheComunityWhoAbsorbs);
-
+	void recalculateDeltaQOfNeighbourdsOfCommunityToBeAbsorbed(int comunityToBeAbsorbed,int comunityToKeepAsFusionOfBoth, vector<int> &neighboursOfTheComunityToBeAbsorbed);
+	void recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(int comunityToBeAbsorbed,int comunityToKeepAsFusionOfBoth, vector<int> &neighboursOfTheComunityToBeAbsorbed);
 };
 
 #endif /* COMUNITATS_H_ */
