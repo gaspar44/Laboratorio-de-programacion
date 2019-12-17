@@ -46,36 +46,41 @@ void Comunitat::creaDeltaQHeap(){
 
 	m_sparseMatrix->creapMaps(m_deltaQ);
 
-	double deltaQLeftSideOfMinusOperation = double(1) / m_M2;
-	int powerM2 = pow(m_M2,2);
-
 	for (int i = 0; i < m_deltaQ.size();i++){
 		map<pair<int,int>,double> aux = m_deltaQ[i];
 		map<pair<int,int>,double>::iterator mapIterator;
 		double maxDeltaQInRow = 0;
-		double newDeltaQ = 0;
 		pair<int,int> keyofMaxDeltaQ;
 
-		for (mapIterator = aux.begin();mapIterator != aux.end();++mapIterator){
-
-			pair<int,int> key = make_pair(mapIterator->first.first, mapIterator->first.second);
-			double deltaQRightSideOfMinusOperation = m_k[mapIterator->first.first] * m_k[mapIterator->first.second];
-			deltaQRightSideOfMinusOperation = deltaQRightSideOfMinusOperation / powerM2;
-
-			newDeltaQ = deltaQLeftSideOfMinusOperation - deltaQRightSideOfMinusOperation;
-			mapIterator->second = newDeltaQ;
-
-			if (newDeltaQ > maxDeltaQInRow){
-				maxDeltaQInRow = newDeltaQ;
-				keyofMaxDeltaQ = key;
-			}
-		}
+		getMaxDeltaQ(aux, maxDeltaQInRow, keyofMaxDeltaQ);
 
 		m_deltaQ[i] = aux;
 		ElemHeap elementHeap = ElemHeap(maxDeltaQInRow,keyofMaxDeltaQ);
 		m_hTotal.insert(elementHeap);
 		pair<int,double> rowOfMaxDeltaQAndValue = make_pair(keyofMaxDeltaQ.first, maxDeltaQInRow);
 		m_maxDeltaQOfRows.push_back(rowOfMaxDeltaQAndValue);
+	}
+}
+
+void Comunitat::getMaxDeltaQ(map<pair<int,int>,double> &aux, double &maxDeltaQInRow,pair<int,int> &keyOfMaxDeltaQ){
+	map<pair<int,int>,double>::iterator mapIterator;
+	double deltaQLeftSideOfMinusOperation = double(1) / m_M2;
+	int powerM2 = pow(m_M2,2);
+	double newDeltaQ = 0;
+
+	for (mapIterator = aux.begin();mapIterator != aux.end();++mapIterator){
+
+		pair<int,int> key = make_pair(mapIterator->first.first, mapIterator->first.second);
+		double deltaQRightSideOfMinusOperation = m_k[mapIterator->first.first] * m_k[mapIterator->first.second];
+		deltaQRightSideOfMinusOperation = deltaQRightSideOfMinusOperation / powerM2;
+
+		newDeltaQ = deltaQLeftSideOfMinusOperation - deltaQRightSideOfMinusOperation;
+		mapIterator->second = newDeltaQ;
+
+		if (newDeltaQ > maxDeltaQInRow){
+			maxDeltaQInRow = newDeltaQ;
+			keyOfMaxDeltaQ = key;
+		}
 	}
 }
 
@@ -86,8 +91,11 @@ void Comunitat::calculaComunitats(list<Tree<double>*>& listDendrogram){
 		ElemHeap maxElement = m_hTotal.max();
 		m_hTotal.delMax();
 		pair<int,int> comunitiesToFusion = maxElement.getPos();
+//		m_indexOfActiveComunity.get
 		fusiona(comunitiesToFusion.first,comunitiesToFusion.second);
-
+		m_A[comunitiesToFusion.first] = m_A[comunitiesToFusion.first] + m_A[comunitiesToFusion.second];
+		m_Q+= maxElement.getVal();
+//		m_indexOfActiveComunity[comunitiesToFusion.first] = 0;
 	}
 }
 
@@ -103,7 +111,6 @@ void Comunitat::fusiona(int comunityToBeAbsorbed, int comunityToKeepAsFusionOfBo
 	recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(comunityToBeAbsorbed, comunityToKeepAsFusionOfBoth, neighboursOfTheComunityWhoAbsorbs);
 	// Recalcula maxDeltaQ en caso de hacer falta.
 	m_deltaQ[comunityToBeAbsorbed].clear();
-
 }
 
 vector<int> Comunitat::getNeighbourds(int comunityToGetNeighbourds){
@@ -176,5 +183,6 @@ void Comunitat::recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(int comunity
 		mapOfNeighbourds[keyToSearch1] = mapOfNeighbourds[keyToSearch1] - rightSideOperand;
 		mapOfNeighbourds[keyToSearch2] = mapOfNeighbourds[keyToSearch2] - rightSideOperand;
 		m_deltaQ[actualNeighbourd] = mapOfNeighbourds;
+
 	}
 }
