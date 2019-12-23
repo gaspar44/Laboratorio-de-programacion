@@ -10,6 +10,7 @@ int main() {
 	Comunitat comunity = Comunitat(sparseMatrix);
 	comunity.printTree();
 
+
 	list<Tree<double>*> dendograms;
 	comunity.calculaComunitats(dendograms);
 	vector<map<pair<int, int>, double>>  deltaQ = comunity.getdeltaQ();
@@ -25,6 +26,8 @@ int main() {
 		}
 	cout<<endl;
 	}
+
+
 //	vector<int> a = {1, 2, 3, 5};
 //	vector<int> b = {3, 5, 10};
 //
