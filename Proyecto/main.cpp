@@ -9,6 +9,9 @@ int main() {
 	vector<map<pair<int,int>,double>> vMap;
 	Comunitat comunity = Comunitat(sparseMatrix);
 	comunity.printTree();
+
+	list<Tree<double>*> dendograms;
+	comunity.calculaComunitats(dendograms);
 	vector<map<pair<int, int>, double>>  deltaQ = comunity.getdeltaQ();
 
 	for (int i = 0; i < deltaQ.size();i++){
