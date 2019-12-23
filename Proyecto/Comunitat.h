@@ -56,7 +56,8 @@ private:
 	void recalculateDeltaQOfNeighbourdsOfCommunityToBeAbsorbed(int comunityToBeAbsorbed,int comunityToKeepAsFusionOfBoth, vector<int> &neighboursOfTheComunityToBeAbsorbed);
 	void recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(int comunityToBeAbsorbed,int comunityToKeepAsFusionOfBoth, vector<int> &neighboursOfTheComunityWhoAbsorbs);
 	void getMaxDeltaQ(map<pair<int,int>,double> &aux, double &maxDeltaQInRow,pair<int,int> &keyOfMaxDeltaQ);
-	void deleteAbsorbedComunityFromActiveComunities(int comunityToBeAbsorbed);
+	void deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbsorbed);
+	void calculateDeltaQ(int firstComunity,int lastComunity,bool insertToHeap);
 };
 
 #endif /* COMUNITATS_H_ */

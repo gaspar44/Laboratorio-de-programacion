@@ -83,6 +83,14 @@ void Heap::descend(int pos){
 }
 
 void Heap::modifElem(const ElemHeap& newValue){
+//	for (int i = 0; i < m_actualPosition;i++){
+//		if (m_data[i].getPos().first == newValue.getPos().first){
+//			if (newValue > m_data[0]){
+//
+//			}
+//			m_data[i] = newValue;
+//		}
+//	}
 
 }
 

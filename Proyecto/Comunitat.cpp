@@ -45,8 +45,11 @@ void Comunitat::creaDeltaQHeap(){
 		throw "Exception: M_2";
 
 	m_sparseMatrix->creapMaps(m_deltaQ);
+	calculateDeltaQ(0, m_deltaQ.size(), true);
+}
 
-	for (int i = 0; i < m_deltaQ.size();i++){
+void Comunitat::calculateDeltaQ(int firstComunity,int lastComunity,bool insertToHeap){
+	for (int i = firstComunity; i < lastComunity;i++){
 		map<pair<int,int>,double> aux = m_deltaQ[i];
 		map<pair<int,int>,double>::iterator mapIterator;
 		double maxDeltaQInRow = 0;
@@ -56,9 +59,17 @@ void Comunitat::creaDeltaQHeap(){
 
 		m_deltaQ[i] = aux;
 		ElemHeap elementHeap = ElemHeap(maxDeltaQInRow,keyofMaxDeltaQ);
-		m_hTotal.insert(elementHeap);
 		pair<int,double> rowOfMaxDeltaQAndValue = make_pair(keyofMaxDeltaQ.first, maxDeltaQInRow);
-		m_maxDeltaQOfRows.push_back(rowOfMaxDeltaQAndValue);
+
+		if (insertToHeap){
+			m_hTotal.insert(elementHeap);
+			m_maxDeltaQOfRows.push_back(rowOfMaxDeltaQAndValue);
+		}
+
+		else {
+			m_maxDeltaQOfRows[i] = rowOfMaxDeltaQAndValue;
+			m_hTotal.modifElem(elementHeap);
+		}
 	}
 }
 
@@ -94,15 +105,13 @@ void Comunitat::calculaComunitats(list<Tree<double>*>& listDendrogram){
 //		m_indexOfActiveComunity.get
 		fusiona(comunitiesToFusion.first,comunitiesToFusion.second);
 
-		deleteAbsorbedComunityFromActiveComunities(comunitiesToFusion.first);
+		deleteAbsorbedComunityFromActiveCommunities(comunitiesToFusion.first);
 		m_A[comunitiesToFusion.first] = m_A[comunitiesToFusion.first] + m_A[comunitiesToFusion.second];
 		m_Q+= maxElement.getVal();
-
-//		m_indexOfActiveComunity[comunitiesToFusion.first] = 0;
 //	}
 }
 
-void Comunitat::deleteAbsorbedComunityFromActiveComunities(int comunityToBeAbsorbed){
+void Comunitat::deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbsorbed){
 	m_indexOfActiveComunity[m_indexOfActiveComunity[comunityToBeAbsorbed].first].second = m_indexOfActiveComunity[comunityToBeAbsorbed].second;
 	m_indexOfActiveComunity[m_indexOfActiveComunity[comunityToBeAbsorbed].second].first = m_indexOfActiveComunity[comunityToBeAbsorbed].first;
 
