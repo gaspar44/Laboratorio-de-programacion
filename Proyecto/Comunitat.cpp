@@ -161,9 +161,9 @@ void Comunitat::commonNeighbourdsOfFusion(int comunityToBeAbsorbed, int comunity
 		mapOfNeighbourds[keyToSearch2] = mapOfNeighbourds[keyToSearch2] + mapOfNeighbourds[keyToSearch1];
 		mapOfNeighbourds.erase(keyToSearch1);
 
-//		if (mapOfNeighbourds.find(keyToSearch4) != mapOfNeighbourds.end()){
+		if (mapOfNeighbourds.find(keyToSearch4) != mapOfNeighbourds.end()){
 			mapOfComunityToKeepAsFusion[keyToSearch3] = mapOfComunityToKeepAsFusion[keyToSearch3] + mapOfNeighbourds[keyToSearch4];
-//		}
+		}
 		m_deltaQ[*iter] = mapOfNeighbourds;
 		for(auto iter2 = mapOfNeighbourds.begin(); iter2 != mapOfNeighbourds.end();++iter2){
 			cout<<iter2->first.first<<" "<<iter2->first.second<<endl;
