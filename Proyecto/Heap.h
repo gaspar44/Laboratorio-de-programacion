@@ -30,11 +30,11 @@ class Heap {
 		for(int i = 0; i <= h.m_actualPosition;i++){
 			out<<h.m_data[i]<<std::endl;
 		}
-
 		return out;
 	}
 	void insert(const ElemHeap& el);
 	void resize(int mida);
+	void modifElem(int communityToTryToChange,const ElemHeap& newValue);
 	void delMax();
 	void delElem(int pos);
 	void modifElem(const ElemHeap& nouVal);

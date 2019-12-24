@@ -50,14 +50,16 @@ private:
 	vector<int> m_k;
 	vector<double> m_A;
 	vector<Tree<double>*> m_vDendrograms;
+	vector<int> m_candidatesElementsToModificateInMaxHeap;
 
 	vector<int> getNeighbourds(int comuintyToGetNeighbourd);
-	void commonNeighbourdsOfFusion(int comunityToBeAbsorbed, int comunityToKeepAsFusionOfBoth,vector<int> &neighboursOfTheComunityToBeAbsorbed,vector<int> &neighboursOfTheComunityWhoAbsorbs);
+	vector<int> commonNeighbourdsOfFusion(int comunityToBeAbsorbed, int comunityToKeepAsFusionOfBoth,vector<int> &neighboursOfTheComunityToBeAbsorbed,vector<int> &neighboursOfTheComunityWhoAbsorbs);
 	void recalculateDeltaQOfNeighbourdsOfCommunityToBeAbsorbed(int comunityToBeAbsorbed,int comunityToKeepAsFusionOfBoth, vector<int> &neighboursOfTheComunityToBeAbsorbed);
 	void recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(int comunityToBeAbsorbed,int comunityToKeepAsFusionOfBoth, vector<int> &neighboursOfTheComunityWhoAbsorbs);
 	void getMaxDeltaQ(map<pair<int,int>,double> &aux, double &maxDeltaQInRow,pair<int,int> &keyOfMaxDeltaQ);
 	void deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbsorbed);
-	void calculateDeltaQ(int firstComunity,int lastComunity,bool insertToHeap);
+	void recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds);
+	void fixMaxHeapAfterFusion(int comunityToBeAbsorbed);
 };
 
 #endif /* COMUNITATS_H_ */

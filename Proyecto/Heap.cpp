@@ -82,16 +82,14 @@ void Heap::descend(int pos){
 	}
 }
 
-void Heap::modifElem(const ElemHeap& newValue){
+void Heap::modifElem(int communityToTryToChange,const ElemHeap& newValue){
 //	for (int i = 0; i < m_actualPosition;i++){
-//		if (m_data[i].getPos().first == newValue.getPos().first){
-//			if (newValue > m_data[0]){
-//
-//			}
+//		if (communityToTryToChange == m_data[i].getPos().first || communityToTryToChange == m_data[i].getPos().second){
+//			double oldValueDeltaQValue = m_data[i].getVal();
 //			m_data[i] = newValue;
+//
 //		}
 //	}
-
 }
 
 void Heap::delElem(int pos){
