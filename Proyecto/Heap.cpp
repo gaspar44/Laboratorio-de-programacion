@@ -83,13 +83,18 @@ void Heap::descend(int pos){
 }
 
 void Heap::modifElem(int communityToTryToChange,const ElemHeap& newValue){
-//	for (int i = 0; i < m_actualPosition;i++){
-//		if (communityToTryToChange == m_data[i].getPos().first || communityToTryToChange == m_data[i].getPos().second){
-//			double oldValueDeltaQValue = m_data[i].getVal();
-//			m_data[i] = newValue;
-//
-//		}
-//	}
+	for (int i = 0; i < m_actualPosition;i++){
+		if (newValue.getVal() != -2 && m_data[i].getVal() != newValue.getVal() &&(communityToTryToChange == m_data[i].getPos().first || communityToTryToChange == m_data[i].getPos().second) ){
+			cout<<"element to delete: "<<m_data[i].getPos().first<<" "<<m_data[i].getPos().second<<endl;
+			cout<<"element To insert: "<<newValue.getPos().first<<" "<<newValue.getPos().second<<endl;
+			cout<<"old value: "<<m_data[i].getVal()<<endl;
+			cout<<"new value: "<<newValue.getVal()<<endl;
+			delElem(i);
+			insert(newValue);
+			cout<<*this<<endl;
+			break;
+		}
+	}
 }
 
 void Heap::delElem(int pos){
@@ -138,7 +143,7 @@ void Heap::swapElementHeap(int actualNode,int fatherToSwitch) {
 
 void Heap::ascend(int pos){
 	int father = getFather(pos);
-	while (pos != 0 && m_data[pos] >= m_data[father]) {
+	while (pos != 0 && m_data[pos] > m_data[father]) {
 		swapElementHeap(pos, father);
 		pos = getFather(pos);
 		father = getFather(pos);
