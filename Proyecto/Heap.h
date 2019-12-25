@@ -40,10 +40,12 @@ class Heap {
 	void modifElem(const ElemHeap& nouVal);
 	void clear();
 	bool operator==(const Heap& h);
+	void sort() { int posHelper = m_actualPosition; heapSort(posHelper) ;};
 
 private:
 
 	std::vector<ElemHeap> m_data;
+
 	int m_maxPosibleValue = 9999;
 	//Guardem indexs del vei inicial per cada un dels valors que tenim guardats
 	std::vector<int> m_index;

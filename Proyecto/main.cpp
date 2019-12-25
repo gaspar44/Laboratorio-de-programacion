@@ -24,13 +24,17 @@ int main() {
 	MatriuSparse *sparseMatrix = new MatriuSparse("XarxaCom.txt");
 	vector<map<pair<int,int>,double>> vMap;
 	Comunitat comunity = Comunitat(sparseMatrix);
-	comunity.printTree();
-	print(comunity);
+//	comunity.printTree();
+//	print(comunity);
 	list<Tree<double>*> dendograms;
 	//sparseMatrix->calculaDendograms(dendograms);
 	comunity.calculaComunitats(dendograms);
-	print(comunity);
-
+//	print(comunity);
+//	comunity.printTree();
+//	comunity.calculaComunitats(dendograms);
+//	comunity.printTree();
+//	comunity.calculaComunitats(dendograms);
+//	comunity.printTree();
 
 	return 0;
 }

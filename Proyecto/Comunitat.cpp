@@ -22,6 +22,64 @@ Comunitat::Comunitat(MatriuSparse* pMAdj) {
 	creaIndexComs();
 }
 
+Comunitat::Comunitat(const Comunitat& community){
+	m_sparseMatrix = community.m_sparseMatrix;
+	m_Q = community.m_Q;
+	m_hTotal = community.m_hTotal;
+	m_M2 = community.m_M2;
+	m_firstActiveComunity = community.m_firstActiveComunity;
+
+	for (int i = 0;i < community.m_deltaQ.size();i++){
+		m_deltaQ.push_back(community.m_deltaQ[i]);
+	}
+
+	for (int i = 0; i < community.m_indexOfActiveComunity.size();i++){
+		m_indexOfActiveComunity.push_back(community.m_indexOfActiveComunity[i]);
+	}
+
+	for (int i = 0; i < community.m_maxDeltaQOfRows.size();i++){
+		m_maxDeltaQOfRows.push_back(community.m_maxDeltaQOfRows[i]);
+	}
+
+	for (int i = 0; i < community.m_vDendrograms.size();i++){
+		m_vDendrograms.push_back(community.m_vDendrograms[i]);
+	}
+
+	for (int i = 0; i < community.m_candidatesElementsToModificateInMaxHeap.size();i++){
+		m_candidatesElementsToModificateInMaxHeap.push_back(community.m_candidatesElementsToModificateInMaxHeap[i]);
+	}
+}
+
+Comunitat& Comunitat::operator =(const Comunitat &community){
+	m_sparseMatrix = community.m_sparseMatrix;
+	m_Q = community.m_Q;
+	m_hTotal = community.m_hTotal;
+	m_M2 = community.m_M2;
+	m_firstActiveComunity = community.m_firstActiveComunity;
+
+	for (int i = 0;i < community.m_deltaQ.size();i++){
+		m_deltaQ.push_back(community.m_deltaQ[i]);
+	}
+
+	for (int i = 0; i < community.m_indexOfActiveComunity.size();i++){
+		m_indexOfActiveComunity.push_back(community.m_indexOfActiveComunity[i]);
+	}
+
+	for (int i = 0; i < community.m_maxDeltaQOfRows.size();i++){
+		m_maxDeltaQOfRows.push_back(community.m_maxDeltaQOfRows[i]);
+	}
+
+	for (int i = 0; i < community.m_vDendrograms.size();i++){
+		m_vDendrograms.push_back(community.m_vDendrograms[i]);
+	}
+
+	for (int i = 0; i < community.m_candidatesElementsToModificateInMaxHeap.size();i++){
+		m_candidatesElementsToModificateInMaxHeap.push_back(community.m_candidatesElementsToModificateInMaxHeap[i]);
+	}
+
+	return *this;
+}
+
 void Comunitat::calculaA(){
 	m_A.resize(m_k.size());
 
@@ -59,10 +117,6 @@ void Comunitat::creaDeltaQHeap(){
 		m_hTotal.insert(elementHeap);
 		m_maxDeltaQOfRows.push_back(rowOfMaxDeltaQAndValue);
 	}
-
-//	for (int i = 0; i < m_maxDeltaQOfRows.size();i++){
-//		cout<<i<<" "<<m_maxDeltaQOfRows[i].first<<" "<<m_maxDeltaQOfRows[i].second<<endl;
-//	}
 }
 
 void Comunitat::getMaxDeltaQ(map<pair<int,int>,double> &aux, double &maxDeltaQInRow,pair<int,int> &keyOfMaxDeltaQ){
@@ -88,20 +142,23 @@ void Comunitat::getMaxDeltaQ(map<pair<int,int>,double> &aux, double &maxDeltaQIn
 }
 
 void Comunitat::calculaComunitats(list<Tree<double>*>& listDendrogram){
+	m_Q = m_hTotal.max().getVal();
 	bool done = false; // deltaQ > 0
-//	while(!done){
+	while(m_Q > 0 &&  m_hTotal.size() != 0){
+		printTree();
 		ElemHeap maxElement = m_hTotal.max();
 		m_hTotal.delMax();
 		pair<int,int> comunitiesToFusion = maxElement.getPos();
 		int communityToBeAbsorbed = comunitiesToFusion.first;
-		int communitiyToKeppAsFusionOfBoth = comunitiesToFusion.second;
+		int communitiyToKeepAsFusionOfBoth = comunitiesToFusion.second;
+		fusiona(communityToBeAbsorbed,communitiyToKeepAsFusionOfBoth);
+//		deleteAbsorbedComunityFromActiveCommunities(communityToBeAbsorbed);
+		fixMaxHeapAfterFusion(communitiyToKeepAsFusionOfBoth,communityToBeAbsorbed);
+		m_A[communitiyToKeepAsFusionOfBoth] = m_A[communityToBeAbsorbed] + m_A[communitiyToKeepAsFusionOfBoth];
+		m_Q = maxElement.getVal();
 
-		fusiona(communityToBeAbsorbed,communitiyToKeppAsFusionOfBoth);
-		deleteAbsorbedComunityFromActiveCommunities(communityToBeAbsorbed);
-		fixMaxHeapAfterFusion(communitiyToKeppAsFusionOfBoth);
-		m_A[communitiyToKeppAsFusionOfBoth] = m_A[communityToBeAbsorbed] + m_A[communitiyToKeppAsFusionOfBoth];
-		m_Q+= maxElement.getVal();
-//	}
+	}
+
 }
 
 void Comunitat::deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbsorbed){
@@ -111,17 +168,14 @@ void Comunitat::deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbso
 	m_firstActiveComunity = m_firstActiveComunity == comunityToBeAbsorbed ? m_hTotal.max().getPos().first : m_firstActiveComunity;
 }
 
-void Comunitat::fixMaxHeapAfterFusion(int communitiyToKeppAsFusionOfBoth){
-//	for (int i = 0; i < m_candidatesElementsToModificateInMaxHeap.size();i++){
-//		cout<<m_candidatesElementsToModificateInMaxHeap[i]<<endl;
-//	}
+void Comunitat::fixMaxHeapAfterFusion(int communitiyToKeepAsFusionOfBoth,int communityToBeAbsorbed){
 	for (int i = 0; i < m_candidatesElementsToModificateInMaxHeap.size();i++){
 		int rowToModificate = m_candidatesElementsToModificateInMaxHeap[i];
 		double newMaxDeltaQ = m_maxDeltaQOfRows[rowToModificate].second;
 
 		pair<int,int> position = make_pair(rowToModificate,m_maxDeltaQOfRows[rowToModificate].first);
 		ElemHeap elementToFix = ElemHeap(newMaxDeltaQ,position);
-		if (rowToModificate != communitiyToKeppAsFusionOfBoth){
+		if (rowToModificate != communitiyToKeepAsFusionOfBoth && rowToModificate != communityToBeAbsorbed){
 			m_hTotal.modifElem(rowToModificate, elementToFix);
 		}
 	}
@@ -130,11 +184,11 @@ void Comunitat::fixMaxHeapAfterFusion(int communitiyToKeppAsFusionOfBoth){
 	 * that community may be a neighbourd of a absorbed community
 	 */
 
-	pair<int,int> position = make_pair(communitiyToKeppAsFusionOfBoth,m_maxDeltaQOfRows[communitiyToKeppAsFusionOfBoth].first);
-	double newMaxDeltaQ = m_maxDeltaQOfRows[communitiyToKeppAsFusionOfBoth].second;
+	pair<int,int> position = make_pair(communitiyToKeepAsFusionOfBoth,m_maxDeltaQOfRows[communitiyToKeepAsFusionOfBoth].first);
+	double newMaxDeltaQ = m_maxDeltaQOfRows[communitiyToKeepAsFusionOfBoth].second;
 	ElemHeap elementToFix = ElemHeap(newMaxDeltaQ,position);
-
-	m_hTotal.modifElem(communitiyToKeppAsFusionOfBoth,elementToFix);
+	m_hTotal.modifElem(communitiyToKeepAsFusionOfBoth,elementToFix);
+	m_hTotal.sort();
 
 	m_candidatesElementsToModificateInMaxHeap.clear();  // To use the same vector for each fusion
 }
@@ -155,16 +209,12 @@ void Comunitat::fusiona(int comunityToBeAbsorbed, int comunityToKeepAsFusionOfBo
 	m_deltaQ[comunityToBeAbsorbed].clear();
 	m_deltaQ[comunityToKeepAsFusionOfBoth].erase(make_pair(comunityToKeepAsFusionOfBoth, comunityToBeAbsorbed));
 
-	recalculateMaxDeltaQOfNeighbourds(commonNeighbourds,comunityToKeepAsFusionOfBoth);// Recalcula maxDeltaQ en caso de hacer falta.
-	recalculateMaxDeltaQOfNeighbourds(neighboursOfTheComunityToBeAbsorbed,comunityToKeepAsFusionOfBoth);
-	recalculateMaxDeltaQOfNeighbourds(neighboursOfTheComunityWhoAbsorbs,comunityToKeepAsFusionOfBoth);
-	recalculateMaxDeltaQOfNeighbourds(comunityToKeep,comunityToKeepAsFusionOfBoth);
+	recalculateMaxDeltaQOfNeighbourds(commonNeighbourds);// Recalcula maxDeltaQ en caso de hacer falta.
+	recalculateMaxDeltaQOfNeighbourds(neighboursOfTheComunityToBeAbsorbed);
+	recalculateMaxDeltaQOfNeighbourds(neighboursOfTheComunityWhoAbsorbs);
+	recalculateMaxDeltaQOfNeighbourds(comunityToKeep);
 	m_maxDeltaQOfRows[comunityToBeAbsorbed].second = -2; // out of range of Q
 
-//	for (int i = 0; i < m_maxDeltaQOfRows.size();i++){
-//		cout<<i<<" "<<m_maxDeltaQOfRows[i].first<<" "<<m_maxDeltaQOfRows[i].second<<endl;
-//	}
-//	cout<<endl;
 	neighboursOfTheComunityToBeAbsorbed.clear();
 	neighboursOfTheComunityWhoAbsorbs.clear();
 	commonNeighbourds.clear();
@@ -284,7 +334,7 @@ void Comunitat::recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(int comunity
 	m_deltaQ[comunityToKeepAsFusionOfBoth] = mapOfComunityToKeepAsFusion;
 }
 
-void Comunitat::recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds,int communityToKeepAsFusionOfBoth){
+void Comunitat::recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds){
 
 	for (int i = 0; i < neighbourds.size();i++){
 		if (neighbourds[i] == -1){  // This case is for commonNeighbourds
@@ -297,25 +347,20 @@ void Comunitat::recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds,
 		double maxDeltaQInRow = 0;
 		pair<int,int> keyofMaxDeltaQ;
 
-		getMaxDeltaQ(aux, maxDeltaQInRow, keyofMaxDeltaQ);
+		for(mapIterator = aux.begin();mapIterator != aux.end();++mapIterator){
+			if (mapIterator->second > maxDeltaQInRow){
+				maxDeltaQInRow = mapIterator->second;
+				keyofMaxDeltaQ = make_pair(mapIterator->first.first, mapIterator->first.second);
+			}
+		}
 
 		pair<int,double> rowOfMaxDeltaQAndValue = make_pair(keyofMaxDeltaQ.second, maxDeltaQInRow);
 		m_maxDeltaQOfRows[actualNeigbourd] = rowOfMaxDeltaQAndValue;
 
-		if (actualNeigbourd != communityToKeepAsFusionOfBoth && not existsElement(m_candidatesElementsToModificateInMaxHeap,actualNeigbourd)){
-			m_candidatesElementsToModificateInMaxHeap.push_back(actualNeigbourd);
-		}
-
-		else if (neighbourds.size() == 1){ // Element to keep as fusion
+		if ( not existsElement(m_candidatesElementsToModificateInMaxHeap,actualNeigbourd)){
 			m_candidatesElementsToModificateInMaxHeap.push_back(actualNeigbourd);
 		}
 	}
-
-//	for (int i = 0;i < m_candidatesElementsToModificateInMaxHeap.size();i++){
-//		cout<<m_candidatesElementsToModificateInMaxHeap[i]<<endl;
-//	}
-//	cout<<endl;
-
 }
 
 bool Comunitat::existsElement(vector<int> const neighbourds,int elementToCheck){
