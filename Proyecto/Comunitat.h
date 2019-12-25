@@ -59,7 +59,7 @@ private:
 	void getMaxDeltaQ(map<pair<int,int>,double> &aux, double &maxDeltaQInRow,pair<int,int> &keyOfMaxDeltaQ);
 	void deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbsorbed);
 	void recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds,int communityToKeepAfterFusionOfBoth);
-	void fixMaxHeapAfterFusion(int comunityToBeAbsorbed);
+	void fixMaxHeapAfterFusion(int communitiyToKeppAsFusionOfBoth);
 	bool existsElement(vector<int> const neighbourds,int elementToCheck);
 };
 

@@ -111,7 +111,7 @@ void Comunitat::deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbso
 	m_firstActiveComunity = m_firstActiveComunity == comunityToBeAbsorbed ? m_hTotal.max().getPos().first : m_firstActiveComunity;
 }
 
-void Comunitat::fixMaxHeapAfterFusion(int comunityToBeAbsorbed){
+void Comunitat::fixMaxHeapAfterFusion(int communitiyToKeppAsFusionOfBoth){
 //	for (int i = 0; i < m_candidatesElementsToModificateInMaxHeap.size();i++){
 //		cout<<m_candidatesElementsToModificateInMaxHeap[i]<<endl;
 //	}
@@ -121,8 +121,21 @@ void Comunitat::fixMaxHeapAfterFusion(int comunityToBeAbsorbed){
 
 		pair<int,int> position = make_pair(rowToModificate,m_maxDeltaQOfRows[rowToModificate].first);
 		ElemHeap elementToFix = ElemHeap(newMaxDeltaQ,position);
-		m_hTotal.modifElem(rowToModificate, elementToFix);
+		if (rowToModificate != communitiyToKeppAsFusionOfBoth){
+			m_hTotal.modifElem(rowToModificate, elementToFix);
+		}
 	}
+	/*
+	 * This is done to guarantee that the last element modified will be communityToKeepAsfusion.
+	 * that community may be a neighbourd of a absorbed community
+	 */
+
+	pair<int,int> position = make_pair(communitiyToKeppAsFusionOfBoth,m_maxDeltaQOfRows[communitiyToKeppAsFusionOfBoth].first);
+	double newMaxDeltaQ = m_maxDeltaQOfRows[communitiyToKeppAsFusionOfBoth].second;
+	ElemHeap elementToFix = ElemHeap(newMaxDeltaQ,position);
+
+	m_hTotal.modifElem(communitiyToKeppAsFusionOfBoth,elementToFix);
+
 	m_candidatesElementsToModificateInMaxHeap.clear();  // To use the same vector for each fusion
 }
 
@@ -143,7 +156,7 @@ void Comunitat::fusiona(int comunityToBeAbsorbed, int comunityToKeepAsFusionOfBo
 	m_deltaQ[comunityToKeepAsFusionOfBoth].erase(make_pair(comunityToKeepAsFusionOfBoth, comunityToBeAbsorbed));
 
 	recalculateMaxDeltaQOfNeighbourds(commonNeighbourds,comunityToKeepAsFusionOfBoth);// Recalcula maxDeltaQ en caso de hacer falta.
-	//recalculateMaxDeltaQOfNeighbourds(neighboursOfTheComunityToBeAbsorbed,comunityToKeepAsFusionOfBoth);
+	recalculateMaxDeltaQOfNeighbourds(neighboursOfTheComunityToBeAbsorbed,comunityToKeepAsFusionOfBoth);
 	recalculateMaxDeltaQOfNeighbourds(neighboursOfTheComunityWhoAbsorbs,comunityToKeepAsFusionOfBoth);
 	recalculateMaxDeltaQOfNeighbourds(comunityToKeep,comunityToKeepAsFusionOfBoth);
 	m_maxDeltaQOfRows[comunityToBeAbsorbed].second = -2; // out of range of Q
@@ -272,10 +285,6 @@ void Comunitat::recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(int comunity
 }
 
 void Comunitat::recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds,int communityToKeepAsFusionOfBoth){
-//	for (int i = 0;i < neighbourds.size();i++){
-//		cout<<neighbourds[i]<<endl;
-//	}
-//	cout<<endl;
 
 	for (int i = 0; i < neighbourds.size();i++){
 		if (neighbourds[i] == -1){  // This case is for commonNeighbourds
@@ -301,6 +310,12 @@ void Comunitat::recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds,
 			m_candidatesElementsToModificateInMaxHeap.push_back(actualNeigbourd);
 		}
 	}
+
+//	for (int i = 0;i < m_candidatesElementsToModificateInMaxHeap.size();i++){
+//		cout<<m_candidatesElementsToModificateInMaxHeap[i]<<endl;
+//	}
+//	cout<<endl;
+
 }
 
 bool Comunitat::existsElement(vector<int> const neighbourds,int elementToCheck){
