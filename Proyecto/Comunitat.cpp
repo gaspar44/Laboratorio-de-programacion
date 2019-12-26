@@ -156,7 +156,6 @@ void Comunitat::calculaComunitats(list<Tree<double>*>& listDendrogram){
 		fixMaxHeapAfterFusion(communitiyToKeepAsFusionOfBoth,communityToBeAbsorbed);
 		m_A[communitiyToKeepAsFusionOfBoth] = m_A[communityToBeAbsorbed] + m_A[communitiyToKeepAsFusionOfBoth];
 		m_Q = maxElement.getVal();
-
 	}
 
 }
@@ -209,7 +208,7 @@ void Comunitat::fusiona(int comunityToBeAbsorbed, int comunityToKeepAsFusionOfBo
 	m_deltaQ[comunityToBeAbsorbed].clear();
 	m_deltaQ[comunityToKeepAsFusionOfBoth].erase(make_pair(comunityToKeepAsFusionOfBoth, comunityToBeAbsorbed));
 
-	recalculateMaxDeltaQOfNeighbourds(commonNeighbourds);// Recalcula maxDeltaQ en caso de hacer falta.
+	recalculateMaxDeltaQOfNeighbourds(commonNeighbourds);
 	recalculateMaxDeltaQOfNeighbourds(neighboursOfTheComunityToBeAbsorbed);
 	recalculateMaxDeltaQOfNeighbourds(neighboursOfTheComunityWhoAbsorbs);
 	recalculateMaxDeltaQOfNeighbourds(comunityToKeep);
@@ -246,19 +245,15 @@ vector<int> Comunitat::commonNeighbourdsOfFusion(int comunityToBeAbsorbed, int c
 
 	vector<int> neighbourdsOfComunityToBeAborbedWithNoCommon;
 	vector<int> neighbourdsOfComunityWhoAbsordsWithNoCommon;
-	for (auto iter = commonNeighbours.begin(); iter != lastElement;++iter){
-		for (int j = 0; j < neighboursOfTheComunityToBeAbsorbed.size();j++){
-			if (*iter != neighboursOfTheComunityToBeAbsorbed[j]){
-				neighbourdsOfComunityToBeAborbedWithNoCommon.push_back(neighboursOfTheComunityToBeAbsorbed[j]);
-			}
+	for (int j = 0; j < neighboursOfTheComunityToBeAbsorbed.size();j++){
+		if (not existsElement(commonNeighbours, neighboursOfTheComunityToBeAbsorbed[j])){
+			neighbourdsOfComunityToBeAborbedWithNoCommon.push_back(neighboursOfTheComunityToBeAbsorbed[j]);
 		}
 	}
 
-	for (auto iter = commonNeighbours.begin(); iter != lastElement;++iter){
-		for (int j = 0; j < neighboursOfTheComunityWhoAbsorbs.size();j++){
-			if (*iter != neighboursOfTheComunityWhoAbsorbs[j]){
-				neighbourdsOfComunityWhoAbsordsWithNoCommon.push_back(neighboursOfTheComunityWhoAbsorbs[j]);
-			}
+	for (int j = 0; j < neighboursOfTheComunityWhoAbsorbs.size();j++){
+		if (not existsElement(neighboursOfTheComunityWhoAbsorbs,neighboursOfTheComunityWhoAbsorbs[j])){
+			neighbourdsOfComunityWhoAbsordsWithNoCommon.push_back(neighboursOfTheComunityWhoAbsorbs[j]);
 		}
 	}
 

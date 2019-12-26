@@ -68,11 +68,11 @@ void Heap::descend(int pos){
 	int leftChild = getLefChild(pos);
 	int rightChild = getRightChild(pos);
 
-	if (leftChild <= m_actualPosition && m_data[max] <= m_data[leftChild]){
+	if (leftChild <= m_actualPosition && m_data[max] < m_data[leftChild]){
 		max = leftChild;
 	}
 
-	if (rightChild <= m_actualPosition && m_data[max] <= m_data[rightChild]){
+	if (rightChild <= m_actualPosition && m_data[max] < m_data[rightChild]){
 		max = rightChild;
 	}
 
@@ -84,14 +84,12 @@ void Heap::descend(int pos){
 
 void Heap::modifElem(int communityToTryToChange,const ElemHeap& newValue){
 	for (int i = 0; i < m_actualPosition;i++){
-		int prueba = m_data[i].getPos().first;
 		if (newValue.getVal() != -2 && communityToTryToChange == m_data[i].getPos().first){
 			m_data[i] = newValue;
 			break;
 		}
 	}
 }
-
 
 void Heap::delElem(int pos){
 	if (pos <= -1 || pos > m_actualPosition)
@@ -139,7 +137,7 @@ void Heap::swapElementHeap(int actualNode,int fatherToSwitch) {
 
 void Heap::ascend(int pos){
 	int father = getFather(pos);
-	while (pos != 0 && m_data[pos] >= m_data[father]) {
+	while (pos != 0 && m_data[pos] > m_data[father]) {
 		swapElementHeap(pos, father);
 		pos = getFather(pos);
 		father = getFather(pos);
