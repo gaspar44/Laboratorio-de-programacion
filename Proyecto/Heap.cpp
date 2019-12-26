@@ -85,8 +85,19 @@ void Heap::descend(int pos){
 void Heap::modifElem(int communityToTryToChange,const ElemHeap& newValue){
 	for (int i = 0; i < m_actualPosition;i++){
 		if (newValue.getVal() != -2 && communityToTryToChange == m_data[i].getPos().first){
+			double oldDeltaQValue = m_data[i].getVal();
 			m_data[i] = newValue;
-			break;
+
+			if (oldDeltaQValue == newValue.getVal())
+				return;
+
+			if (newValue.getVal() == 0){
+				delElem(i);
+				return;
+			}
+
+//			newValue.getVal() > oldDeltaQValue ? ascend(i) : descend(i);
+			return;
 		}
 	}
 }
@@ -123,6 +134,17 @@ void Heap::heapSort(int positionToStartSort){
 	int actual = positionToStartSort;
 
 	while (actual != 0 && m_data[actual] >= m_data[father]){
+		swapElementHeap(actual, father);
+		actual = father;
+		father = getFather(father);
+	}
+}
+
+void Heap::heapSort2(int positionToStartSort){
+	int father = getFather(positionToStartSort);
+	int actual = positionToStartSort;
+
+	while (actual != 0 && m_data[actual] > m_data[father]){
 		swapElementHeap(actual, father);
 		actual = father;
 		father = getFather(father);

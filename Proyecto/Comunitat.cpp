@@ -252,7 +252,7 @@ vector<int> Comunitat::commonNeighbourdsOfFusion(int comunityToBeAbsorbed, int c
 	}
 
 	for (int j = 0; j < neighboursOfTheComunityWhoAbsorbs.size();j++){
-		if (not existsElement(neighboursOfTheComunityWhoAbsorbs,neighboursOfTheComunityWhoAbsorbs[j])){
+		if (not existsElement(commonNeighbours,neighboursOfTheComunityWhoAbsorbs[j])){
 			neighbourdsOfComunityWhoAbsordsWithNoCommon.push_back(neighboursOfTheComunityWhoAbsorbs[j]);
 		}
 	}
@@ -330,7 +330,6 @@ void Comunitat::recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(int comunity
 }
 
 void Comunitat::recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds){
-
 	for (int i = 0; i < neighbourds.size();i++){
 		if (neighbourds[i] == -1){  // This case is for commonNeighbourds
 			break;
