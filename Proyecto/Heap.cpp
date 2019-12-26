@@ -140,7 +140,7 @@ void Heap::heapSort(int positionToStartSort){
 	}
 }
 
-void Heap::heapSort2(int positionToStartSort){
+void Heap::heapSortForModification(int positionToStartSort){
 	int father = getFather(positionToStartSort);
 	int actual = positionToStartSort;
 

@@ -40,7 +40,7 @@ class Heap {
 	void modifElem(const ElemHeap& nouVal);
 	void clear();
 	bool operator==(const Heap& h);
-	void sort() { int posHelper = m_actualPosition; heapSort2(posHelper) ;};
+	void sort() { int posHelper = m_actualPosition; heapSortForModification(posHelper) ;};
 
 private:
 
@@ -60,7 +60,7 @@ private:
 	void ascend(int pos);
 	void descend(int pos);
 	void heapSort(int positionToStartSort);
-	void heapSort2(int positionToStartSort);
+	void heapSortForModification(int positionToStartSort);
 
 };
 
