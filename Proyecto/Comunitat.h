@@ -10,8 +10,8 @@
 #include <list>
 #include <vector>
 #include "MatriuSparse.h"
-#include "Tree.h"
 #include "Heap.h"
+#include "Tree.hpp"
 
 class Comunitat {
 public:
@@ -90,6 +90,7 @@ private:
 	void recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds);
 	void fixMaxHeapAfterFusion(int communitiyToKeepAsFusionOfBoth,int communityToBeAbsorbed);
 	bool existsElement(vector<int> const neighbourds,int elementToCheck);
+	void updateDendogram(int communitiyToKeepAsFusionOfBoth,int communityToBeAbsorbed);
 };
 
 #endif /* COMUNITATS_H_ */

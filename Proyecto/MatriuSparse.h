@@ -12,7 +12,8 @@
 #include <vector>
 #include <map>
 #include <fstream>
-#include "Tree.h"
+
+#include "Tree.hpp"
 
 using namespace std;
 

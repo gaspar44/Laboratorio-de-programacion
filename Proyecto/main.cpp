@@ -29,6 +29,13 @@ int main() {
 	list<Tree<double>*> dendograms;
 	//sparseMatrix->calculaDendograms(dendograms);
 	comunity.calculaComunitats(dendograms);
+//	list<Tree<double>*>::iterator it;
+//	it = dendograms.begin();
+//	while (it != dendograms.end()){
+//		cout << *(*it) << endl;
+//		++it;
+//	}
+//	cout<<endl;
 //	print(comunity);
 //	comunity.printTree();
 //	comunity.calculaComunitats(dendograms);

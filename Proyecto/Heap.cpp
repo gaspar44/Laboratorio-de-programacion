@@ -3,8 +3,8 @@
 Heap::Heap(const Heap& h)
 {//constructor de copia
 	m_data = h.m_data;
-	m_maxEls = h.m_maxEls;
-	m_act = h.m_act;
+	m_maxElement = h.m_maxElement;
+	m_actualPosition = h.m_actualPosition;
 	m_index = h.m_index;
 }
 
@@ -12,8 +12,8 @@ void Heap::clear()
 {
 	m_data.clear();
 	m_index.clear();
-	m_maxEls=0;
-	m_act=-1;
+	m_maxElement=0;
+	m_actualPosition=-1;
 }
 
 Heap& Heap::operator=(const Heap& h)
@@ -21,8 +21,8 @@ Heap& Heap::operator=(const Heap& h)
 	if (this != &h)
 	{
 		m_data = h.m_data;
-		m_maxEls = h.m_maxEls;
-		m_act = h.m_act;
+		m_maxElement = h.m_maxElement;
+		m_actualPosition = h.m_actualPosition;
 		m_index = h.m_index;
 	}
 	return *this;
@@ -31,7 +31,7 @@ Heap& Heap::operator=(const Heap& h)
 bool Heap::operator==(const Heap& h)
 {
 	bool iguals = true;
-	if (m_act != h.m_act)
+	if (m_actualPosition != h.m_actualPosition)
 	{
 		iguals = false;
 	}
@@ -39,7 +39,7 @@ bool Heap::operator==(const Heap& h)
 	{
 
 		int i = 0;
-		while ((i <= m_act) && iguals)
+		while ((i <= m_actualPosition) && iguals)
 		{
 			if (!(m_data[i] == h.m_data[i]))
 			{
@@ -54,7 +54,7 @@ bool Heap::operator==(const Heap& h)
 
 std::ostream& operator<<(std::ostream& out, const Heap& h)
 {
-	if (h.m_act == -1) { out << "|---->BUIT" << endl; }
+	if (h.m_actualPosition == -1) { out << "|---->BUIT" << endl; }
 	else	h.printRec(out, 0, 0);
 	return out;
 }
@@ -62,7 +62,7 @@ std::ostream& operator<<(std::ostream& out, const Heap& h)
 void Heap::delElem(int pos1)
 {
 	int pos = m_index[pos1];
-	if ((pos >= 0) && (pos <= m_act))
+	if ((pos >= 0) && (pos <= m_actualPosition))
 	{
 		//Posar element ultim a pos i decrementar nombre elements
 
@@ -71,28 +71,36 @@ void Heap::delElem(int pos1)
 		m_index[m_data[0].getPos().first] = -1;
 
 		//Posar element ultim a pos i decrementar nombre elements
-		intercanvia(0, pos);
-		m_act--;
-		descendir(pos);
+		swapPosition(0, pos);
+		m_actualPosition--;
+		descend(pos);
 	}
 }
 
 void Heap::modifElem(const ElemHeap& novaData)
 {
+	if (novaData.getVal() == -2 || novaData.getVal() == 0){
+//		cout<<"FUCKKKKKKK"<<endl;
+//		cout<<"pos: "<<novaData.getPos().first<<","<<novaData.getPos().second<<endl;
+//		cout<<"valor: "<<novaData.getVal()<<endl;
+		return;
+	}
+
+
 	int pos = m_index[novaData.getPos().first];
-	if ((pos >= 0) && (pos <= m_act))
+	if ((pos >= 0) && (pos <= m_actualPosition))
 	{
 		//Modifiquem element
 		if (m_data[pos] > novaData)
 		{
 			m_data[pos] = novaData;
-			descendir(pos);
+			descend(pos);
 		}
 		else
 			if (m_data[pos] < novaData)
 			{
 				m_data[pos] = novaData;
-				ascendir(pos);
+				ascend(pos);
 			}
 			else
 			{
@@ -103,52 +111,52 @@ void Heap::modifElem(const ElemHeap& novaData)
 
 void Heap::insert(const ElemHeap& el)
 {
-	if ((m_act + 1) < m_maxEls) //Si hi ha espai
+	if ((m_actualPosition + 1) < m_maxElement) //Si hi ha espai
 	{//inserim element al final
-		m_act++;
-		m_data[m_act] = el;
+		m_actualPosition++;
+		m_data[m_actualPosition] = el;
 		//Indiquem que element el esta posicio m_act
-		m_index[el.getPos().first] = m_act;
+		m_index[el.getPos().first] = m_actualPosition;
 
-		int posAct = m_act;
+		int posAct = m_actualPosition;
 		// Fix the max heap property if it is violated
-		while (posAct != 0 && m_data[posAct] >= m_data[pare(posAct)])
+		while (posAct != 0 && m_data[posAct] >= m_data[getFather(posAct)])
 		{
 			//Indiquem que element que estava a posAct estara a pare(posAct) i viceversa
 			int indexAux = m_index[m_data[posAct].getPos().first];
-			m_index[m_data[posAct].getPos().first] = m_index[m_data[pare(posAct)].getPos().first];
-			m_index[m_data[pare(posAct)].getPos().first] = indexAux;
+			m_index[m_data[posAct].getPos().first] = m_index[m_data[getFather(posAct)].getPos().first];
+			m_index[m_data[getFather(posAct)].getPos().first] = indexAux;
 
-			intercanvia(posAct, pare(posAct));
+			swapPosition(posAct, getFather(posAct));
 
-			posAct = pare(posAct);
+			posAct = getFather(posAct);
 		}
 	}
 }
 
 void Heap::delMax()
 {
-	if (m_act >= 0)
+	if (m_actualPosition >= 0)
 	{
 		//Modifiquem que ara element que estava a m_act estara a 0
-		m_index[m_data[m_act].getPos().first] = 0;
+		m_index[m_data[m_actualPosition].getPos().first] = 0;
 		m_index[m_data[0].getPos().first] = -1;
 		//Posar element ultim a l'arrel i decrementar nombre elements
-		intercanvia(0, m_act);
+		swapPosition(0, m_actualPosition);
 
-		m_act--;
-		descendir(0);
+		m_actualPosition--;
+		descend(0);
 	}
 }
 
-void Heap::descendir(int posAct)
+void Heap::descend(int posAct)
 {
-	int fEsq = fillEsq(posAct);
-	int fDret = fillDret(posAct);
+	int fEsq = getLeftSon(posAct);
+	int fDret = getRightSon(posAct);
 	int mesGran = posAct;
-	if (fEsq <= m_act && m_data[fEsq] > m_data[posAct])
+	if (fEsq <= m_actualPosition && m_data[fEsq] > m_data[posAct])
 		mesGran = fEsq;
-	if (fDret <= m_act && m_data[fDret] > m_data[mesGran])
+	if (fDret <= m_actualPosition && m_data[fDret] > m_data[mesGran])
 		mesGran = fDret;
 	if (mesGran != posAct)
 	{
@@ -157,14 +165,14 @@ void Heap::descendir(int posAct)
 		m_index[m_data[posAct].getPos().first] = m_index[m_data[mesGran].getPos().first];
 		m_index[m_data[mesGran].getPos().first] = indAux;
 
-		intercanvia(posAct, mesGran);
-		descendir(mesGran);
+		swapPosition(posAct, mesGran);
+		descend(mesGran);
 	}
 }
 
-void Heap::ascendir(int posAct)
+void Heap::ascend(int posAct)
 {
-	int fPare = pare(posAct);
+	int fPare = getFather(posAct);
 	if (fPare >= 0 && m_data[fPare] < m_data[posAct])
 	{
 		//Indiquem que element que estava a posAct estara a pare(posAct) i viceversa
@@ -172,8 +180,8 @@ void Heap::ascendir(int posAct)
 		m_index[m_data[posAct].getPos().first] = m_index[m_data[fPare].getPos().first];
 		m_index[m_data[fPare].getPos().first] = indexAux;
 
-		intercanvia(posAct, fPare);
-		ascendir(fPare);
+		swapPosition(posAct, fPare);
+		ascend(fPare);
 	}
 }
 
@@ -191,20 +199,20 @@ void Heap::ascendir(int posAct)
 
 std::ostream& Heap::printRec(std::ostream& out, int pos, int n) const
 {
-	if (pos <= m_act)
+	if (pos <= m_actualPosition)
 	{//Pintem arbre
 		for (int i = 0; i < n; i++)
 		{
 			out << "|--";
 		}
 		out << "|-->" << m_data[pos] << endl;
-		if (((2 * pos) + 1) <= m_maxEls)
+		if (((2 * pos) + 1) <= m_maxElement)
 		{//printem subarbre esquerre
-			printRec(out, fillEsq(pos), n + 1);
+			printRec(out, getLeftSon(pos), n + 1);
 		}
-		if ((2 * pos) < m_maxEls)
+		if ((2 * pos) < m_maxElement)
 		{//printem subarbre dret
-			printRec(out, fillDret(pos), n + 1);
+			printRec(out, getRightSon(pos), n + 1);
 		}
 	}
 	return out;

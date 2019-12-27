@@ -144,7 +144,6 @@ void Comunitat::getMaxDeltaQ(map<pair<int,int>,double> &aux, double &maxDeltaQIn
 }
 
 void Comunitat::calculaComunitats(list<Tree<double>*>& listDendrogram){
-	bool done = false; // deltaQ > 0
 	while(m_hTotal.size() != 0){
 		printTree();
 		ElemHeap maxElement = m_hTotal.max();
@@ -153,11 +152,25 @@ void Comunitat::calculaComunitats(list<Tree<double>*>& listDendrogram){
 		int communityToBeAbsorbed = comunitiesToFusion.first;
 		int communitiyToKeepAsFusionOfBoth = comunitiesToFusion.second;
 		fusiona(communityToBeAbsorbed,communitiyToKeepAsFusionOfBoth);
-//		deleteAbsorbedComunityFromActiveCommunities(communityToBeAbsorbed);
 		fixMaxHeapAfterFusion(communitiyToKeepAsFusionOfBoth,communityToBeAbsorbed);
 		m_A[communitiyToKeepAsFusionOfBoth] = m_A[communityToBeAbsorbed] + m_A[communitiyToKeepAsFusionOfBoth];
 		m_Q += maxElement.getVal();
+		updateDendogram(communitiyToKeepAsFusionOfBoth,communityToBeAbsorbed);
 	}
+
+	for (int i = 0; i < m_vDendrograms.size();i++){
+		if (m_vDendrograms[i] != nullptr){
+			listDendrogram.push_back(m_vDendrograms[i]);
+		}
+	}
+}
+
+void Comunitat::updateDendogram(int communitiyToKeepAsFusionOfBoth,int communityToBeAbsorbed){
+	Tree<double> *treeWithDeltaQAndCommunitiesWhoGenerate = new Tree<double>(m_Q);
+	treeWithDeltaQAndCommunitiesWhoGenerate->setLeft(m_vDendrograms[communitiyToKeepAsFusionOfBoth]);
+	treeWithDeltaQAndCommunitiesWhoGenerate->setRight(m_vDendrograms[communityToBeAbsorbed]);
+	m_vDendrograms[communityToBeAbsorbed] = nullptr;
+	m_vDendrograms[communitiyToKeepAsFusionOfBoth] = treeWithDeltaQAndCommunitiesWhoGenerate;
 }
 
 void Comunitat::deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbsorbed){
