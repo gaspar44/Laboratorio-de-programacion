@@ -144,9 +144,11 @@ void Comunitat::getMaxDeltaQ(map<pair<int,int>,double> &aux, double &maxDeltaQIn
 }
 
 void Comunitat::calculaComunitats(list<Tree<double>*>& listDendrogram){
-	while(m_hTotal.size() != 0){
+	ElemHeap maxElement = m_hTotal.max();
+
+	while(maxElement.getVal() != 0 && m_hTotal.size() != 0){
 		printTree();
-		ElemHeap maxElement = m_hTotal.max();
+		maxElement = m_hTotal.max();
 		m_hTotal.delMax();
 		pair<int,int> comunitiesToFusion = maxElement.getPos();
 		int communityToBeAbsorbed = comunitiesToFusion.first;
@@ -181,6 +183,12 @@ void Comunitat::deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbso
 }
 
 void Comunitat::fixMaxHeapAfterFusion(int communitiyToKeepAsFusionOfBoth,int communityToBeAbsorbed){
+//	cout<<"communitiyToKeepAsFusionOfBoth: "<<communitiyToKeepAsFusionOfBoth<<endl;
+//	cout<<"communityToBeAbsorbed: "<<communityToBeAbsorbed<<endl;
+//	for (int i = 0;i < m_candidatesElementsToModificateInMaxHeap.size();i++){
+//		cout<<m_candidatesElementsToModificateInMaxHeap[i]<<endl;
+//	}
+//	cout<<endl<<endl<<endl;
 	for (int i = 0; i < m_candidatesElementsToModificateInMaxHeap.size();i++){
 		int rowToModificate = m_candidatesElementsToModificateInMaxHeap[i];
 		double newMaxDeltaQ = m_maxDeltaQOfRows[rowToModificate].second;

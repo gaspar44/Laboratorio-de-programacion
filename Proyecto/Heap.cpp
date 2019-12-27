@@ -79,13 +79,11 @@ void Heap::delElem(int pos1)
 
 void Heap::modifElem(const ElemHeap& novaData)
 {
-	if (novaData.getVal() == -2 || novaData.getVal() == 0){
-//		cout<<"FUCKKKKKKK"<<endl;
-//		cout<<"pos: "<<novaData.getPos().first<<","<<novaData.getPos().second<<endl;
-//		cout<<"valor: "<<novaData.getVal()<<endl;
-		return;
-	}
-
+//	if (novaData.getVal() == -2 || novaData.getVal() == 0){
+//		for(int i = 0; i < m_actualPosition;i++){
+//			if (m_data[i].getPos().first ==)
+//		}
+//	}
 
 	int pos = m_index[novaData.getPos().first];
 	if ((pos >= 0) && (pos <= m_actualPosition))
