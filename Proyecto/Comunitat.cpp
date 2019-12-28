@@ -147,7 +147,7 @@ void Comunitat::calculaComunitats(list<Tree<double>*>& listDendrogram){
 	ElemHeap maxElement = m_hTotal.max();
 
 	while(maxElement.getVal() != 0 && m_hTotal.size() != 0){
-//		printTree();
+		printTree();
 		maxElement = m_hTotal.max();
 		m_hTotal.delMax();
 		pair<int,int> comunitiesToFusion = maxElement.getPos();
@@ -291,9 +291,9 @@ vector<int> Comunitat::commonNeighbourdsOfFusion(int comunityToBeAbsorbed, int c
 
 		mapOfNeighbourds[keyToSearch2] = mapOfNeighbourds[keyToSearch2] + mapOfNeighbourds[keyToSearch1];
 		mapOfNeighbourds.erase(keyToSearch1);
-		cout<<mapOfComunityToKeepAsFusion[keyToSearch3]<<endl;
+//		cout<<mapOfComunityToKeepAsFusion[keyToSearch3]<<endl;
 		mapOfComunityToKeepAsFusion[keyToSearch3] = mapOfComunityToKeepAsFusion[keyToSearch3] + mapOfComunityToBeAbsorbed[keyToSearch4];
-		cout<<mapOfComunityToKeepAsFusion[keyToSearch3]<<endl;
+//		cout<<mapOfComunityToBeAbsorbed[keyToSearch4]<<endl;
 		m_deltaQ[*iter] = mapOfNeighbourds;
 	}
 	m_deltaQ[comunityToKeepAsFusionOfBoth] = mapOfComunityToKeepAsFusion;
@@ -330,7 +330,7 @@ void Comunitat::recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(int comunity
 	for (int i = 0; i < neighboursOfTheComunityWhoAbsorbs.size();i++){
 		int actualNeighbourd = neighboursOfTheComunityWhoAbsorbs[i];
 
-		if (actualNeighbourd != comunityToBeAbsorbed){
+//		if (actualNeighbourd != comunityToBeAbsorbed){
 			map<pair<int,int>,double> mapOfNeighbourds = m_deltaQ[actualNeighbourd];
 
 			pair<int,int> keyToSearch1 = make_pair(actualNeighbourd,comunityToKeepAsFusionOfBoth);
@@ -341,7 +341,7 @@ void Comunitat::recalculateDeltaQOfNeighbourdsOfCommunityWhoAbsorbs(int comunity
 			mapOfNeighbourds[keyToSearch1] = mapOfNeighbourds[keyToSearch1] - rightSideOperand;
 			mapOfComunityToKeepAsFusion[keyToSearch2] = mapOfComunityToKeepAsFusion[keyToSearch2] - rightSideOperand;
 			m_deltaQ[actualNeighbourd] = mapOfNeighbourds;
-		}
+		//}
 	}
 
 	m_deltaQ[comunityToKeepAsFusionOfBoth] = mapOfComunityToKeepAsFusion;
