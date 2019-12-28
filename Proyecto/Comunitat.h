@@ -90,7 +90,7 @@ private:
 	void recalculateMaxDeltaQOfNeighbourds(vector<int> const neighbourds);
 	void fixMaxHeapAfterFusion(int communitiyToKeepAsFusionOfBoth,int communityToBeAbsorbed);
 	bool existsElement(vector<int> const neighbourds,int elementToCheck);
-	void updateDendogram(int communitiyToKeepAsFusionOfBoth,int communityToBeAbsorbed);
+	void updateDendogram(int communitiyToKeepAsFusionOfBoth,int communityToBeAbsorbed,double actualDeltaQ);
 };
 
 #endif /* COMUNITATS_H_ */
