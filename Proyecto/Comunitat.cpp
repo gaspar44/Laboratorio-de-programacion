@@ -186,12 +186,6 @@ void Comunitat::deleteAbsorbedComunityFromActiveCommunities(int comunityToBeAbso
 }
 
 void Comunitat::fixMaxHeapAfterFusion(int communitiyToKeepAsFusionOfBoth,int communityToBeAbsorbed){
-//	cout<<"communitiyToKeepAsFusionOfBoth: "<<communitiyToKeepAsFusionOfBoth<<endl;
-//	cout<<"communityToBeAbsorbed: "<<communityToBeAbsorbed<<endl;
-//	for (int i = 0;i < m_candidatesElementsToModificateInMaxHeap.size();i++){
-//		cout<<m_candidatesElementsToModificateInMaxHeap[i]<<endl;
-//	}
-//	cout<<endl<<endl<<endl;
 	for (int i = 0; i < m_candidatesElementsToModificateInMaxHeap.size();i++){
 		int rowToModificate = m_candidatesElementsToModificateInMaxHeap[i];
 		double newMaxDeltaQ = m_maxDeltaQOfRows[rowToModificate].second;
@@ -297,7 +291,9 @@ vector<int> Comunitat::commonNeighbourdsOfFusion(int comunityToBeAbsorbed, int c
 
 		mapOfNeighbourds[keyToSearch2] = mapOfNeighbourds[keyToSearch2] + mapOfNeighbourds[keyToSearch1];
 		mapOfNeighbourds.erase(keyToSearch1);
+		cout<<mapOfComunityToKeepAsFusion[keyToSearch3]<<endl;
 		mapOfComunityToKeepAsFusion[keyToSearch3] = mapOfComunityToKeepAsFusion[keyToSearch3] + mapOfComunityToBeAbsorbed[keyToSearch4];
+		cout<<mapOfComunityToKeepAsFusion[keyToSearch3]<<endl;
 		m_deltaQ[*iter] = mapOfNeighbourds;
 	}
 	m_deltaQ[comunityToKeepAsFusionOfBoth] = mapOfComunityToKeepAsFusion;
