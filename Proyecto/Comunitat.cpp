@@ -111,7 +111,14 @@ void Comunitat::creaDeltaQHeap(){
 		double maxDeltaQInRow = 0;
 		pair<int,int> keyofMaxDeltaQ;
 
-		getMaxDeltaQ(aux, maxDeltaQInRow, keyofMaxDeltaQ);
+		if (aux.size() == 0){
+			maxDeltaQInRow = -2;
+			keyofMaxDeltaQ = make_pair(i, -1);
+		}
+
+		else {
+			getMaxDeltaQ(aux, maxDeltaQInRow, keyofMaxDeltaQ);
+		}
 
 		m_deltaQ[i] = aux;
 		ElemHeap elementHeap = ElemHeap(maxDeltaQInRow,keyofMaxDeltaQ);

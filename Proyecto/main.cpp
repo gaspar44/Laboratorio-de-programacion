@@ -1,25 +1,4 @@
-#include "MatriuSparse.h"
-#include "Heap.h"
-#include "Comunitat.h"
-#include <stdio.h>
-#include <algorithm>
 #include "Graph.h"
-
-void print(Comunitat comunity){
-	vector<map<pair<int, int>, double>>  deltaQ = comunity.getdeltaQ();
-
-	for (int i = 0; i < deltaQ.size();i++){
-		map<pair<int,int>,double> aux = deltaQ[i];
-		map<pair<int,int>,double>::iterator mapIterator;
-		pair<int,int> keyofMaxDeltaQ;
-
-		for (mapIterator = aux.begin();mapIterator != aux.end();++mapIterator){
-			cout<<"fila: "<<mapIterator->first.first<<", columna: "<<mapIterator->first.second;
-			printf(" valor: %lf\n",mapIterator->second);
-		}
-	cout<<endl;
-	}
-}
 
 bool IgualFitxers(string nomF1, string nomF2, string nomFRes)
 {
@@ -315,283 +294,283 @@ int main()
 
 		cout << endl << "Comment :=>> GRADE Parcial: " << grade << "(Sobre 10)" << endl << endl;
 
-//		cout << "Comment :=>> =============================================================" << endl;
-//		cout << "Comment :=>> TEST SOBRE ZACKARY..........................................." << endl;
-//		cout << "Comment :=>> =============================================================" << endl;
-//		string nomFitxerZack = "ZackaryKarate.txt";
-//
-//		cout << "Comment :=>> =============================================================" << endl;
-//		cout << "Comment :=>> LLEGINT I CREANT MATRIU I COMUNITAT ZACKARY.................." << endl;
-//		MatriuSparse mXarxaZack(nomFitxerZack);
-//		Comunitat cXarxaZack(&mXarxaZack);
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT M2 XARXAZACK.................." << endl;
-//		cXarxaZack.calculaM2();
-//		int m2XarxaZack = cXarxaZack.getM2();
-//		cout << "Comment :=>> M2 CALCULAT: " << m2XarxaZack << endl;
-//		if (m2XarxaZack == OKM2[1])
-//		{
-//			cout << "Comment :=>> M2 XARXAZACK CALCULAT OK ..............." << endl;
-//			grade += 0.1;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> M2 XARXAZACK CALCULAT ERROR : Esperavem:" << OKM2[0] << endl;
-//			valid = false;
-//		}
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT K ZACKARY....................." << endl;
-//		cXarxaZack.calculaK();
-//		vector<int> vKXarxaZack = cXarxaZack.getK();
-//		ofstream fKXarxaZack, fKXarxaZackOK;
-//
-//		if (comparaVectInt(vKXarxaZack, "0KZackary.txt", "0KZackaryOK.txt", "0KZackaryCOMP.txt"))
-//		{
-//			cout << "Comment :=>> K ZACKARY CALCULAT OK .................." << endl;
-//			grade += 0.5;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> K ZACKARY CALCULAT ERROR................" << endl;
-//			valid = false;
-//		}
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT A ZACKARY....................." << endl;
-//		cXarxaZack.calculaA();
-//		vector<double> vAXarxaZack = cXarxaZack.getA();
-//		if (comparaVectDoub(vAXarxaZack, "0AZackary.txt", "0AZackaryOK.txt", "0AZackaryCOMP.txt"))
-//		{
-//			cout << "Comment :=>> A ZACKARY CALCULAT OK .................." << endl;
-//			grade += 0.6;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> A ZACKARY CALCULAT ERROR................" << endl;
-//			valid = false;
-//		}
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT deltaQ i HeapTotal............" << endl;
-//		cXarxaZack.creaDeltaQHeap();
-//
-//		cout << "Comment :=>> VALIDANT deltaQ ........................" << endl;
-//		vector<map<pair<int, int>, double>> vDeltaQXaxaZack = cXarxaZack.getdeltaQ();
-//		if (comparaVectMap(vDeltaQXaxaZack, "0DeltaQZackary.txt", "0DeltaQZackaryOK.txt", "0DeltaQZackaryCOMP.txt"))
-//		{
-//			cout << "Comment :=>> DeltaQ ZACKARY CALCULAT OK ............." << endl;
-//			grade += 3;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> DeltaQ ZACKARY CALCULAT ERROR..........." << endl;
-//			valid = false;
-//		}
-//		cout << "Comment :=>> VALIDANT HeapTotal ....................." << endl;
-//		Heap hXarxaZack = cXarxaZack.gethTotal();
-//
-//		if (comparaHeap(hXarxaZack, "0HZackary.txt", "0HZackaryOK.txt", "0HZackaryCOMP.txt"))
-//		{
-//			cout << "Comment :=>> HeapTotal ZACKARY CALCULAT OK .........." << endl;
-//			grade += 0.5;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> HeapTotal ZACKARY CALCULAT ERROR........" << endl;
-//			valid = false;
-//		}
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT IndexComs....................." << endl;
-//		cXarxaZack.creaIndexComs();
-//		vector<pair<int, int>> vindexComsXarxaZack = cXarxaZack.getIndexComs();
-//		if (comparaVectPair(vindexComsXarxaZack, "0IndexComsZackary.txt", "0IndexComsZackaryOK.txt", "0IndexComsZackaryCOMP.txt"))
-//		{
-//			cout << "Comment :=>> IndexComs ZACKARY CALCULAT OK .........." << endl;
-//			grade += 0.3;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> IndexComs ZACKARY CALCULAT ERROR........" << endl;
-//			valid = false;
-//		}
-//		mXarxaZack.clear();
-//		cXarxaZack.clear();
-//		vKXarxaZack.clear();
-//		vAXarxaZack.clear();
-//		hXarxaZack.clear();
-//		vDeltaQXaxaZack.clear();
-//		vindexComsXarxaZack.clear();
-//
-//		cout << "Comment :=>> ==============================================" << endl;
-//		cout << "Comment :=>> CREANT GRAF ZACKARY..........................." << endl;
-//		Graph gZack(nomFitxerZack);
-//
-//		cout << "Comment :=>> ==============================================" << endl;
-//		cout << "Comment :=>> ESCRIVINT ZACKARY............................." << endl;
-//		cout << gZack;
-//
-//		cout << "Comment :=>> ==============================================" << endl;
-//		cout << "Comment :=>> CALCULANT COMUNITATS ZACKARY.................." << endl;
-//		cout << "Comment :=>> ==============================================" << endl;
-//
-//		list<Tree<double>*> listDendrogramsZack;
-//		gZack.calculaComunitats(listDendrogramsZack);
-//
-//		cout << "Comment :=>> ==============================================" << endl;
-//		cout << "Comment :=>> ESCRIVINT COMUNITATS ZACKARY.................." << endl;
-//		cout << "Comment :=>> ==============================================" << endl;
-//		ofstream fCOMZack, fCOMZackOK;
-//		fCOMZack.open("0COMZack.txt");
-//		if (fCOMZack.is_open())
-//		{
-//			list<Tree<double>*>::iterator itAnt;
-//			list<Tree<double>*>::iterator it;
-//			it = listDendrogramsZack.begin();
-//			while (it != listDendrogramsZack.end())
-//			{
-//				fCOMZack << (*(*it)) << endl;
-//				cout << (*(*it)) << endl;
-//				itAnt = it;
-//				it++;
-//				listDendrogramsZack.erase(itAnt);
-//			}
-//
-//			fCOMZack.close();
-//		}
-//
-//		if (IgualFitxers("0COMZack.txt", "0COMZackOK.txt", "0COMZackComp.txt"))
-//		{
-//			cout << "Comment :=>> COMUNITATS ZACKARY CALCULAT OK ..............." << endl;
-//			grade += 5;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> COMUNITATS ZACKARY CALCULAT ERROR............." << endl;
-//			valid = false;
-//		}
-//		gZack.clear();
-//
-//		cout << endl << "Comment :=>> GRADE Parcial: " << grade << "(Sobre 20)" <<endl << endl;
-//
-//
-//		cout << "Comment :=>> ==========================================" << endl;
-//		cout << "Comment :=>> TEST SOBRE EPINIONS SIMETRIC............. " << endl;
-//		cout << "Comment :=>> ==========================================" << endl;
-//		string nomFitxerEpi = "EpinionsSimetricOrdenat.txt";
-//
-//		cout << "Comment :=>> =============================================================" << endl;
-//		cout << "Comment :=>> LLEGINT I CREANT MATRIU I COMUNITAT EPINIONS................." << endl;
-//		MatriuSparse mXarxaEpi(nomFitxerEpi);
-//		Comunitat cXarxaEpi(&mXarxaEpi);
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT M2 EPINIONS..................." << endl;
-//		cXarxaEpi.calculaM2();
-//		int m2XarxaEpi = cXarxaEpi.getM2();
-//		cout << "Comment :=>> M2 CALCULAT: " << m2XarxaEpi << endl;
-//		if (m2XarxaEpi == OKM2[2])
-//		{
-//			cout << "Comment :=>> M2 EPINIONS CALCULAT OK ................" << endl;
-//			grade += 0.1;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> M2 EPINIONS CALCULAT ERROR : Esperavem:." << OKM2[0] << endl;
-//			valid = false;
-//		}
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT K EPINIONS...................." << endl;
-//		cXarxaEpi.calculaK();
-//		vector<int> vKXarxaEpi = cXarxaEpi.getK();
-//		ofstream fKXarxaEpi, fKXarxaEpiOK;
-//
-//		if (comparaVectInt(vKXarxaEpi, "0KEpinions.txt", "0KEpinionsOK.txt", "0KEpinionsCOMP.txt"))
-//		{
-//			cout << "Comment :=>> K EPINIONS CALCULAT OK ................." << endl;
-//			grade += 0.5;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> K EPINIONS CALCULAT ERROR..............." << endl;
-//			valid = false;
-//		}
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT A EPINIONS...................." << endl;
-//		cXarxaEpi.calculaA();
-//		vector<double> vAXarxaEpi = cXarxaEpi.getA();
-//		if (comparaVectDoub(vAXarxaEpi, "0AEpinions.txt", "0AEpinionsOK.txt", "0AEpinionsCOMP.txt"))
-//		{
-//			cout << "Comment :=>> A EPINIONS CALCULAT OK ................." << endl;
-//			grade += 0.6;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> A EPINIONS CALCULAT ERROR..............." << endl;
-//			valid = false;
-//		}
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT deltaQ i HeapTotal............" << endl;
-//		cXarxaEpi.creaDeltaQHeap();
-//
-//		cout << "Comment :=>> VALIDANT deltaQ ........................" << endl;
-//		vector<map<pair<int, int>, double>> vDeltaQXaxaEpi = cXarxaEpi.getdeltaQ();
-//		if (comparaVectMap(vDeltaQXaxaEpi, "0DeltaQEpinions.txt", "0DeltaQEpinionsOK.txt", "0DeltaQEpinionsCOMP.txt"))
-//		{
-//			cout << "Comment :=>> DeltaQ EPINIONS CALCULAT OK ............" << endl;
-//			grade += 3;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> DeltaQ EPINIONS CALCULAT ERROR.........." << endl;
-//			valid = false;
-//		}
-//		cout << "Comment :=>> VALIDANT HeapTotal ....................." << endl;
-//		Heap hXarxaEpi = cXarxaEpi.gethTotal();
-//
-//		if (comparaHeap(hXarxaEpi, "0HEpinions.txt", "0HEpinionsOK.txt", "0HEpinionsCOMP.txt"))
-//		{
-//			cout << "Comment :=>> HeapTotal EPINIONS CALCULAT OK ........." << endl;
-//			grade += 0.5;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> HeapTotal EPINIONS CALCULAT ERROR......." << endl;
-//			valid = false;
-//		}
-//
-//		cout << "Comment :=>> ========================================" << endl;
-//		cout << "Comment :=>> CALCULANT IndexComs....................." << endl;
-//		cXarxaEpi.creaIndexComs();
-//		vector<pair<int, int>> vindexComsXarxaEpi = cXarxaEpi.getIndexComs();
-//		if (comparaVectPair(vindexComsXarxaEpi, "0IndexComsEpinions.txt", "0IndexComsEpinionsOK.txt", "0IndexComsEpinionsCOMP.txt"))
-//		{
-//			cout << "Comment :=>> IndexComs EPINIONS CALCULAT OK ........." << endl;
-//			grade += 0.3;
-//		}
-//		else
-//		{
-//			cout << "Comment :=>> IndexComs EPINIONS CALCULAT ERROR......." << endl;
-//			valid = false;
-//		}
-//
-//		mXarxaEpi.clear();
-//		cXarxaEpi.clear();
-//		vKXarxaEpi.clear();
-//		vAXarxaEpi.clear();
-//		hXarxaEpi.clear();
-//		vDeltaQXaxaEpi.clear();
-//		vindexComsXarxaEpi.clear();
-//
-//		cout << "Comment :=>> ====================================================" << endl;
-//		cout << "Comment :=>> ATENCIO NO CALCULEM COMUNITATS EPINIONS............." << endl;
-//		cout << "Comment :=>> ====================================================" << endl;
-//		cout << endl << "Comment :=>> GRADE Parcial: " << grade << "(Sobre 25)" << endl << endl;
+		cout << "Comment :=>> =============================================================" << endl;
+		cout << "Comment :=>> TEST SOBRE ZACKARY..........................................." << endl;
+		cout << "Comment :=>> =============================================================" << endl;
+		string nomFitxerZack = "ZackaryKarate.txt";
+
+		cout << "Comment :=>> =============================================================" << endl;
+		cout << "Comment :=>> LLEGINT I CREANT MATRIU I COMUNITAT ZACKARY.................." << endl;
+		MatriuSparse mXarxaZack(nomFitxerZack);
+		Comunitat cXarxaZack(&mXarxaZack);
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT M2 XARXAZACK.................." << endl;
+		cXarxaZack.calculaM2();
+		int m2XarxaZack = cXarxaZack.getM2();
+		cout << "Comment :=>> M2 CALCULAT: " << m2XarxaZack << endl;
+		if (m2XarxaZack == OKM2[1])
+		{
+			cout << "Comment :=>> M2 XARXAZACK CALCULAT OK ..............." << endl;
+			grade += 0.1;
+		}
+		else
+		{
+			cout << "Comment :=>> M2 XARXAZACK CALCULAT ERROR : Esperavem:" << OKM2[0] << endl;
+			valid = false;
+		}
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT K ZACKARY....................." << endl;
+		cXarxaZack.calculaK();
+		vector<int> vKXarxaZack = cXarxaZack.getK();
+		ofstream fKXarxaZack, fKXarxaZackOK;
+
+		if (comparaVectInt(vKXarxaZack, "0KZackary.txt", "0KZackaryOK.txt", "0KZackaryCOMP.txt"))
+		{
+			cout << "Comment :=>> K ZACKARY CALCULAT OK .................." << endl;
+			grade += 0.5;
+		}
+		else
+		{
+			cout << "Comment :=>> K ZACKARY CALCULAT ERROR................" << endl;
+			valid = false;
+		}
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT A ZACKARY....................." << endl;
+		cXarxaZack.calculaA();
+		vector<double> vAXarxaZack = cXarxaZack.getA();
+		if (comparaVectDoub(vAXarxaZack, "0AZackary.txt", "0AZackaryOK.txt", "0AZackaryCOMP.txt"))
+		{
+			cout << "Comment :=>> A ZACKARY CALCULAT OK .................." << endl;
+			grade += 0.6;
+		}
+		else
+		{
+			cout << "Comment :=>> A ZACKARY CALCULAT ERROR................" << endl;
+			valid = false;
+		}
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT deltaQ i HeapTotal............" << endl;
+		cXarxaZack.creaDeltaQHeap();
+
+		cout << "Comment :=>> VALIDANT deltaQ ........................" << endl;
+		vector<map<pair<int, int>, double>> vDeltaQXaxaZack = cXarxaZack.getdeltaQ();
+		if (comparaVectMap(vDeltaQXaxaZack, "0DeltaQZackary.txt", "0DeltaQZackaryOK.txt", "0DeltaQZackaryCOMP.txt"))
+		{
+			cout << "Comment :=>> DeltaQ ZACKARY CALCULAT OK ............." << endl;
+			grade += 3;
+		}
+		else
+		{
+			cout << "Comment :=>> DeltaQ ZACKARY CALCULAT ERROR..........." << endl;
+			valid = false;
+		}
+		cout << "Comment :=>> VALIDANT HeapTotal ....................." << endl;
+		Heap hXarxaZack = cXarxaZack.gethTotal();
+
+		if (comparaHeap(hXarxaZack, "0HZackary.txt", "0HZackaryOK.txt", "0HZackaryCOMP.txt"))
+		{
+			cout << "Comment :=>> HeapTotal ZACKARY CALCULAT OK .........." << endl;
+			grade += 0.5;
+		}
+		else
+		{
+			cout << "Comment :=>> HeapTotal ZACKARY CALCULAT ERROR........" << endl;
+			valid = false;
+		}
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT IndexComs....................." << endl;
+		cXarxaZack.creaIndexComs();
+		vector<pair<int, int>> vindexComsXarxaZack = cXarxaZack.getIndexComs();
+		if (comparaVectPair(vindexComsXarxaZack, "0IndexComsZackary.txt", "0IndexComsZackaryOK.txt", "0IndexComsZackaryCOMP.txt"))
+		{
+			cout << "Comment :=>> IndexComs ZACKARY CALCULAT OK .........." << endl;
+			grade += 0.3;
+		}
+		else
+		{
+			cout << "Comment :=>> IndexComs ZACKARY CALCULAT ERROR........" << endl;
+			valid = false;
+		}
+		mXarxaZack.clear();
+		cXarxaZack.clear();
+		vKXarxaZack.clear();
+		vAXarxaZack.clear();
+		hXarxaZack.clear();
+		vDeltaQXaxaZack.clear();
+		vindexComsXarxaZack.clear();
+
+		cout << "Comment :=>> ==============================================" << endl;
+		cout << "Comment :=>> CREANT GRAF ZACKARY..........................." << endl;
+		Graph gZack(nomFitxerZack);
+
+		cout << "Comment :=>> ==============================================" << endl;
+		cout << "Comment :=>> ESCRIVINT ZACKARY............................." << endl;
+		cout << gZack;
+
+		cout << "Comment :=>> ==============================================" << endl;
+		cout << "Comment :=>> CALCULANT COMUNITATS ZACKARY.................." << endl;
+		cout << "Comment :=>> ==============================================" << endl;
+
+		list<Tree<double>*> listDendrogramsZack;
+		gZack.calculaComunitats(listDendrogramsZack);
+
+		cout << "Comment :=>> ==============================================" << endl;
+		cout << "Comment :=>> ESCRIVINT COMUNITATS ZACKARY.................." << endl;
+		cout << "Comment :=>> ==============================================" << endl;
+		ofstream fCOMZack, fCOMZackOK;
+		fCOMZack.open("0COMZack.txt");
+		if (fCOMZack.is_open())
+		{
+			list<Tree<double>*>::iterator itAnt;
+			list<Tree<double>*>::iterator it;
+			it = listDendrogramsZack.begin();
+			while (it != listDendrogramsZack.end())
+			{
+				fCOMZack << (*(*it)) << endl;
+				cout << (*(*it)) << endl;
+				itAnt = it;
+				it++;
+				listDendrogramsZack.erase(itAnt);
+			}
+
+			fCOMZack.close();
+		}
+
+		if (IgualFitxers("0COMZack.txt", "0COMZackOK.txt", "0COMZackComp.txt"))
+		{
+			cout << "Comment :=>> COMUNITATS ZACKARY CALCULAT OK ..............." << endl;
+			grade += 5;
+		}
+		else
+		{
+			cout << "Comment :=>> COMUNITATS ZACKARY CALCULAT ERROR............." << endl;
+			valid = false;
+		}
+		gZack.clear();
+
+		cout << endl << "Comment :=>> GRADE Parcial: " << grade << "(Sobre 20)" <<endl << endl;
+
+
+		cout << "Comment :=>> ==========================================" << endl;
+		cout << "Comment :=>> TEST SOBRE EPINIONS SIMETRIC............. " << endl;
+		cout << "Comment :=>> ==========================================" << endl;
+		string nomFitxerEpi = "EpinionsSimetricOrdenat.txt";
+
+		cout << "Comment :=>> =============================================================" << endl;
+		cout << "Comment :=>> LLEGINT I CREANT MATRIU I COMUNITAT EPINIONS................." << endl;
+		MatriuSparse mXarxaEpi(nomFitxerEpi);
+		Comunitat cXarxaEpi(&mXarxaEpi);
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT M2 EPINIONS..................." << endl;
+		cXarxaEpi.calculaM2();
+		int m2XarxaEpi = cXarxaEpi.getM2();
+		cout << "Comment :=>> M2 CALCULAT: " << m2XarxaEpi << endl;
+		if (m2XarxaEpi == OKM2[2])
+		{
+			cout << "Comment :=>> M2 EPINIONS CALCULAT OK ................" << endl;
+			grade += 0.1;
+		}
+		else
+		{
+			cout << "Comment :=>> M2 EPINIONS CALCULAT ERROR : Esperavem:." << OKM2[0] << endl;
+			valid = false;
+		}
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT K EPINIONS...................." << endl;
+		cXarxaEpi.calculaK();
+		vector<int> vKXarxaEpi = cXarxaEpi.getK();
+		ofstream fKXarxaEpi, fKXarxaEpiOK;
+
+		if (comparaVectInt(vKXarxaEpi, "0KEpinions.txt", "0KEpinionsOK.txt", "0KEpinionsCOMP.txt"))
+		{
+			cout << "Comment :=>> K EPINIONS CALCULAT OK ................." << endl;
+			grade += 0.5;
+		}
+		else
+		{
+			cout << "Comment :=>> K EPINIONS CALCULAT ERROR..............." << endl;
+			valid = false;
+		}
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT A EPINIONS...................." << endl;
+		cXarxaEpi.calculaA();
+		vector<double> vAXarxaEpi = cXarxaEpi.getA();
+		if (comparaVectDoub(vAXarxaEpi, "0AEpinions.txt", "0AEpinionsOK.txt", "0AEpinionsCOMP.txt"))
+		{
+			cout << "Comment :=>> A EPINIONS CALCULAT OK ................." << endl;
+			grade += 0.6;
+		}
+		else
+		{
+			cout << "Comment :=>> A EPINIONS CALCULAT ERROR..............." << endl;
+			valid = false;
+		}
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT deltaQ i HeapTotal............" << endl;
+		cXarxaEpi.creaDeltaQHeap();
+
+		cout << "Comment :=>> VALIDANT deltaQ ........................" << endl;
+		vector<map<pair<int, int>, double>> vDeltaQXaxaEpi = cXarxaEpi.getdeltaQ();
+		if (comparaVectMap(vDeltaQXaxaEpi, "0DeltaQEpinions.txt", "0DeltaQEpinionsOK.txt", "0DeltaQEpinionsCOMP.txt"))
+		{
+			cout << "Comment :=>> DeltaQ EPINIONS CALCULAT OK ............" << endl;
+			grade += 3;
+		}
+		else
+		{
+			cout << "Comment :=>> DeltaQ EPINIONS CALCULAT ERROR.........." << endl;
+			valid = false;
+		}
+		cout << "Comment :=>> VALIDANT HeapTotal ....................." << endl;
+		Heap hXarxaEpi = cXarxaEpi.gethTotal();
+
+		if (comparaHeap(hXarxaEpi, "0HEpinions.txt", "0HEpinionsOK.txt", "0HEpinionsCOMP.txt"))
+		{
+			cout << "Comment :=>> HeapTotal EPINIONS CALCULAT OK ........." << endl;
+			grade += 0.5;
+		}
+		else
+		{
+			cout << "Comment :=>> HeapTotal EPINIONS CALCULAT ERROR......." << endl;
+			valid = false;
+		}
+
+		cout << "Comment :=>> ========================================" << endl;
+		cout << "Comment :=>> CALCULANT IndexComs....................." << endl;
+		cXarxaEpi.creaIndexComs();
+		vector<pair<int, int>> vindexComsXarxaEpi = cXarxaEpi.getIndexComs();
+		if (comparaVectPair(vindexComsXarxaEpi, "0IndexComsEpinions.txt", "0IndexComsEpinionsOK.txt", "0IndexComsEpinionsCOMP.txt"))
+		{
+			cout << "Comment :=>> IndexComs EPINIONS CALCULAT OK ........." << endl;
+			grade += 0.3;
+		}
+		else
+		{
+			cout << "Comment :=>> IndexComs EPINIONS CALCULAT ERROR......." << endl;
+			valid = false;
+		}
+
+		mXarxaEpi.clear();
+		cXarxaEpi.clear();
+		vKXarxaEpi.clear();
+		vAXarxaEpi.clear();
+		hXarxaEpi.clear();
+		vDeltaQXaxaEpi.clear();
+		vindexComsXarxaEpi.clear();
+
+		cout << "Comment :=>> ====================================================" << endl;
+		cout << "Comment :=>> ATENCIO NO CALCULEM COMUNITATS EPINIONS............." << endl;
+		cout << "Comment :=>> ====================================================" << endl;
+		cout << endl << "Comment :=>> GRADE Parcial: " << grade << "(Sobre 25)" << endl << endl;
 
 
 
@@ -615,3 +594,4 @@ int main()
 	}
 
 }
+

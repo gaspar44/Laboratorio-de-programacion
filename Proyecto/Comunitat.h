@@ -20,34 +20,7 @@ public:
 	Comunitat& operator=(const Comunitat& community);
 	~Comunitat() {
 		m_sparseMatrix = nullptr;
-		if (m_deltaQ.size() != 0){
-			m_deltaQ.clear();
-		}
-
-		if (m_indexOfActiveComunity.size() != 0){
-			m_indexOfActiveComunity.clear();
-		}
-		if (m_maxDeltaQOfRows.size() != 0){
-			m_maxDeltaQOfRows.clear();
-		}
-
-		if (m_k.size() != 0){
-			m_k.clear();
-		}
-
-		if (m_A.size() != 0){
-			m_A.clear();
-		}
-
-		if (m_vDendrograms.size() != 0){
-			m_vDendrograms.clear();
-		}
-
-		if (m_candidatesElementsToModificateInMaxHeap.size() != 0){
-			m_candidatesElementsToModificateInMaxHeap.clear();
-		}
 	};
-
 	void calculaM2() { m_M2 = m_sparseMatrix->getNValues(); };
 	void calculaK() { m_sparseMatrix->calculaGrau(m_k); };
 	void calculaA();

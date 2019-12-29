@@ -20,13 +20,7 @@ using namespace std;
 class MatriuSparse {
 public:
 	MatriuSparse() : m_dimension(0), m_noZeroElements(0), m_aristas(0) {};
-	~MatriuSparse() {
-		if (m_dictionary.size() != 0){
-			cout<<"done"<<endl;
-			cout<<m_dictionary.size()<<endl;
-//			m_dictionary.clear();
-		}
-	};
+	~MatriuSparse() {};
 	MatriuSparse(string fileName);
 	MatriuSparse(int rows, int columns) : m_dimension(rows), m_noZeroElements(0), m_aristas(0) {};
 	MatriuSparse(const MatriuSparse& m);
@@ -50,7 +44,7 @@ public:
 
 private:
 	map<pair<int,int>,double> m_dictionary;
-	map<int,int> m_gradesIn;
+	vector<int> m_gradesIn;
 	int m_dimension;
 	int m_noZeroElements;
 	int m_aristas;

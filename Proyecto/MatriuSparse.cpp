@@ -16,6 +16,7 @@ MatriuSparse::MatriuSparse(string fileName) {
 	int rowToWrite2;
 	int columnToWrite2;
 	m_dimension = getMaxNumberOfNodes(fileName);
+	m_gradesIn.resize(m_dimension,0);
 	m_aristas = 0;
 
 	ifstream fileToCreateMatrix(fileName);
@@ -64,6 +65,7 @@ void MatriuSparse::setVal(int row,int column,float value){
 
 	if (row > m_dimension - 1 || column > m_dimension - 1){
 		m_dimension = row > column ? row + 1 : column + 1;
+		m_gradesIn.resize(m_dimension,0);
 	}
 		m_dictionary[key1] = value;
 		m_dictionary[key2] = value;
@@ -167,9 +169,10 @@ MatriuSparse& MatriuSparse::operator =(const MatriuSparse &m){
 void MatriuSparse::calculaGrau(vector<int> &graus){
 	map<int,int>::iterator mapIterator;
 	graus.resize(m_gradesIn.size(),0);
+	cout<<m_gradesIn.size()<<endl;
 
-	for (mapIterator = m_gradesIn.begin(); mapIterator != m_gradesIn.end(); ++mapIterator){
-		graus[mapIterator->first] = mapIterator->second;
+	for (int i = 0; i < m_gradesIn.size();i++){
+		graus[i] = m_gradesIn[i];
 	}
 }
 
