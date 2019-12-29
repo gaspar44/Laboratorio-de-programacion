@@ -169,7 +169,6 @@ MatriuSparse& MatriuSparse::operator =(const MatriuSparse &m){
 void MatriuSparse::calculaGrau(vector<int> &graus){
 	map<int,int>::iterator mapIterator;
 	graus.resize(m_gradesIn.size(),0);
-	cout<<m_gradesIn.size()<<endl;
 
 	for (int i = 0; i < m_gradesIn.size();i++){
 		graus[i] = m_gradesIn[i];
