@@ -19,6 +19,7 @@ public:
 	Comunitat(const Comunitat& community);
 	Comunitat& operator=(const Comunitat& community);
 	~Comunitat() {
+		m_sparseMatrix = nullptr;
 		if (m_deltaQ.size() != 0){
 			m_deltaQ.clear();
 		}

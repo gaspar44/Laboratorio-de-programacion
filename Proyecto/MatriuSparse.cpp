@@ -13,14 +13,21 @@
 MatriuSparse::MatriuSparse(string fileName) {
 	int rowToWrite;
 	int columnToWrite;
+	int rowToWrite2;
+	int columnToWrite2;
 	m_dimension = getMaxNumberOfNodes(fileName);
+	m_aristas = 0;
 
 	ifstream fileToCreateMatrix(fileName);
 	string readedLine;
 
 	while(!fileToCreateMatrix.eof()){
-		fileToCreateMatrix>>rowToWrite>>columnToWrite;
-		setVal(rowToWrite, columnToWrite, 1);
+		fileToCreateMatrix>>rowToWrite2>>columnToWrite2;
+		if (rowToWrite != rowToWrite2 || columnToWrite != columnToWrite2){
+			rowToWrite = rowToWrite2;
+			columnToWrite = columnToWrite2;
+			setVal(rowToWrite, columnToWrite, 1);
+		}
 	}
 
 	fileToCreateMatrix.close();
@@ -177,8 +184,12 @@ void MatriuSparse::calculaDendograms(vector<Tree<double>*> &vDendogramns){
 }
 
 void MatriuSparse::clear(){
-	m_dictionary.clear();
+	if (m_dictionary.size() != 0)
+		m_dictionary.clear();
 	m_gradesIn.clear();
+	m_aristas = 0;
+	m_dimension = 0;
+	m_noZeroElements = 0;
 }
 
 int MatriuSparse::getMaxNumberOfNodes(string fileName){

@@ -203,7 +203,7 @@ std::ostream& Heap::printRec(std::ostream& out, int pos, int n) const
 		{
 			out << "|--";
 		}
-		out << "|-->" << m_data[pos] << endl;
+		out << "|-->" << m_data[pos] << endl<<endl;;
 		if (((2 * pos) + 1) <= m_maxElement)
 		{//printem subarbre esquerre
 			printRec(out, getLeftSon(pos), n + 1);

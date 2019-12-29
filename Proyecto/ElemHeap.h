@@ -30,7 +30,7 @@ public:
 		return *this;
 	};
 	friend std::ostream& operator<<(std::ostream& out, const ElemHeap& elHeap) {
-		out<< elHeap.m_value<< ": "<<elHeap.m_position.first<<","<<elHeap.m_position.second;
+		out<< "( < "<<elHeap.m_position.first<<" , "<<elHeap.m_position.second<<" > ; "<<elHeap.m_value<<" )";
 		return out;
 	}
 
